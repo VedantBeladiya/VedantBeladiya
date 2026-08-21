@@ -2732,6 +2732,22 @@ a, button, input, select, textarea {
   box-shadow: 0 0 28px rgba(225, 48, 108, 0.65);
 }
 
+.c-icon-call {
+  box-shadow: 0 0 16px rgba(0, 210, 255, 0.25);
+  border-color: rgba(0, 255, 136, 0.3);
+}
+
+.call-tile:hover {
+  border-color: var(--primary-blue);
+  background: rgba(0, 210, 255, 0.08);
+}
+
+.call-tile:hover .c-icon-badge {
+  transform: scale(1.12) rotate(-4deg);
+  border-color: var(--primary-blue);
+  box-shadow: 0 0 28px rgba(0, 210, 255, 0.65);
+}
+
 .c-tile strong {
   display: block;
   font-size: 0.92rem;
