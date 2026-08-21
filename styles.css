@@ -2383,7 +2383,8 @@ a, button, input, select, textarea {
 
 .creator-avatar-wrap {
   position: relative;
-  width: 110px; height: 110px;
+  width: 130px;
+  height: 130px;
   border-radius: 50%;
   margin-bottom: 1.2rem;
   display: flex;
@@ -2392,15 +2393,31 @@ a, button, input, select, textarea {
 }
 
 .creator-avatar {
-  width: 100%; height: 100%;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  background: linear-gradient(135deg, #091a36, #032b1e);
+  background: radial-gradient(circle, #092e24 0%, #031521 100%);
   border: 2px solid var(--accent-green);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
-  box-shadow: 0 0 25px var(--accent-green-glow);
+  overflow: hidden;
+  box-shadow: 0 0 30px var(--accent-green-glow), 0 10px 25px rgba(0, 0, 0, 0.6);
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.creator-avatar:hover {
+  transform: scale(1.06);
+  box-shadow: 0 0 40px var(--accent-green-glow), 0 15px 35px rgba(0, 255, 136, 0.3);
+}
+
+.creator-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  display: block;
 }
 
 .creator-title h3 {
