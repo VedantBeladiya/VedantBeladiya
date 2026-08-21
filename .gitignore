@@ -1,0 +1,10 @@
+# Ignore large video files (use YouTube/Drive links instead for hosting)
+videos/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+*.swp
