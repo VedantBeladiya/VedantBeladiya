@@ -2216,21 +2216,29 @@ a, button, input, select, textarea {
 }
 
 .c-icon-badge {
-  width: 46px;
-  height: 46px;
-  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 4px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.c-icon-badge svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .c-icon-wa {
-  background: linear-gradient(135deg, rgba(37, 211, 102, 0.16), rgba(37, 211, 102, 0.04));
-  border: 1.5px solid rgba(37, 211, 102, 0.35);
-  color: #25d366;
-  box-shadow: 0 0 16px rgba(37, 211, 102, 0.15);
+  box-shadow: 0 0 16px rgba(37, 211, 102, 0.25);
+  border-color: rgba(37, 211, 102, 0.3);
 }
 
 .wa-tile:hover {
@@ -2238,39 +2246,31 @@ a, button, input, select, textarea {
   background: rgba(37, 211, 102, 0.08);
 }
 
-.wa-tile:hover .c-icon-wa {
-  transform: scale(1.1) rotate(4deg);
-  background: #25d366;
-  color: #030712;
+.wa-tile:hover .c-icon-badge {
+  transform: scale(1.12) rotate(4deg);
   border-color: #25d366;
-  box-shadow: 0 0 25px rgba(37, 211, 102, 0.55);
+  box-shadow: 0 0 28px rgba(37, 211, 102, 0.65);
 }
 
 .c-icon-mail {
-  background: linear-gradient(135deg, rgba(0, 210, 255, 0.16), rgba(59, 130, 246, 0.04));
-  border: 1.5px solid rgba(0, 210, 255, 0.35);
-  color: #00d2ff;
-  box-shadow: 0 0 16px rgba(0, 210, 255, 0.15);
+  box-shadow: 0 0 16px rgba(234, 67, 53, 0.2);
+  border-color: rgba(66, 133, 244, 0.3);
 }
 
 .mail-tile:hover {
-  border-color: #00d2ff;
-  background: rgba(0, 210, 255, 0.08);
+  border-color: #ea4335;
+  background: rgba(234, 67, 53, 0.08);
 }
 
-.mail-tile:hover .c-icon-mail {
-  transform: scale(1.1) rotate(-4deg);
-  background: #00d2ff;
-  color: #030712;
-  border-color: #00d2ff;
-  box-shadow: 0 0 25px rgba(0, 210, 255, 0.55);
+.mail-tile:hover .c-icon-badge {
+  transform: scale(1.12) rotate(-4deg);
+  border-color: #ea4335;
+  box-shadow: 0 0 28px rgba(234, 67, 53, 0.6);
 }
 
 .c-icon-insta {
-  background: linear-gradient(135deg, rgba(225, 48, 108, 0.16), rgba(253, 29, 29, 0.08), rgba(245, 96, 64, 0.04));
-  border: 1.5px solid rgba(225, 48, 108, 0.35);
-  color: #e1306c;
-  box-shadow: 0 0 16px rgba(225, 48, 108, 0.15);
+  box-shadow: 0 0 16px rgba(225, 48, 108, 0.25);
+  border-color: rgba(225, 48, 108, 0.3);
 }
 
 .insta-tile:hover {
@@ -2278,12 +2278,10 @@ a, button, input, select, textarea {
   background: rgba(225, 48, 108, 0.08);
 }
 
-.insta-tile:hover .c-icon-insta {
-  transform: scale(1.1) rotate(4deg);
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-  color: #ffffff;
+.insta-tile:hover .c-icon-badge {
+  transform: scale(1.12) rotate(4deg);
   border-color: #e1306c;
-  box-shadow: 0 0 25px rgba(225, 48, 108, 0.55);
+  box-shadow: 0 0 28px rgba(225, 48, 108, 0.65);
 }
 
 .c-tile strong {
