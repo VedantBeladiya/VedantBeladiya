@@ -2215,16 +2215,75 @@ a, button, input, select, textarea {
   background: rgba(0, 255, 136, 0.08);
 }
 
-.c-emoji {
-  font-size: 1.3rem;
-  width: 42px; height: 42px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-subtle);
-  border-radius: 10px;
+.c-icon-badge {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.c-icon-wa {
+  background: linear-gradient(135deg, rgba(37, 211, 102, 0.16), rgba(37, 211, 102, 0.04));
+  border: 1.5px solid rgba(37, 211, 102, 0.35);
+  color: #25d366;
+  box-shadow: 0 0 16px rgba(37, 211, 102, 0.15);
+}
+
+.wa-tile:hover {
+  border-color: #25d366;
+  background: rgba(37, 211, 102, 0.08);
+}
+
+.wa-tile:hover .c-icon-wa {
+  transform: scale(1.1) rotate(4deg);
+  background: #25d366;
+  color: #030712;
+  border-color: #25d366;
+  box-shadow: 0 0 25px rgba(37, 211, 102, 0.55);
+}
+
+.c-icon-mail {
+  background: linear-gradient(135deg, rgba(0, 210, 255, 0.16), rgba(59, 130, 246, 0.04));
+  border: 1.5px solid rgba(0, 210, 255, 0.35);
+  color: #00d2ff;
+  box-shadow: 0 0 16px rgba(0, 210, 255, 0.15);
+}
+
+.mail-tile:hover {
+  border-color: #00d2ff;
+  background: rgba(0, 210, 255, 0.08);
+}
+
+.mail-tile:hover .c-icon-mail {
+  transform: scale(1.1) rotate(-4deg);
+  background: #00d2ff;
+  color: #030712;
+  border-color: #00d2ff;
+  box-shadow: 0 0 25px rgba(0, 210, 255, 0.55);
+}
+
+.c-icon-insta {
+  background: linear-gradient(135deg, rgba(225, 48, 108, 0.16), rgba(253, 29, 29, 0.08), rgba(245, 96, 64, 0.04));
+  border: 1.5px solid rgba(225, 48, 108, 0.35);
+  color: #e1306c;
+  box-shadow: 0 0 16px rgba(225, 48, 108, 0.15);
+}
+
+.insta-tile:hover {
+  border-color: #e1306c;
+  background: rgba(225, 48, 108, 0.08);
+}
+
+.insta-tile:hover .c-icon-insta {
+  transform: scale(1.1) rotate(4deg);
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  color: #ffffff;
+  border-color: #e1306c;
+  box-shadow: 0 0 25px rgba(225, 48, 108, 0.55);
 }
 
 .c-tile strong {
