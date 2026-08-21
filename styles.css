@@ -3037,8 +3037,21 @@ a, button, input, select, textarea {
 }
 
 @media (max-width: 640px) {
-  .nav-actions .btn-pill { display: none; }
-  .logo-text { font-size: 0.86rem; }
+  .nav-inner { padding: 0.35rem 0.65rem; gap: 0.4rem; }
+  .logo { gap: 0.4rem; }
+  .logo-text { font-size: 0.8rem; letter-spacing: -0.02em; }
+  .logo-avatar-wrap { width: 28px; height: 28px; }
+  .nav-actions { gap: 0.35rem; }
+  .nav-actions .btn-pill { 
+    display: inline-flex;
+    padding: 0.35rem 0.75rem; 
+    font-size: 0.72rem; 
+    min-height: 32px; 
+    gap: 0.25rem;
+  }
+  .nav-actions .btn-pill svg { width: 10px; height: 10px; }
+  .mobile-toggle { width: 34px; height: 34px; border-radius: 8px; }
+  .mobile-toggle span { width: 16px; }
   .form-row { grid-template-columns: 1fr; }
   .agency-services-mini { grid-template-columns: 1fr; }
   .footer-cols { grid-template-columns: 1fr 1fr; gap: 1.8rem; }
