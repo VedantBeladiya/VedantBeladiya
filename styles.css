@@ -2268,17 +2268,35 @@ a, button, input, select, textarea {
 
 .stat-num-wrap {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: center;
   font-size: clamp(2.6rem, 6vw, 3.4rem);
   font-weight: 900;
   color: var(--text-white);
   margin-bottom: 0.6rem;
+  line-height: 1;
+  position: relative;
 }
 
 .counter-plus {
   color: var(--primary-blue);
-  font-size: 2rem;
+  font-weight: 800;
+  margin-left: 3px;
+  line-height: 1;
+}
+
+/* Plus sign placed at the top (superscript) */
+.counter-plus.plus-sign {
+  align-self: flex-start;
+  font-size: clamp(1.4rem, 3.5vw, 1.8rem);
+  margin-top: 0.2rem;
+}
+
+/* Percent sign placed in the vertical center */
+.counter-plus.percent-sign {
+  align-self: center;
+  font-size: clamp(1.5rem, 3.8vw, 2rem);
+  margin-top: 0;
 }
 
 .stat-card h4 {
