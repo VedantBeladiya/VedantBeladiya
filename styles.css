@@ -2404,28 +2404,62 @@ a, button, input, select, textarea {
   padding-bottom: 0.7rem;
 }
 
-.skill-tags {
+.skill-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.1rem;
+}
+
+.s-tool-item {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
+  align-items: center;
+  gap: 0.9rem;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0.35rem 0;
+  transition: transform 0.25s ease;
+  user-select: none;
 }
 
-.s-tag {
-  padding: 0.5rem 1rem;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-pill);
-  font-size: 0.8rem;
-  color: var(--text-muted);
-  font-weight: 500;
-  transition: var(--transition-fast);
+.s-tool-item:hover {
+  transform: translateX(6px);
 }
 
-.s-tag:hover, .s-tag.active {
-  background: rgba(0, 210, 255, 0.1);
-  border-color: var(--border-blue);
+.s-tool-icon {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: 9px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.s-tool-item:hover .s-tool-icon {
+  transform: scale(1.15) rotate(3deg);
+  box-shadow: 0 0 20px rgba(0, 210, 255, 0.4);
+}
+
+.s-tool-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.s-tool-name {
+  font-size: 0.95rem;
+  font-weight: 600;
   color: var(--text-white);
-  box-shadow: 0 0 15px rgba(0, 210, 255, 0.15);
+  letter-spacing: -0.01em;
+  transition: color 0.2s ease;
+}
+
+.s-tool-item:hover .s-tool-name {
+  color: var(--accent-green);
 }
 
 /* --- ABOUT CREATOR --- */
