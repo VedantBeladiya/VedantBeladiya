@@ -3,14 +3,6 @@
    Theme: Obsidian Black + Electric Blue + Neon Green + Pure White
    ========================================================= */
 
-@font-face {
-  font-family: 'Space Kick';
-  src: url('fonts/Space Kick.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
 /* --- RESET & DESIGN TOKENS --- */
 *, *::before, *::after {
   box-sizing: border-box;
@@ -717,7 +709,7 @@ a, button, input, select, textarea {
 /* Giant Background 3D Typography (Animated Metallic Chrome — Behind Portrait) */
 .hero-bg-text-wrap {
   position: absolute;
-  top: 38%;
+  top: 48%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100vw;
@@ -725,8 +717,8 @@ a, button, input, select, textarea {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: clamp(160px, 32vw, 500px);
-  padding: 0 0.8rem;
+  gap: clamp(120px, 22vw, 380px);
+  padding: 0 1rem;
   z-index: 2;
   pointer-events: none;
   user-select: none;
@@ -735,58 +727,50 @@ a, button, input, select, textarea {
 
 .hero-bg-word {
   position: relative;
-  font-family: 'Space Kick', 'Bebas Neue', 'Inter', sans-serif;
-  font-size: clamp(3.8rem, 11vw, 11rem);
-  font-weight: normal;
-  line-height: 1.25;
+  font-family: 'Bebas Neue', 'Inter', sans-serif;
+  font-size: clamp(6.5rem, 20vw, 22rem);
+  font-weight: 900;
+  line-height: 0.8;
   letter-spacing: 0.04em;
   display: inline-block;
   white-space: nowrap;
-  text-transform: uppercase;
-  padding: 0.25em 0.12em;
-  overflow: visible;
   will-change: transform;
   transform: translate3d(0, 0, 0);
   backface-visibility: hidden;
 }
 
 .hero-bg-word span {
-  display: inline-block;
-  line-height: 1.25;
-  padding: 0.1em 0.08em;
+  display: block;
   background: linear-gradient(135deg, 
     #ffffff 0%, 
-    #ffffff 22%, 
-    #bbf7d0 42%, 
-    #ffffff 58%, 
-    #67e8f9 78%, 
+    #e2e8f0 18%, 
+    #94a3b8 38%, 
+    #ffffff 52%, 
+    #64748b 68%, 
+    #cbd5e1 84%, 
     #ffffff 100%
   );
-  background-size: 200% 200%;
+  background-size: 240% 240%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
   animation: chromeShine 6s ease-in-out infinite alternate;
-  filter: 
-    drop-shadow(0 2px 8px rgba(0, 210, 255, 0.4))
-    drop-shadow(0 8px 22px rgba(0, 0, 0, 0.9));
+  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 30px rgba(0, 210, 255, 0.25));
   will-change: transform;
   transform: translateZ(0);
 }
 
 .hero-bg-word.left {
   text-align: right;
-  transform-origin: right bottom;
-  transform: rotateY(8deg) rotateZ(-10deg) translate3d(0, 10px, 0);
+  transform: rotateY(8deg) rotateZ(-1deg) translate3d(0, 0, 0);
   animation: floatWordLeft 6s ease-in-out infinite alternate;
   will-change: transform;
 }
 
 .hero-bg-word.right {
   text-align: left;
-  transform-origin: left bottom;
-  transform: rotateY(-8deg) rotateZ(10deg) translate3d(0, 10px, 0);
+  transform: rotateY(-8deg) rotateZ(1deg) translate3d(0, 0, 0);
   animation: floatWordRight 6s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -805,25 +789,25 @@ a, button, input, select, textarea {
 
 @keyframes floatWordLeft {
   0% {
-    transform: rotateY(8deg) rotateZ(-10deg) translate3d(0, 10px, 0) scale(1);
+    transform: rotateY(7deg) rotateZ(-1deg) translate3d(0, 0px, 0) scale(1);
   }
   50% {
-    transform: rotateY(5deg) rotateZ(-8deg) translate3d(0, -6px, 0) scale(1.02);
+    transform: rotateY(4deg) rotateZ(-0.5deg) translate3d(0, -8px, 0) scale(1.02);
   }
   100% {
-    transform: rotateY(9deg) rotateZ(-11.5deg) translate3d(0, 18px, 0) scale(0.99);
+    transform: rotateY(8deg) rotateZ(-1.5deg) translate3d(0, 6px, 0) scale(0.99);
   }
 }
 
 @keyframes floatWordRight {
   0% {
-    transform: rotateY(-8deg) rotateZ(10deg) translate3d(0, 10px, 0) scale(1);
+    transform: rotateY(-7deg) rotateZ(1deg) translate3d(0, 0px, 0) scale(1);
   }
   50% {
-    transform: rotateY(-5deg) rotateZ(8deg) translate3d(0, -6px, 0) scale(1.02);
+    transform: rotateY(-4deg) rotateZ(0.5deg) translate3d(0, -8px, 0) scale(1.02);
   }
   100% {
-    transform: rotateY(-9deg) rotateZ(11.5deg) translate3d(0, 18px, 0) scale(0.99);
+    transform: rotateY(-8deg) rotateZ(1.5deg) translate3d(0, 6px, 0) scale(0.99);
   }
 }
 
@@ -3122,9 +3106,9 @@ a, button, input, select, textarea {
   .contact-grid { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   
-  .hero-bg-text-wrap { gap: clamp(120px, 30vw, 260px); top: 38%; }
-  .hero-bg-word { font-size: clamp(2.8rem, 9.5vw, 5.5rem); }
-  .hero-photo-frame { width: clamp(240px, 48vw, 380px); max-height: 52vh; }
+  .hero-bg-text-wrap { gap: clamp(80px, 18vw, 220px); top: 46%; }
+  .hero-bg-word { font-size: clamp(5rem, 17vw, 10rem); }
+  .hero-photo-frame { width: clamp(280px, 54vw, 440px); max-height: 54vh; }
   
   .badge-ae, .badge-keyshot { display: none; }
 }
@@ -3158,9 +3142,9 @@ a, button, input, select, textarea {
   .counter-plus { font-size: 1.4rem; }
   
   .hero-tagline-quote { top: 4.8rem; right: 1rem; font-size: 1.4rem; }
-  .hero-bg-text-wrap { gap: clamp(80px, 25vw, 150px); top: 35%; padding: 0 0.4rem; }
-  .hero-bg-word { font-size: clamp(1.9rem, 7.2vw, 3.2rem); }
-  .hero-photo-frame { width: clamp(200px, 50vw, 290px); max-height: 48vh; }
+  .hero-bg-text-wrap { gap: clamp(60px, 15vw, 120px); top: 44%; }
+  .hero-bg-word { font-size: clamp(3.8rem, 15vw, 6.2rem); }
+  .hero-photo-frame { width: 88vw; max-height: 50vh; }
   .banner-content { margin-top: -2.5rem; }
   .floating-badge { width: 42px; height: 42px; border-radius: 10px; }
   .badge-inner { font-size: 0.85rem; }
@@ -3169,9 +3153,6 @@ a, button, input, select, textarea {
 }
 
 @media (max-width: 400px) {
-  .hero-bg-text-wrap { gap: clamp(60px, 20vw, 110px); top: 34%; padding: 0 0.3rem; }
-  .hero-bg-word { font-size: clamp(1.5rem, 6.5vw, 2.4rem); }
-  .hero-photo-frame { width: clamp(180px, 46vw, 230px); max-height: 44vh; }
   .stats-grid { grid-template-columns: 1fr; }
   .footer-cols { grid-template-columns: 1fr; }
   .banner-cta { flex-direction: column; width: 100%; }
