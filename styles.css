@@ -717,7 +717,7 @@ a, button, input, select, textarea {
 /* Giant Background 3D Typography (Animated Metallic Chrome — Behind Portrait) */
 .hero-bg-text-wrap {
   position: absolute;
-  top: 48%;
+  top: 38%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100vw;
@@ -725,8 +725,8 @@ a, button, input, select, textarea {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: clamp(120px, 22vw, 380px);
-  padding: 0 1rem;
+  gap: clamp(160px, 32vw, 500px);
+  padding: 0 0.8rem;
   z-index: 2;
   pointer-events: none;
   user-select: none;
@@ -736,10 +736,10 @@ a, button, input, select, textarea {
 .hero-bg-word {
   position: relative;
   font-family: 'Space Kick', 'Bebas Neue', 'Inter', sans-serif;
-  font-size: clamp(5.2rem, 15.5vw, 16.5rem);
+  font-size: clamp(4.2rem, 13vw, 13.5rem);
   font-weight: normal;
   line-height: 0.88;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   display: inline-block;
   white-space: nowrap;
   text-transform: uppercase;
@@ -752,36 +752,38 @@ a, button, input, select, textarea {
   display: block;
   background: linear-gradient(135deg, 
     #ffffff 0%, 
-    #f1f5f9 18%, 
-    #94a3b8 38%, 
-    #ffffff 52%, 
-    #64748b 68%, 
-    #cbd5e1 84%, 
+    #ffffff 22%, 
+    #bbf7d0 42%, 
+    #ffffff 58%, 
+    #67e8f9 78%, 
     #ffffff 100%
   );
-  background-size: 240% 240%;
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
   color: transparent;
   animation: chromeShine 6s ease-in-out infinite alternate;
-  filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.85)) drop-shadow(0 0 30px rgba(0, 210, 255, 0.25));
+  filter: 
+    drop-shadow(0 2px 10px rgba(0, 210, 255, 0.6))
+    drop-shadow(0 0 25px rgba(0, 255, 136, 0.4))
+    drop-shadow(0 15px 35px rgba(0, 0, 0, 0.95));
   will-change: transform;
   transform: translateZ(0);
 }
 
 .hero-bg-word.left {
   text-align: right;
-  transform-origin: right center;
-  transform: rotateY(7deg) rotateZ(-3.5deg) translate3d(0, 4px, 0);
+  transform-origin: right bottom;
+  transform: rotateY(8deg) rotateZ(-8deg) translate3d(0, 10px, 0);
   animation: floatWordLeft 6s ease-in-out infinite alternate;
   will-change: transform;
 }
 
 .hero-bg-word.right {
   text-align: left;
-  transform-origin: left center;
-  transform: rotateY(-7deg) rotateZ(3.5deg) translate3d(0, 4px, 0);
+  transform-origin: left bottom;
+  transform: rotateY(-8deg) rotateZ(8deg) translate3d(0, 10px, 0);
   animation: floatWordRight 6s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -800,25 +802,25 @@ a, button, input, select, textarea {
 
 @keyframes floatWordLeft {
   0% {
-    transform: rotateY(7deg) rotateZ(-3.5deg) translate3d(0, 4px, 0) scale(1);
+    transform: rotateY(8deg) rotateZ(-8deg) translate3d(0, 10px, 0) scale(1);
   }
   50% {
-    transform: rotateY(4deg) rotateZ(-2deg) translate3d(0, -5px, 0) scale(1.02);
+    transform: rotateY(5deg) rotateZ(-6deg) translate3d(0, -6px, 0) scale(1.02);
   }
   100% {
-    transform: rotateY(8deg) rotateZ(-4.8deg) translate3d(0, 9px, 0) scale(0.99);
+    transform: rotateY(9deg) rotateZ(-9.5deg) translate3d(0, 18px, 0) scale(0.99);
   }
 }
 
 @keyframes floatWordRight {
   0% {
-    transform: rotateY(-7deg) rotateZ(3.5deg) translate3d(0, 4px, 0) scale(1);
+    transform: rotateY(-8deg) rotateZ(8deg) translate3d(0, 10px, 0) scale(1);
   }
   50% {
-    transform: rotateY(-4deg) rotateZ(2deg) translate3d(0, -5px, 0) scale(1.02);
+    transform: rotateY(-5deg) rotateZ(6deg) translate3d(0, -6px, 0) scale(1.02);
   }
   100% {
-    transform: rotateY(-8deg) rotateZ(4.8deg) translate3d(0, 9px, 0) scale(0.99);
+    transform: rotateY(-9deg) rotateZ(9.5deg) translate3d(0, 18px, 0) scale(0.99);
   }
 }
 
@@ -3117,8 +3119,8 @@ a, button, input, select, textarea {
   .contact-grid { grid-template-columns: 1fr; }
   .footer-top { grid-template-columns: 1fr; }
   
-  .hero-bg-text-wrap { gap: clamp(80px, 18vw, 220px); top: 46%; }
-  .hero-bg-word { font-size: clamp(4.2rem, 14vw, 8.5rem); }
+  .hero-bg-text-wrap { gap: clamp(140px, 35vw, 280px); top: 38%; }
+  .hero-bg-word { font-size: clamp(3.2rem, 11vw, 6.2rem); }
   .hero-photo-frame { width: clamp(280px, 54vw, 440px); max-height: 54vh; }
   
   .badge-ae, .badge-keyshot { display: none; }
@@ -3153,8 +3155,8 @@ a, button, input, select, textarea {
   .counter-plus { font-size: 1.4rem; }
   
   .hero-tagline-quote { top: 4.8rem; right: 1rem; font-size: 1.4rem; }
-  .hero-bg-text-wrap { gap: clamp(60px, 15vw, 120px); top: 44%; }
-  .hero-bg-word { font-size: clamp(3.2rem, 13vw, 5.2rem); }
+  .hero-bg-text-wrap { gap: clamp(110px, 36vw, 190px); top: 36%; }
+  .hero-bg-word { font-size: clamp(2.2rem, 8.5vw, 3.6rem); }
   .hero-photo-frame { width: 88vw; max-height: 50vh; }
   .banner-content { margin-top: -2.5rem; }
   .floating-badge { width: 42px; height: 42px; border-radius: 10px; }
@@ -3164,6 +3166,8 @@ a, button, input, select, textarea {
 }
 
 @media (max-width: 400px) {
+  .hero-bg-text-wrap { gap: clamp(90px, 32vw, 150px); top: 35%; }
+  .hero-bg-word { font-size: clamp(1.8rem, 7.8vw, 2.8rem); }
   .stats-grid { grid-template-columns: 1fr; }
   .footer-cols { grid-template-columns: 1fr; }
   .banner-cta { flex-direction: column; width: 100%; }
