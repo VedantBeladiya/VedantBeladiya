@@ -38,7 +38,7 @@
   <div class="nav-inner">
     <a href="#home" class="logo">
       <div class="logo-avatar-wrap">
-        <img src="photo.jpg.png" alt="Vedant Beladiya" class="logo-avatar-img"/>
+        <img src="photo.jpg.png" alt="Vedant Beladiya" class="logo-avatar-img" width="34" height="34" decoding="async"/>
       </div>
       <span class="logo-text">Vedant Beladiya<em>.Editor</em></span>
     </a>
@@ -186,7 +186,7 @@
   <div class="hero-photo-container">
     <div class="photo-ambient-backlight"></div>
     <div class="hero-photo-frame">
-      <img src="photo.jpg.png" alt="Video Editor Portrait" class="hero-portrait-img" id="heroPortrait" />
+      <img src="photo.jpg.png" alt="Video Editor Portrait" class="hero-portrait-img" id="heroPortrait" fetchpriority="high" decoding="async" />
       <div class="hero-photo-bottom-fade"></div>
     </div>
   </div>
@@ -308,14 +308,14 @@
       <div class="works-track" id="aiTrack">
         <div class="work-card video-card-interactive">
           <div class="work-thumb">
-            <video class="portfolio-video" src="videos/reel1.mp4" playsinline preload="metadata" loop muted></video>
+            <video class="portfolio-video" src="videos/reel1.mp4" playsinline preload="none" loop muted></video>
             <button class="work-play-btn video-toggle-btn" aria-label="Play video">▶</button>
           </div>
         </div>
 
         <div class="work-card video-card-interactive">
           <div class="work-thumb">
-            <video class="portfolio-video" src="videos/reel1.mp4" playsinline preload="metadata" loop muted></video>
+            <video class="portfolio-video" src="videos/reel1.mp4" playsinline preload="none" loop muted></video>
             <button class="work-play-btn video-toggle-btn" aria-label="Play video">▶</button>
           </div>
         </div>
@@ -604,7 +604,7 @@
       <div class="agency-info">
         <div class="agency-header">
           <div class="agency-badge-icon">
-            <img src="voiceup-logo.png" alt="VoiceUp Media Logo" class="agency-logo-img"/>
+            <img src="voiceup-logo.png" alt="VoiceUp Media Logo" class="agency-logo-img" loading="lazy" decoding="async" width="54" height="54"/>
           </div>
           <div>
             <div class="agency-tag-pill">Digital Marketing Agency</div>
@@ -618,46 +618,47 @@
         </p>
 
         <div class="agency-services-mini">
-          <div class="asm-item">
-            <span class="asm-dot"></span>
-            <span>Performance Ads &amp; Paid Media</span>
+          <div class="asm-item"><span class="asm-dot"></span> <span>Performance Ads &amp; Paid Media</span></div>
+          <div class="asm-item"><span class="asm-dot"></span> <span>Viral Short-Form Reels &amp; TikToks</span></div>
+          <div class="asm-item"><span class="asm-dot"></span> <span>Script-to-Screen Production</span></div>
+          <div class="asm-item"><span class="asm-dot"></span> <span>Hook &amp; Retention Engineering</span></div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-cell">
+            <strong>50<span>+</span></strong>
+            <small>Active Clients</small>
           </div>
-          <div class="asm-item">
-            <span class="asm-dot"></span>
-            <span>Viral Short-Form Reels &amp; TikToks</span>
+          <div class="stat-cell">
+            <strong>2.5M<span>+</span></strong>
+            <small>Total Organic Views</small>
           </div>
-          <div class="asm-item">
-            <span class="asm-dot"></span>
-            <span>Brand Identity &amp; Social Strategy</span>
-          </div>
-          <div class="asm-item">
-            <span class="asm-dot"></span>
-            <span>Full-Scale Video &amp; Podcast Production</span>
+          <div class="stat-cell">
+            <strong>98<span>%</span></strong>
+            <small>Retention Rate</small>
           </div>
         </div>
 
-
-        <div class="agency-actions">
-          <a href="#contact" class="btn-primary">
-            <span>Work With VoiceUp Media</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
-          </a>
-        </div>
+        <a href="#contact" class="btn-primary">
+          <span>Scale With VoiceUp</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+        </a>
       </div>
 
+      <!-- Right Column: Featured Agency Projects Showcase (Swipeable) -->
       <div class="agency-showcase-wrap">
         <div class="agency-showcase-head">
-          <h4>Agency Campaign Highlights</h4>
-          <div class="agency-nav-btns">
-            <button class="reel-nav-btn prev" onclick="scrollAgency(-1)" aria-label="Previous Campaign">‹</button>
-            <button class="reel-nav-btn next" onclick="scrollAgency(1)" aria-label="Next Campaign">›</button>
+          <h4>Agency Top Performs</h4>
+          <div class="works-slider-nav">
+            <button class="w-nav-btn" onclick="scrollAgency(-1)" aria-label="Previous Project">‹</button>
+            <button class="w-nav-btn" onclick="scrollAgency(1)" aria-label="Next Project">›</button>
           </div>
         </div>
 
         <div class="reels-showcase" id="agencyShowcase">
           <div class="reel-frame video-card-interactive">
             <div class="reel-mockup r1">
-              <video class="portfolio-video" src="videos/reel1.mp4" playsinline preload="metadata" loop muted></video>
+              <video class="portfolio-video" src="videos/reel1.mp4" playsinline preload="none" loop muted></video>
               <div class="reel-badge">Viral Reel</div>
               <button class="reel-play-icon video-toggle-btn" aria-label="Play video">▶</button>
               <div class="reel-label">
@@ -846,7 +847,7 @@
       <div class="about-left">
         <div class="creator-avatar-wrap">
           <div class="creator-avatar">
-            <img src="photo.jpg.png" alt="Vedant Beladiya - Video Editor" class="creator-avatar-img"/>
+            <img src="photo.jpg.png" alt="Vedant Beladiya - Video Editor" class="creator-avatar-img" loading="lazy" decoding="async" width="260" height="300"/>
           </div>
         </div>
         <div class="creator-title">

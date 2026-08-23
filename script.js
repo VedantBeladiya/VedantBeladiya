@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
   var progress = 0;
   
   var interval = setInterval(function() {
-    progress += 35;
+    progress += 40;
     if (progress > 100) progress = 100;
     if (fill) fill.style.width = progress + '%';
     
@@ -18,9 +18,9 @@ document.addEventListener('DOMContentLoaded', function() {
       clearInterval(interval);
       setTimeout(function() {
         if (loader) loader.classList.add('done');
-      }, 150);
+      }, 100);
     }
-  }, 25);
+  }, 20);
 
   // --- MOBILE DRAWER MENU ---
   var mobileToggle = document.getElementById('mobileToggle');
@@ -64,27 +64,36 @@ document.addEventListener('DOMContentLoaded', function() {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.05, rootMargin: '0px 0px -30px 0px' });
+  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
 
   document.querySelectorAll('.reveal').forEach(function(el) {
     revealObserver.observe(el);
   });
 
-  // --- NAV AUTO-HIDE ON SCROLL ---
-  var lastScrollY = 0;
+  // --- NAV AUTO-HIDE ON SCROLL (THROTTLED WITH rAF) ---
+  var lastScrollY = window.scrollY;
   var nav = document.getElementById('nav');
+  var scrollTicking = false;
+
   window.addEventListener('scroll', function() {
-    var y = window.scrollY;
-    if (nav) {
-      if (y > 220 && y > lastScrollY && (!mobileMenu || !mobileMenu.classList.contains('open'))) {
-        nav.classList.add('hidden');
-      } else {
-        nav.classList.remove('hidden');
-      }
+    if (!scrollTicking) {
+      window.requestAnimationFrame(function() {
+        var y = window.scrollY;
+        if (nav) {
+          if (y > 220 && y > lastScrollY && (!mobileMenu || !mobileMenu.classList.contains('open'))) {
+            nav.classList.add('hidden');
+          } else {
+            nav.classList.remove('hidden');
+          }
+        }
+        lastScrollY = y;
+        scrollTicking = false;
+      });
+      scrollTicking = true;
     }
-    lastScrollY = y;
   }, { passive: true });
 
   // --- COUNTER NUMBER ANIMATION ---
@@ -92,8 +101,8 @@ document.addEventListener('DOMContentLoaded', function() {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) {
         var el = entry.target;
-        var target = parseInt(el.getAttribute('data-target'));
-        var duration = 1400;
+        var target = parseInt(el.getAttribute('data-target'), 10);
+        var duration = 1200;
         var start = performance.now();
 
         function step(now) {
@@ -130,11 +139,12 @@ document.addEventListener('DOMContentLoaded', function() {
     window.scrollSection('agencyShowcase', direction);
   };
 
-  // Drag-to-scroll on desktop mouse
+  // Drag-to-scroll on desktop mouse (rAF Throttled for smooth 60fps)
   var allTracks = document.querySelectorAll('.works-track, .reels-showcase');
   allTracks.forEach(function(track) {
     var isDown = false;
     var startX, scrollLeft;
+    var dragTicking = false;
 
     track.addEventListener('mousedown', function(e) {
       isDown = true;
@@ -148,7 +158,13 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       var x = e.pageX - track.offsetLeft;
       var walk = (x - startX) * 1.5;
-      track.scrollLeft = scrollLeft - walk;
+      if (!dragTicking) {
+        window.requestAnimationFrame(function() {
+          track.scrollLeft = scrollLeft - walk;
+          dragTicking = false;
+        });
+        dragTicking = true;
+      }
     });
   });
 
