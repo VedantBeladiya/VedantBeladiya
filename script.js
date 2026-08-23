@@ -257,6 +257,15 @@ document.addEventListener('DOMContentLoaded', function() {
     var playBtn = card.querySelector('.video-toggle-btn');
     if (!video) return;
 
+    // Ensure first frame is loaded and rendered as thumbnail
+    if (video.readyState >= 1) {
+      if (video.currentTime === 0) video.currentTime = 0.001;
+    } else {
+      video.addEventListener('loadedmetadata', function() {
+        if (video.currentTime === 0) video.currentTime = 0.001;
+      }, { once: true });
+    }
+
     // Hover preview (muted)
     card.addEventListener('mouseenter', function() {
       if (video.paused && !card.classList.contains('is-playing')) {
@@ -271,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
     card.addEventListener('mouseleave', function() {
       if (!card.classList.contains('is-playing')) {
         video.pause();
-        video.currentTime = 0;
+        video.currentTime = 0.001;
       }
     });
 
@@ -284,6 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
         video.pause();
         card.classList.remove('is-playing');
         if (playBtn) playBtn.innerHTML = '▶';
+        video.currentTime = 0.001;
       } else {
         // Pause all other videos
         allVideoCards.forEach(function(otherCard) {
