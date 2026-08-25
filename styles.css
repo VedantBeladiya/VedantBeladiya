@@ -1434,10 +1434,16 @@ a, button, input, select, textarea {
   transition: opacity 0.3s ease;
 }
 
-.work-thumb > *:not(.portfolio-video),
-.reel-mockup > *:not(.portfolio-video) {
+.work-thumb > *:not(.portfolio-video):not(.vc-overlay),
+.reel-mockup > *:not(.portfolio-video):not(.vc-overlay) {
   position: relative;
   z-index: 3;
+}
+
+/* Hide original center play button once custom controls are injected */
+.video-card-interactive[data-vc-init="1"] .work-play-btn,
+.video-card-interactive[data-vc-init="1"] .reel-play-icon {
+  display: none !important;
 }
 
 /* =====================================================
