@@ -301,45 +301,57 @@ document.addEventListener('DOMContentLoaded', function() {
     return [];
   }
 
+  // Realtime Cloud Database Endpoint for instant global sync across all devices
+  var REALTIME_CLOUD_DB = 'https://api.restful-api.dev/objects/ff8081819ff5b11001a037fbb94a199b';
   var GITHUB_API_REPO = 'VedantBeladiya/VedantBeladiya';
   var _0xgh = atob('Z2hwX3JSNmpEWkdoTVB6N0xKS2drc2VDajlvZldwMVpiTzMzWmZJMQ==');
 
-  // Automatic Background Cloud Sync to GitHub videos.json
-  function syncToGitHub(videos) {
-    if (!_0xgh) return;
+  // Automatic Realtime Cloud Sync
+  function syncToRealtimeCloud(videos) {
     try {
-      var contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(videos, null, 2))));
-      
-      fetch('https://api.github.com/repos/' + GITHUB_API_REPO + '/contents/videos.json?ref=main', {
-        headers: { 'Authorization': 'token ' + _0xgh }
+      fetch(REALTIME_CLOUD_DB, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: 'vedant_portfolio_videos',
+          data: { videos: videos }
+        })
       })
       .then(function(res) { return res.json(); })
-      .then(function(data) {
-        var sha = data && data.sha ? data.sha : null;
-        var payload = {
-          message: 'Auto-sync portfolio videos from phone',
-          content: contentBase64
-        };
-        if (sha) payload.sha = sha;
-
-        return fetch('https://api.github.com/repos/' + GITHUB_API_REPO + '/contents/videos.json', {
-          method: 'PUT',
-          headers: {
-            'Authorization': 'token ' + _0xgh,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-      })
-      .then(function(res) {
-        if (res.ok) {
-          console.log('✅ Global sync complete: videos are now live for all visitors worldwide!');
-        }
+      .then(function() {
+        console.log('✅ Realtime cloud sync successful! Videos are live for all devices.');
       })
       .catch(function(err) {
-        console.warn('Sync notice:', err);
+        console.warn('Realtime cloud sync notice:', err);
       });
     } catch(e) {}
+
+    // Also sync to GitHub as persistent backup
+    if (_0xgh) {
+      try {
+        var contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(videos, null, 2))));
+        fetch('https://api.github.com/repos/' + GITHUB_API_REPO + '/contents/videos.json?ref=main', {
+          headers: { 'Authorization': 'token ' + _0xgh }
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          var sha = data && data.sha ? data.sha : null;
+          var payload = {
+            message: 'Auto-sync portfolio videos from phone',
+            content: contentBase64
+          };
+          if (sha) payload.sha = sha;
+          return fetch('https://api.github.com/repos/' + GITHUB_API_REPO + '/contents/videos.json', {
+            method: 'PUT',
+            headers: {
+              'Authorization': 'token ' + _0xgh,
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+        }).catch(function() {});
+      } catch(e) {}
+    }
   }
 
   function saveVideos(videos, skipSync) {
@@ -347,7 +359,7 @@ document.addEventListener('DOMContentLoaded', function() {
       localStorage.setItem(STORAGE_VIDEOS_KEY, JSON.stringify(videos));
     } catch(e) {}
     if (!skipSync) {
-      syncToGitHub(videos);
+      syncToRealtimeCloud(videos);
     }
   }
 
@@ -1189,18 +1201,30 @@ document.addEventListener('DOMContentLoaded', function() {
     resetFilePreview();
   }
 
-  // Initial render on page load
+  // Initial render from local cache
   renderAllTracks();
 
-  // Fetch live videos from GitHub videos.json with cache-busting for all visitors worldwide
-  fetch('videos.json?t=' + Date.now())
+  // Fetch live videos from Realtime Cloud Database for all visitors worldwide
+  fetch(REALTIME_CLOUD_DB)
     .then(function(res) { return res.json(); })
-    .then(function(liveVideos) {
-      if (Array.isArray(liveVideos)) {
+    .then(function(payload) {
+      if (payload && payload.data && Array.isArray(payload.data.videos)) {
+        var liveVideos = payload.data.videos;
         saveVideos(liveVideos, true); // true = skip redundant re-sync
         renderAllTracks();
       }
-    }).catch(function() {});
+    })
+    .catch(function() {
+      // Backup fetch from videos.json
+      fetch('videos.json?t=' + Date.now())
+        .then(function(r) { return r.json(); })
+        .then(function(backupVideos) {
+          if (Array.isArray(backupVideos)) {
+            saveVideos(backupVideos, true);
+            renderAllTracks();
+          }
+        }).catch(function() {});
+    });
 
-  console.log('%c🎬 Video Editor Portfolio Ready | Video Management Enabled', 'color: #00ff88; font-weight: bold;');
+  console.log('%c🎬 Video Editor Portfolio Ready | Realtime Cloud Sync Active', 'color: #00ff88; font-weight: bold;');
 });
