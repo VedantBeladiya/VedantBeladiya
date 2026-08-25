@@ -1,1388 +1,1500 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
-<title>Video Editor &amp; Motion Designer — Portfolio</title>
-<meta name="description" content="Premium video editing, cinematic reels, motion graphics, graphic design &amp; 3D visualization."/>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;700&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css"/>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+  <meta name="google-site-verification" content="qdTDnTnvwD6gPFid-ptwpz4z2xwF3atMOL8ydbBCzD0" />
+  <title>Video Editor &amp; Motion Designer — Portfolio</title>
+  <meta name="description"
+    content="Premium video editing, cinematic reels, motion graphics, graphic design &amp; 3D visualization." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Caveat:wght@500;700&family=Inter:wght@300;400;500;600;700;800;900&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,700&family=Instrument+Serif:ital,wght@0,400;1,400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
 </head>
+
 <body>
 
-<!-- CUSTOM CURSOR (Hidden on touch/mobile) -->
-<div class="cursor-dot" id="cursorDot"></div>
-<div class="cursor-ring" id="cursorRing"></div>
+  <!-- CUSTOM CURSOR (Hidden on touch/mobile) -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- LOADER -->
-<div class="loader" id="loader">
-  <div class="loader-inner">
-    <div class="loader-logo">◆</div>
-    <div class="loader-text">VIDEO EDITOR &amp; CREATOR</div>
-    <div class="loader-bar"><div class="loader-fill"></div></div>
-  </div>
-</div>
-
-<!-- AMBIENT BACKGROUND -->
-<div class="ambient-bg">
-  <div class="ambient-blob b1"></div>
-  <div class="ambient-blob b2"></div>
-  <div class="ambient-blob b3"></div>
-  <div class="ambient-grid"></div>
-</div>
-
-<!-- NAVBAR -->
-<nav class="nav" id="nav">
-  <div class="nav-inner">
-    <a href="#home" class="logo">
-      <div class="logo-avatar-wrap">
-        <img src="photo.jpg.png" alt="Vedant Beladiya" class="logo-avatar-img" width="34" height="34" decoding="async"/>
+  <!-- LOADER -->
+  <div class="loader" id="loader">
+    <div class="loader-inner">
+      <div class="loader-logo">◆</div>
+      <div class="loader-text">VIDEO EDITOR &amp; CREATOR</div>
+      <div class="loader-bar">
+        <div class="loader-fill"></div>
       </div>
-      <span class="logo-text">Vedant Beladiya<em>.Editor</em></span>
-    </a>
-    
-    <ul class="nav-links">
-      <li><a href="#color-grade">Colour Grade</a></li>
-      <li><a href="#ai-reels">AI Reels</a></li>
-      <li><a href="#motion-graphics">Motion</a></li>
-      <li><a href="#speed-ramp">Speed Ramp</a></li>
-      <li><a href="#agency">VoiceUp Media</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-
-    <div class="nav-actions">
-      <a href="#contact" class="btn-pill">
-        <span>Hire Me</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
-      </a>
-
-      <!-- Mobile Hamburger Button -->
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation Menu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
     </div>
   </div>
-</nav>
 
-<!-- MOBILE DRAWER MENU -->
-<div class="mobile-menu" id="mobileMenu">
-  <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
-  <div class="mobile-menu-content">
-    <div class="mobile-menu-header">
+  <!-- AMBIENT BACKGROUND -->
+  <div class="ambient-bg">
+    <div class="ambient-blob b1"></div>
+    <div class="ambient-blob b2"></div>
+    <div class="ambient-blob b3"></div>
+    <div class="ambient-grid"></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="nav" id="nav">
+    <div class="nav-inner">
       <a href="#home" class="logo">
         <div class="logo-avatar-wrap">
-          <img src="photo.jpg.png" alt="Vedant Beladiya" class="logo-avatar-img"/>
+          <img src="photo.jpg.png" alt="Vedant Beladiya" class="logo-avatar-img" width="34" height="34"
+            decoding="async" />
         </div>
         <span class="logo-text">Vedant Beladiya<em>.Editor</em></span>
       </a>
-      <button class="mobile-close" id="mobileClose" aria-label="Close Menu">✕</button>
-    </div>
-    
-    <ul class="mobile-nav-links">
-      <li><a href="#home" class="mobile-link"><span class="m-num">01</span> Home</a></li>
-      <li><a href="#color-grade" class="mobile-link"><span class="m-num">02</span> Colour Grading</a></li>
-      <li><a href="#ai-reels" class="mobile-link"><span class="m-num">03</span> AI Reels</a></li>
-      <li><a href="#motion-graphics" class="mobile-link"><span class="m-num">04</span> Motion Graphics</a></li>
-      <li><a href="#speed-ramp" class="mobile-link"><span class="m-num">05</span> Speed Ramps</a></li>
-      <li><a href="#agency" class="mobile-link"><span class="m-num">06</span> VoiceUp Media</a></li>
-      <li><a href="#contact" class="mobile-link"><span class="m-num">07</span> Contact</a></li>
-      <li><a href="javascript:void(0)" class="mobile-link" onclick="document.getElementById('adminToggleBtn').click(); document.getElementById('mobileClose').click();" style="color:var(--accent-green);"><span class="m-num">⚡</span> Manage Videos</a></li>
-    </ul>
 
-    <div class="mobile-menu-footer">
-      <a href="#contact" class="btn-primary full mobile-link">
-        <span>Start a Project</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
-      </a>
-      <div class="mobile-socials">
-        <a href="https://wa.me/919409904904" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-        <a href="https://www.instagram.com/vedant.editx.09/" target="_blank" rel="noopener noreferrer">Instagram</a>
-        <a href="mailto:vedbeladiya22@gmail.com">Email</a>
+      <ul class="nav-links">
+        <li><a href="#color-grade">Colour Grade</a></li>
+        <li><a href="#ai-reels">AI Reels</a></li>
+        <li><a href="#motion-graphics">Motion</a></li>
+        <li><a href="#speed-ramp">Speed Ramp</a></li>
+        <li><a href="#agency">VoiceUp Media</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <a href="#contact" class="btn-pill">
+          <span>Hire Me</span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+            <path d="M7 17L17 7M17 7H8M17 7V16" />
+          </svg>
+        </a>
+
+        <!-- Mobile Hamburger Button -->
+        <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Navigation Menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
       </div>
     </div>
-  </div>
-</div>
+  </nav>
 
-<!-- HERO BANNER -->
-<header id="home" class="hero-banner">
-  <!-- Background Lighting & Atmosphere -->
-  <div class="banner-image">
-    <div class="banner-cyber-grid"></div>
-    <div class="banner-lights">
-      <div class="light-beam blue"></div>
-      <div class="light-beam green"></div>
-    </div>
-    <div class="banner-glow-spot"></div>
-    <div class="banner-overlay"></div>
-    <div class="banner-vignette"></div>
-  </div>
-
-  <!-- Top Right Handwriting Tagline -->
-  <div class="hero-tagline-quote">
-    <span>Creativity</span>
-    <em>in every frame.</em>
-  </div>
-
-  <!-- Giant Background 3D Typography (Each Alphabet Individually Curved & Floating) -->
-  <div class="hero-bg-text-wrap" aria-hidden="true">
-    <div class="hero-bg-word left" aria-label="VIDEO">
-      <span class="char c1" style="--i:1; --rot:-6deg; --ty:14px;">V</span>
-      <span class="char c2" style="--i:2; --rot:-4.5deg; --ty:8px;">I</span>
-      <span class="char c3" style="--i:3; --rot:-3deg; --ty:4px;">D</span>
-      <span class="char c4" style="--i:4; --rot:-1.5deg; --ty:1px;">E</span>
-      <span class="char c5" style="--i:5; --rot:0deg; --ty:0px;">O</span>
-    </div>
-    <div class="hero-bg-word right" aria-label="EDITOR">
-      <span class="char c6" style="--i:6; --rot:0deg; --ty:0px;">E</span>
-      <span class="char c7" style="--i:7; --rot:1.5deg; --ty:1px;">D</span>
-      <span class="char c8" style="--i:8; --rot:3deg; --ty:4px;">I</span>
-      <span class="char c9" style="--i:9; --rot:4.5deg; --ty:8px;">T</span>
-      <span class="char c10" style="--i:10; --rot:6deg; --ty:14px;">O</span>
-      <span class="char c11" style="--i:11; --rot:7.5deg; --ty:20px;">R</span>
-    </div>
-  </div>
-
-  <!-- Floating 3D Software Badges (Left Side) -->
-  <div class="floating-badge badge-pr" title="Premiere Pro">
-    <div class="badge-inner">Pr</div>
-  </div>
-  <div class="floating-badge badge-ae" title="After Effects">
-    <div class="badge-inner">Ae</div>
-  </div>
-  <div class="floating-badge badge-ps" title="Photoshop">
-    <div class="badge-inner">Ps</div>
-  </div>
-  <div class="floating-badge badge-lr" title="Lightroom">
-    <div class="badge-inner">Lr</div>
-  </div>
-  <div class="floating-badge badge-davinci" title="DaVinci Resolve">
-    <div class="badge-inner badge-icon">
-      <svg viewBox="0 0 24 24" width="22" height="22">
-        <path d="M12 4.4c-2 .1-3.2 1.7-3.2 3.3 0 1.4 1.6 3.5 2.9 4.5.1.1.2.1.3.2.1 0 .2 0 .3-.1.4-.2 1-.9 1.6-1.7a7.7 7.7 0 0 0 1-1.7c.4-.9.3-1.6.2-1.9a4 4 0 0 0-1-1.7 3.4 3.4 0 0 0-2.1-.9z" fill="#FF453A"/>
-        <path d="M16.2 12.3c-1.1.1-2.2.3-3.2.6-.2.1-.3.1-.4.2-.1 0-.1.1-.1.3 0 .4.3 1.3.6 2.3.4 1.1 1.1 2.3 1.8 2.7a3.2 3.2 0 0 0 2.5.3c.8-.2 1.6-.9 2-1.5 1-1.8.2-3.5-1.1-4.4-.5-.3-1.1-.5-1.9-.5h-.2z" fill="#0A84FF"/>
-        <path d="M7.8 12.3a6.2 6.2 0 0 0-.8 0c-.6.1-.9.3-1.3.5a3.2 3.2 0 0 0-1.4 2c-.1.6-.1 1.1.1 1.5.4 1.4 1.3 2.2 2.8 2.5.6 0 1.4-.1 2-.5 1.3-.8 2.1-3.2 2.4-4.7.1-.2 0-.4 0-.4 0-.1 0-.1-.2-.2-.4-.2-1.3-.4-2.4-.6a7.7 7.7 0 0 0-1.2-.1z" fill="#30D158"/>
-      </svg>
-    </div>
-  </div>
-  <div class="floating-badge badge-capcut" title="CapCut">
-    <div class="badge-inner badge-icon">
-      <svg viewBox="0 0 24.19 24" fill="#FFFFFF"><path d="M24.189 6.442V2.671l-4.535 2.383V4.91c.002-1.505-1.078-2.411-2.638-2.411H2.64C.993 2.5 0 3.407 0 4.91V8.72L6.354 12 0 15.316v3.8C0 20.595 1 21.5 2.64 21.5h14.373c1.56 0 2.639-.907 2.639-2.382v-.197l4.536 2.409v-3.828L13.64 12 24.19 6.443zM9.982 13.873l7.797 4.083H2.157l7.825-4.083zm7.741-7.828l-7.742 4.057-7.825-4.057h15.567z"/></svg>
-    </div>
-  </div>
-
-  <!-- Floating 3D Software Badges (Right Side) -->
-  <div class="floating-badge badge-ai" title="Illustrator">
-    <div class="badge-inner">Ai</div>
-  </div>
-  <div class="floating-badge badge-c4d" title="Cinema 4D">
-    <div class="badge-inner">C4D</div>
-  </div>
-  <div class="floating-badge badge-blender" title="Blender">
-    <div class="badge-inner badge-icon">
-      <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/><circle cx="6" cy="10" r="2"/><circle cx="18" cy="10" r="2"/><circle cx="12" cy="18" r="2"/></svg>
-    </div>
-  </div>
-  <div class="floating-badge badge-keyshot" title="KeyShot">
-    <div class="badge-inner">K</div>
-  </div>
-  <div class="floating-badge badge-coreldraw" title="CorelDRAW">
-    <div class="badge-inner badge-icon">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C8 2 5 5.5 5 10c0 4.5 7 12 7 12s7-7.5 7-12c0-4.5-3-8-7-8z"/><circle cx="12" cy="9" r="2.5"/></svg>
-      <span class="badge-label">CorelDRAW</span>
-    </div>
-  </div>
-
-  <!-- Hero Photo Centerpiece -->
-  <div class="hero-photo-container">
-    <div class="photo-ambient-backlight"></div>
-    <div class="hero-photo-frame">
-      <img src="photo.jpg.png" alt="Video Editor Portrait" class="hero-portrait-img" id="heroPortrait" fetchpriority="high" decoding="async" />
-      <div class="hero-photo-bottom-fade"></div>
-    </div>
-  </div>
-
-  <!-- Foreground Content & Actions (Bottom Centered) -->
-  <div class="banner-content">
-    <div class="banner-badge">
-      <span class="pulse-dot"></span>
-      Available for new projects · 2026
-    </div>
-
-    <div class="banner-cta">
-      <a href="#color-grade" class="btn-hero-watch">
-        <span class="btn-play-icon">▶</span>
-        <span>Watch Reel</span>
-      </a>
-      <a href="#contact" class="btn-hero-start">
-        <span>Start a Project</span>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
-      </a>
-    </div>
-
-    <div class="banner-scroll">
-      <span>SCROLL TO EXPLORE</span>
-      <div class="scroll-line"></div>
-    </div>
-  </div>
-
-  <!-- Marquee at bottom -->
-  <div class="marquee">
-    <div class="marquee-track">
-      <span>◆ Premiere Pro</span>
-      <span>● After Effects</span>
-      <span>◈ DaVinci Resolve</span>
-      <span>▲ CapCut</span>
-      <span>◇ Cinema 4D</span>
-      <span>● Blender</span>
-      <span>◆ Color Grading</span>
-      <span>▲ Photoshop</span>
-      <span>◈ Sound Design</span>
-      <span>● Motion Graphics</span>
-      <span>◆ Premiere Pro</span>
-      <span>● After Effects</span>
-      <span>◈ DaVinci Resolve</span>
-      <span>▲ CapCut</span>
-      <span>◇ Cinema 4D</span>
-      <span>● Blender</span>
-    </div>
-  </div>
-</header>
-
-
-
-<!-- ================= 2. COLOUR GRADE SECTION ================= -->
-<section id="color-grade" class="section works-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow green">◆ 01 · Color Science</span>
-      <h2 class="section-title">Cinema-Grade<br/><span class="italic">Colour Grading</span></h2>
-      <p class="section-desc">Transforming flat log footage into deep, atmospheric film looks with DaVinci Resolve color pipelines.</p>
-    </div>
-
-    <div class="works-slider-wrapper reveal">
-      <div class="works-slider-header">
-        <span class="works-counter-text">👆 <strong>Swipe left/right</strong> to explore color grades</span>
-        <div class="works-slider-nav">
-          <button class="w-nav-btn" onclick="scrollSection('colorTrack', -1)" aria-label="Previous">‹</button>
-          <button class="w-nav-btn" onclick="scrollSection('colorTrack', 1)" aria-label="Next">›</button>
-        </div>
+  <!-- MOBILE DRAWER MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+    <div class="mobile-menu-content">
+      <div class="mobile-menu-header">
+        <a href="#home" class="logo">
+          <div class="logo-avatar-wrap">
+            <img src="photo.jpg.png" alt="Vedant Beladiya" class="logo-avatar-img" />
+          </div>
+          <span class="logo-text">Vedant Beladiya<em>.Editor</em></span>
+        </a>
+        <button class="mobile-close" id="mobileClose" aria-label="Close Menu">✕</button>
       </div>
 
-      <div class="works-track" id="colorTrack">
-        <div class="work-card">
-          <div class="work-thumb v2">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
+      <ul class="mobile-nav-links">
+        <li><a href="#home" class="mobile-link"><span class="m-num">01</span> Home</a></li>
+        <li><a href="#color-grade" class="mobile-link"><span class="m-num">02</span> Colour Grading</a></li>
+        <li><a href="#ai-reels" class="mobile-link"><span class="m-num">03</span> AI Reels</a></li>
+        <li><a href="#motion-graphics" class="mobile-link"><span class="m-num">04</span> Motion Graphics</a></li>
+        <li><a href="#speed-ramp" class="mobile-link"><span class="m-num">05</span> Speed Ramps</a></li>
+        <li><a href="#agency" class="mobile-link"><span class="m-num">06</span> VoiceUp Media</a></li>
+        <li><a href="#contact" class="mobile-link"><span class="m-num">07</span> Contact</a></li>
+        <li><a href="javascript:void(0)" class="mobile-link"
+            onclick="document.getElementById('adminToggleBtn').click(); document.getElementById('mobileClose').click();"
+            style="color:var(--accent-green);"><span class="m-num">⚡</span> Manage Videos</a></li>
+      </ul>
 
-        <div class="work-card">
-          <div class="work-thumb v7">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v1">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v5">
-            <div class="work-play-btn">▶</div>
-          </div>
+      <div class="mobile-menu-footer">
+        <a href="#contact" class="btn-primary full mobile-link">
+          <span>Start a Project</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M7 17L17 7M17 7H8M17 7V16" />
+          </svg>
+        </a>
+        <div class="mobile-socials">
+          <a href="https://wa.me/919409904904" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+          <a href="https://www.instagram.com/vedant.editx.09/" target="_blank" rel="noopener noreferrer">Instagram</a>
+          <a href="mailto:vedbeladiya22@gmail.com">Email</a>
         </div>
       </div>
     </div>
   </div>
-</section>
 
-<!-- ================= 3. AI REELS SECTION ================= -->
-<section id="ai-reels" class="section works-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">◆ 02 · AI &amp; Next-Gen Media</span>
-      <h2 class="section-title">AI Reels &amp;<br/><span class="italic">Viral Short-Form</span></h2>
-      <p class="section-desc">AI-assisted visual effects, Midjourney &amp; Runway generative scenes, animated hooks, and 1M+ views formats.</p>
+  <!-- HERO BANNER -->
+  <header id="home" class="hero-banner">
+    <!-- Background Lighting & Atmosphere -->
+    <div class="banner-image">
+      <div class="banner-cyber-grid"></div>
+      <div class="banner-lights">
+        <div class="light-beam blue"></div>
+        <div class="light-beam green"></div>
+      </div>
+      <div class="banner-glow-spot"></div>
+      <div class="banner-overlay"></div>
+      <div class="banner-vignette"></div>
     </div>
 
-    <div class="works-slider-wrapper reveal">
-      <div class="works-slider-header">
-        <span class="works-counter-text">👆 <strong>Swipe left/right</strong> to explore AI reels</span>
-        <div class="works-slider-nav">
-          <button class="w-nav-btn" onclick="scrollSection('aiTrack', -1)" aria-label="Previous">‹</button>
-          <button class="w-nav-btn" onclick="scrollSection('aiTrack', 1)" aria-label="Next">›</button>
-        </div>
+    <!-- Top Right Handwriting Tagline -->
+    <div class="hero-tagline-quote">
+      <span>Creativity</span>
+      <em>in every frame.</em>
+    </div>
+
+    <!-- Giant Background 3D Typography (Each Alphabet Individually Curved & Floating) -->
+    <div class="hero-bg-text-wrap" aria-hidden="true">
+      <div class="hero-bg-word left" aria-label="VIDEO">
+        <span class="char c1" style="--i:1; --rot:-6deg; --ty:14px;">V</span>
+        <span class="char c2" style="--i:2; --rot:-4.5deg; --ty:8px;">I</span>
+        <span class="char c3" style="--i:3; --rot:-3deg; --ty:4px;">D</span>
+        <span class="char c4" style="--i:4; --rot:-1.5deg; --ty:1px;">E</span>
+        <span class="char c5" style="--i:5; --rot:0deg; --ty:0px;">O</span>
       </div>
-
-      <div class="works-track" id="aiTrack">
-        <div class="work-card video-card-interactive">
-          <div class="work-thumb">
-            <video class="portfolio-video" src="videos/reel1.mp4#t=0.001" playsinline preload="metadata" loop muted></video>
-            <button class="work-play-btn video-toggle-btn" aria-label="Play video">▶</button>
-          </div>
-        </div>
-
-        <div class="work-card video-card-interactive">
-          <div class="work-thumb">
-            <video class="portfolio-video" src="videos/reel1.mp4#t=0.001" playsinline preload="metadata" loop muted></video>
-            <button class="work-play-btn video-toggle-btn" aria-label="Play video">▶</button>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v8">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v1">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
+      <div class="hero-bg-word right" aria-label="EDITOR">
+        <span class="char c6" style="--i:6; --rot:0deg; --ty:0px;">E</span>
+        <span class="char c7" style="--i:7; --rot:1.5deg; --ty:1px;">D</span>
+        <span class="char c8" style="--i:8; --rot:3deg; --ty:4px;">I</span>
+        <span class="char c9" style="--i:9; --rot:4.5deg; --ty:8px;">T</span>
+        <span class="char c10" style="--i:10; --rot:6deg; --ty:14px;">O</span>
+        <span class="char c11" style="--i:11; --rot:7.5deg; --ty:20px;">R</span>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- ================= 4. MOTION GRAPHICS SECTION ================= -->
-<section id="motion-graphics" class="section works-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow green">◆ 03 · Motion Design</span>
-      <h2 class="section-title">Motion Graphics &amp;<br/><span class="italic">Title Sequences</span></h2>
-      <p class="section-desc">Dynamic 2D/3D typography, animated brand logos, holographic UI elements, and sleek intros.</p>
+    <!-- Floating 3D Software Badges (Left Side) -->
+    <div class="floating-badge badge-pr" title="Premiere Pro">
+      <div class="badge-inner">Pr</div>
     </div>
-
-    <div class="works-slider-wrapper reveal">
-      <div class="works-slider-header">
-        <span class="works-counter-text">👆 <strong>Swipe left/right</strong> to explore motion graphics</span>
-        <div class="works-slider-nav">
-          <button class="w-nav-btn" onclick="scrollSection('motionTrack', -1)" aria-label="Previous">‹</button>
-          <button class="w-nav-btn" onclick="scrollSection('motionTrack', 1)" aria-label="Next">›</button>
-        </div>
-      </div>
-
-      <div class="works-track" id="motionTrack">
-        <div class="work-card">
-          <div class="work-thumb v4">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v1">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v6">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v2">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
+    <div class="floating-badge badge-ae" title="After Effects">
+      <div class="badge-inner">Ae</div>
+    </div>
+    <div class="floating-badge badge-ps" title="Photoshop">
+      <div class="badge-inner">Ps</div>
+    </div>
+    <div class="floating-badge badge-lr" title="Lightroom">
+      <div class="badge-inner">Lr</div>
+    </div>
+    <div class="floating-badge badge-davinci" title="DaVinci Resolve">
+      <div class="badge-inner badge-icon">
+        <svg viewBox="0 0 24 24" width="22" height="22">
+          <path
+            d="M12 4.4c-2 .1-3.2 1.7-3.2 3.3 0 1.4 1.6 3.5 2.9 4.5.1.1.2.1.3.2.1 0 .2 0 .3-.1.4-.2 1-.9 1.6-1.7a7.7 7.7 0 0 0 1-1.7c.4-.9.3-1.6.2-1.9a4 4 0 0 0-1-1.7 3.4 3.4 0 0 0-2.1-.9z"
+            fill="#FF453A" />
+          <path
+            d="M16.2 12.3c-1.1.1-2.2.3-3.2.6-.2.1-.3.1-.4.2-.1 0-.1.1-.1.3 0 .4.3 1.3.6 2.3.4 1.1 1.1 2.3 1.8 2.7a3.2 3.2 0 0 0 2.5.3c.8-.2 1.6-.9 2-1.5 1-1.8.2-3.5-1.1-4.4-.5-.3-1.1-.5-1.9-.5h-.2z"
+            fill="#0A84FF" />
+          <path
+            d="M7.8 12.3a6.2 6.2 0 0 0-.8 0c-.6.1-.9.3-1.3.5a3.2 3.2 0 0 0-1.4 2c-.1.6-.1 1.1.1 1.5.4 1.4 1.3 2.2 2.8 2.5.6 0 1.4-.1 2-.5 1.3-.8 2.1-3.2 2.4-4.7.1-.2 0-.4 0-.4 0-.1 0-.1-.2-.2-.4-.2-1.3-.4-2.4-.6a7.7 7.7 0 0 0-1.2-.1z"
+            fill="#30D158" />
+        </svg>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- ================= 5. SPEED RAMP SECTION ================= -->
-<section id="speed-ramp" class="section works-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">◆ 04 · High-Energy Transitions</span>
-      <h2 class="section-title">Speed Ramps &amp;<br/><span class="italic">Beat Sync Action</span></h2>
-      <p class="section-desc">Hyper-smooth velocity speed ramps, seamless whip transitions, car &amp; action sequences synced to music drops.</p>
-    </div>
-
-    <div class="works-slider-wrapper reveal">
-      <div class="works-slider-header">
-        <span class="works-counter-text">👆 <strong>Swipe left/right</strong> to explore speed ramps</span>
-        <div class="works-slider-nav">
-          <button class="w-nav-btn" onclick="scrollSection('speedTrack', -1)" aria-label="Previous">‹</button>
-          <button class="w-nav-btn" onclick="scrollSection('speedTrack', 1)" aria-label="Next">›</button>
-        </div>
-      </div>
-
-      <div class="works-track" id="speedTrack">
-        <div class="work-card">
-          <div class="work-thumb v5">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v3">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v7">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
-
-        <div class="work-card">
-          <div class="work-thumb v2">
-            <div class="work-play-btn">▶</div>
-          </div>
-        </div>
+    <div class="floating-badge badge-capcut" title="CapCut">
+      <div class="badge-inner badge-icon">
+        <svg viewBox="0 0 24.19 24" fill="#FFFFFF">
+          <path
+            d="M24.189 6.442V2.671l-4.535 2.383V4.91c.002-1.505-1.078-2.411-2.638-2.411H2.64C.993 2.5 0 3.407 0 4.91V8.72L6.354 12 0 15.316v3.8C0 20.595 1 21.5 2.64 21.5h14.373c1.56 0 2.639-.907 2.639-2.382v-.197l4.536 2.409v-3.828L13.64 12 24.19 6.443zM9.982 13.873l7.797 4.083H2.157l7.825-4.083zm7.741-7.828l-7.742 4.057-7.825-4.057h15.567z" />
+        </svg>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- SERVICES -->
-<section id="services" class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">◆ Services</span>
-      <h2 class="section-title">Creative services that<br/><span class="italic">deliver real impact</span></h2>
-      <p class="section-desc">Video editing is my primary craft — with full creative production support.</p>
+    <!-- Floating 3D Software Badges (Right Side) -->
+    <div class="floating-badge badge-ai" title="Illustrator">
+      <div class="badge-inner">Ai</div>
+    </div>
+    <div class="floating-badge badge-c4d" title="Cinema 4D">
+      <div class="badge-inner">C4D</div>
+    </div>
+    <div class="floating-badge badge-blender" title="Blender">
+      <div class="badge-inner badge-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <circle cx="12" cy="12" r="4" />
+          <circle cx="6" cy="10" r="2" />
+          <circle cx="18" cy="10" r="2" />
+          <circle cx="12" cy="18" r="2" />
+        </svg>
+      </div>
+    </div>
+    <div class="floating-badge badge-keyshot" title="KeyShot">
+      <div class="badge-inner">K</div>
+    </div>
+    <div class="floating-badge badge-coreldraw" title="CorelDRAW">
+      <div class="badge-inner badge-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M12 2C8 2 5 5.5 5 10c0 4.5 7 12 7 12s7-7.5 7-12c0-4.5-3-8-7-8z" />
+          <circle cx="12" cy="9" r="2.5" />
+        </svg>
+        <span class="badge-label">CorelDRAW</span>
+      </div>
     </div>
 
-    <div class="services-grid">
-      <!-- 1. PREMIERE PRO TIMELINE MOCKUP -->
-      <div class="service-card reveal featured">
-        <div class="service-glow"></div>
-        <div class="service-mockup pr-mockup">
-          <div class="app-ui-header">
-            <div class="ui-dots"><span></span><span></span><span></span></div>
-            <div class="ui-tab"><span class="app-badge pr">Pr</span> Sequence 01 · 4K 60fps</div>
-            <div class="ui-timecode pr-tc">00:01:24:18</div>
+    <!-- Hero Photo Centerpiece -->
+    <div class="hero-photo-container">
+      <div class="photo-ambient-backlight"></div>
+      <div class="hero-photo-frame">
+        <img src="photo.jpg.png" alt="Video Editor Portrait" class="hero-portrait-img" id="heroPortrait"
+          fetchpriority="high" decoding="async" />
+        <div class="hero-photo-bottom-fade"></div>
+      </div>
+    </div>
+
+    <!-- Foreground Content & Actions (Bottom Centered) -->
+    <div class="banner-content">
+      <div class="banner-badge">
+        <span class="pulse-dot"></span>
+        Available for new projects · 2026
+      </div>
+
+      <div class="banner-cta">
+        <a href="#color-grade" class="btn-hero-watch">
+          <span class="btn-play-icon">▶</span>
+          <span>Watch Reel</span>
+        </a>
+        <a href="#contact" class="btn-hero-start">
+          <span>Start a Project</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <path d="M7 17L17 7M17 7H8M17 7V16" />
+          </svg>
+        </a>
+      </div>
+
+      <div class="banner-scroll">
+        <span>SCROLL TO EXPLORE</span>
+        <div class="scroll-line"></div>
+      </div>
+    </div>
+
+    <!-- Marquee at bottom -->
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>◆ Premiere Pro</span>
+        <span>● After Effects</span>
+        <span>◈ DaVinci Resolve</span>
+        <span>▲ CapCut</span>
+        <span>◇ Cinema 4D</span>
+        <span>● Blender</span>
+        <span>◆ Color Grading</span>
+        <span>▲ Photoshop</span>
+        <span>◈ Sound Design</span>
+        <span>● Motion Graphics</span>
+        <span>◆ Premiere Pro</span>
+        <span>● After Effects</span>
+        <span>◈ DaVinci Resolve</span>
+        <span>▲ CapCut</span>
+        <span>◇ Cinema 4D</span>
+        <span>● Blender</span>
+      </div>
+    </div>
+  </header>
+
+
+
+  <!-- ================= 2. COLOUR GRADE SECTION ================= -->
+  <section id="color-grade" class="section works-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow green">◆ 01 · Color Science</span>
+        <h2 class="section-title">Cinema-Grade<br /><span class="italic">Colour Grading</span></h2>
+        <p class="section-desc">Transforming flat log footage into deep, atmospheric film looks with DaVinci Resolve
+          color pipelines.</p>
+      </div>
+
+      <div class="works-slider-wrapper reveal">
+        <div class="works-slider-header">
+          <span class="works-counter-text">👆 <strong>Swipe left/right</strong> to explore color grades</span>
+          <div class="works-slider-nav">
+            <button class="w-nav-btn" onclick="scrollSection('colorTrack', -1)" aria-label="Previous">‹</button>
+            <button class="w-nav-btn" onclick="scrollSection('colorTrack', 1)" aria-label="Next">›</button>
           </div>
-          <div class="pr-timeline-body">
-            <div class="pr-ruler">
-              <span>00:00</span><span>00:15</span><span>00:30</span><span>00:45</span><span>01:00</span>
-              <div class="pr-playhead"></div>
+        </div>
+
+        <div class="works-track" id="colorTrack">
+          <div class="work-card">
+            <div class="work-thumb v2">
+              <div class="work-play-btn">▶</div>
             </div>
-            <div class="pr-tracks">
-              <div class="pr-track v-track">
-                <span class="track-label">V3</span>
-                <div class="clip-block c-mogr">Text_Hook.mogr</div>
-                <div class="clip-block c-mogr short">LowerThird.mogr</div>
-              </div>
-              <div class="pr-track v-track">
-                <span class="track-label">V2</span>
-                <div class="clip-block c-cyan">B-Roll_4K_01.mp4</div>
-                <div class="clip-block c-cyan mid">SpeedRamp_Cut.mp4</div>
-                <div class="clip-block c-cyan">Drone_Shot.mov</div>
-              </div>
-              <div class="pr-track v-track">
-                <span class="track-label">V1</span>
-                <div class="clip-block c-blue long">Main_A-Roll_4K.mov [Cut]</div>
-                <div class="clip-block c-blue">Reaction_CamB.mov</div>
-              </div>
-              <div class="pr-divider"></div>
-              <div class="pr-track a-track">
-                <span class="track-label">A1</span>
-                <div class="clip-block c-green"><span class="wave-icon">〰</span> Voice_Master_EQ.wav</div>
-              </div>
-              <div class="pr-track a-track">
-                <span class="track-label">A2</span>
-                <div class="clip-block c-gold sfx">Whoosh</div>
-                <div class="clip-block c-gold sfx">Impact</div>
-                <div class="clip-block c-gold sfx">Riser</div>
-              </div>
-              <div class="pr-track a-track">
-                <span class="track-label">A3</span>
-                <div class="clip-block c-purple"><span class="wave-icon">♬</span> Cinematic_OST_140bpm.mp3</div>
-              </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v7">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v1">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v5">
+              <div class="work-play-btn">▶</div>
             </div>
           </div>
         </div>
-        <span class="service-tag">✦ Primary</span>
-        <h3>Video Editing</h3>
-        <p>Cinematic edits, viral reels, brand promos, YouTube content with pro pacing, transitions &amp; narrative structure.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 3. AI REELS SECTION ================= -->
+  <section id="ai-reels" class="section works-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">◆ 02 · AI &amp; Next-Gen Media</span>
+        <h2 class="section-title">AI Reels &amp;<br /><span class="italic">Viral Short-Form</span></h2>
+        <p class="section-desc">AI-assisted visual effects, Midjourney &amp; Runway generative scenes, animated hooks,
+          and 1M+ views formats.</p>
       </div>
 
-      <!-- 2. AFTER EFFECTS COMPOSITION & KEYFRAME TIMELINE -->
-      <div class="service-card reveal">
-        <div class="service-mockup ae-mockup">
-          <div class="app-ui-header">
-            <div class="ui-dots"><span></span><span></span><span></span></div>
-            <div class="ui-tab"><span class="app-badge ae">Ae</span> Kinetic_VFX_Comp · 3D</div>
-            <div class="ui-timecode ae-tc">00:00:08:12</div>
+      <div class="works-slider-wrapper reveal">
+        <div class="works-slider-header">
+          <span class="works-counter-text">👆 <strong>Swipe left/right</strong> to explore AI reels</span>
+          <div class="works-slider-nav">
+            <button class="w-nav-btn" onclick="scrollSection('aiTrack', -1)" aria-label="Previous">‹</button>
+            <button class="w-nav-btn" onclick="scrollSection('aiTrack', 1)" aria-label="Next">›</button>
           </div>
-          <div class="ae-timeline-body">
-            <div class="ae-ruler">
-              <span>0s</span><span>2s</span><span>4s</span><span>6s</span><span>8s</span>
-              <div class="ae-playhead"></div>
+        </div>
+
+        <div class="works-track" id="aiTrack">
+          <div class="work-card video-card-interactive">
+            <div class="work-thumb">
+              <video class="portfolio-video" src="videos/reel1.mp4#t=0.001" playsinline preload="metadata" loop
+                muted></video>
+              <button class="work-play-btn video-toggle-btn" aria-label="Play video">▶</button>
             </div>
-            <div class="ae-layers">
-              <div class="ae-layer">
-                <div class="layer-head"><span class="layer-idx">1</span> <span class="layer-icon red">T</span> Kinetic Title</div>
-                <div class="keyframe-bar">
-                  <span class="kf" style="left: 15%"></span>
-                  <span class="kf-line" style="left: 15%; width: 45%;"></span>
-                  <span class="kf" style="left: 60%"></span>
+          </div>
+
+          <div class="work-card video-card-interactive">
+            <div class="work-thumb">
+              <video class="portfolio-video" src="videos/reel1.mp4#t=0.001" playsinline preload="metadata" loop
+                muted></video>
+              <button class="work-play-btn video-toggle-btn" aria-label="Play video">▶</button>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v8">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v1">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 4. MOTION GRAPHICS SECTION ================= -->
+  <section id="motion-graphics" class="section works-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow green">◆ 03 · Motion Design</span>
+        <h2 class="section-title">Motion Graphics &amp;<br /><span class="italic">Title Sequences</span></h2>
+        <p class="section-desc">Dynamic 2D/3D typography, animated brand logos, holographic UI elements, and sleek
+          intros.</p>
+      </div>
+
+      <div class="works-slider-wrapper reveal">
+        <div class="works-slider-header">
+          <span class="works-counter-text">👆 <strong>Swipe left/right</strong> to explore motion graphics</span>
+          <div class="works-slider-nav">
+            <button class="w-nav-btn" onclick="scrollSection('motionTrack', -1)" aria-label="Previous">‹</button>
+            <button class="w-nav-btn" onclick="scrollSection('motionTrack', 1)" aria-label="Next">›</button>
+          </div>
+        </div>
+
+        <div class="works-track" id="motionTrack">
+          <div class="work-card">
+            <div class="work-thumb v4">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v1">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v6">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v2">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 5. SPEED RAMP SECTION ================= -->
+  <section id="speed-ramp" class="section works-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">◆ 04 · High-Energy Transitions</span>
+        <h2 class="section-title">Speed Ramps &amp;<br /><span class="italic">Beat Sync Action</span></h2>
+        <p class="section-desc">Hyper-smooth velocity speed ramps, seamless whip transitions, car &amp; action sequences
+          synced to music drops.</p>
+      </div>
+
+      <div class="works-slider-wrapper reveal">
+        <div class="works-slider-header">
+          <span class="works-counter-text">👆 <strong>Swipe left/right</strong> to explore speed ramps</span>
+          <div class="works-slider-nav">
+            <button class="w-nav-btn" onclick="scrollSection('speedTrack', -1)" aria-label="Previous">‹</button>
+            <button class="w-nav-btn" onclick="scrollSection('speedTrack', 1)" aria-label="Next">›</button>
+          </div>
+        </div>
+
+        <div class="works-track" id="speedTrack">
+          <div class="work-card">
+            <div class="work-thumb v5">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v3">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v7">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+
+          <div class="work-card">
+            <div class="work-thumb v2">
+              <div class="work-play-btn">▶</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">◆ Services</span>
+        <h2 class="section-title">Creative services that<br /><span class="italic">deliver real impact</span></h2>
+        <p class="section-desc">Video editing is my primary craft — with full creative production support.</p>
+      </div>
+
+      <div class="services-grid">
+        <!-- 1. PREMIERE PRO TIMELINE MOCKUP -->
+        <div class="service-card reveal featured">
+          <div class="service-glow"></div>
+          <div class="service-mockup pr-mockup">
+            <div class="app-ui-header">
+              <div class="ui-dots"><span></span><span></span><span></span></div>
+              <div class="ui-tab"><span class="app-badge pr">Pr</span> Sequence 01 · 4K 60fps</div>
+              <div class="ui-timecode pr-tc">00:01:24:18</div>
+            </div>
+            <div class="pr-timeline-body">
+              <div class="pr-ruler">
+                <span>00:00</span><span>00:15</span><span>00:30</span><span>00:45</span><span>01:00</span>
+                <div class="pr-playhead"></div>
+              </div>
+              <div class="pr-tracks">
+                <div class="pr-track v-track">
+                  <span class="track-label">V3</span>
+                  <div class="clip-block c-mogr">Text_Hook.mogr</div>
+                  <div class="clip-block c-mogr short">LowerThird.mogr</div>
+                </div>
+                <div class="pr-track v-track">
+                  <span class="track-label">V2</span>
+                  <div class="clip-block c-cyan">B-Roll_4K_01.mp4</div>
+                  <div class="clip-block c-cyan mid">SpeedRamp_Cut.mp4</div>
+                  <div class="clip-block c-cyan">Drone_Shot.mov</div>
+                </div>
+                <div class="pr-track v-track">
+                  <span class="track-label">V1</span>
+                  <div class="clip-block c-blue long">Main_A-Roll_4K.mov [Cut]</div>
+                  <div class="clip-block c-blue">Reaction_CamB.mov</div>
+                </div>
+                <div class="pr-divider"></div>
+                <div class="pr-track a-track">
+                  <span class="track-label">A1</span>
+                  <div class="clip-block c-green"><span class="wave-icon">〰</span> Voice_Master_EQ.wav</div>
+                </div>
+                <div class="pr-track a-track">
+                  <span class="track-label">A2</span>
+                  <div class="clip-block c-gold sfx">Whoosh</div>
+                  <div class="clip-block c-gold sfx">Impact</div>
+                  <div class="clip-block c-gold sfx">Riser</div>
+                </div>
+                <div class="pr-track a-track">
+                  <span class="track-label">A3</span>
+                  <div class="clip-block c-purple"><span class="wave-icon">♬</span> Cinematic_OST_140bpm.mp3</div>
                 </div>
               </div>
-              <div class="ae-layer">
-                <div class="layer-head"><span class="layer-idx">2</span> <span class="layer-icon blue">★</span> 3D Glowing Shape</div>
-                <div class="keyframe-bar">
-                  <span class="kf" style="left: 25%"></span>
-                  <span class="kf-line" style="left: 25%; width: 55%;"></span>
-                  <span class="kf" style="left: 80%"></span>
-                </div>
+            </div>
+          </div>
+          <span class="service-tag">✦ Primary</span>
+          <h3>Video Editing</h3>
+          <p>Cinematic edits, viral reels, brand promos, YouTube content with pro pacing, transitions &amp; narrative
+            structure.</p>
+        </div>
+
+        <!-- 2. AFTER EFFECTS COMPOSITION & KEYFRAME TIMELINE -->
+        <div class="service-card reveal">
+          <div class="service-mockup ae-mockup">
+            <div class="app-ui-header">
+              <div class="ui-dots"><span></span><span></span><span></span></div>
+              <div class="ui-tab"><span class="app-badge ae">Ae</span> Kinetic_VFX_Comp · 3D</div>
+              <div class="ui-timecode ae-tc">00:00:08:12</div>
+            </div>
+            <div class="ae-timeline-body">
+              <div class="ae-ruler">
+                <span>0s</span><span>2s</span><span>4s</span><span>6s</span><span>8s</span>
+                <div class="ae-playhead"></div>
               </div>
-              <div class="ae-layer">
-                <div class="layer-head"><span class="layer-idx">3</span> <span class="layer-icon yellow">fx</span> CC Motion Blur &amp; Glow</div>
-                <div class="keyframe-bar">
-                  <div class="ae-curve-graph">
-                    <svg viewBox="0 0 100 16" preserveAspectRatio="none"><path d="M0,14 C35,14 45,2 100,2" fill="none" stroke="#ffeaa7" stroke-width="2"/></svg>
+              <div class="ae-layers">
+                <div class="ae-layer">
+                  <div class="layer-head"><span class="layer-idx">1</span> <span class="layer-icon red">T</span> Kinetic
+                    Title</div>
+                  <div class="keyframe-bar">
+                    <span class="kf" style="left: 15%"></span>
+                    <span class="kf-line" style="left: 15%; width: 45%;"></span>
+                    <span class="kf" style="left: 60%"></span>
+                  </div>
+                </div>
+                <div class="ae-layer">
+                  <div class="layer-head"><span class="layer-idx">2</span> <span class="layer-icon blue">★</span> 3D
+                    Glowing Shape</div>
+                  <div class="keyframe-bar">
+                    <span class="kf" style="left: 25%"></span>
+                    <span class="kf-line" style="left: 25%; width: 55%;"></span>
+                    <span class="kf" style="left: 80%"></span>
+                  </div>
+                </div>
+                <div class="ae-layer">
+                  <div class="layer-head"><span class="layer-idx">3</span> <span class="layer-icon yellow">fx</span> CC
+                    Motion Blur &amp; Glow</div>
+                  <div class="keyframe-bar">
+                    <div class="ae-curve-graph">
+                      <svg viewBox="0 0 100 16" preserveAspectRatio="none">
+                        <path d="M0,14 C35,14 45,2 100,2" fill="none" stroke="#ffeaa7" stroke-width="2" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div class="ae-layer">
+                  <div class="layer-head"><span class="layer-idx">4</span> <span class="layer-icon purple">📷</span> 3D
+                    Camera Tracker</div>
+                  <div class="keyframe-bar">
+                    <span class="kf" style="left: 10%"></span>
+                    <span class="kf-line" style="left: 10%; width: 70%;"></span>
+                    <span class="kf" style="left: 80%"></span>
                   </div>
                 </div>
               </div>
-              <div class="ae-layer">
-                <div class="layer-head"><span class="layer-idx">4</span> <span class="layer-icon purple">📷</span> 3D Camera Tracker</div>
-                <div class="keyframe-bar">
-                  <span class="kf" style="left: 10%"></span>
-                  <span class="kf-line" style="left: 10%; width: 70%;"></span>
-                  <span class="kf" style="left: 80%"></span>
+            </div>
+          </div>
+          <h3>Motion Graphics</h3>
+          <p>Animated logos, 3D title sequences, sleek explainers, speed ramping &amp; dynamic kinetic typography.</p>
+        </div>
+
+        <!-- 3. DAVINCI RESOLVE COLOR & SOUND DESIGN -->
+        <div class="service-card reveal">
+          <div class="service-mockup dv-mockup">
+            <div class="app-ui-header">
+              <div class="ui-dots"><span></span><span></span><span></span></div>
+              <div class="ui-tab"><span class="app-badge dv">Dv</span> DaVinci Color &amp; Fairlight</div>
+              <div class="ui-timecode dv-tc">ACEScc · 12-Bit Log</div>
+            </div>
+            <div class="dv-body">
+              <div class="dv-nodes">
+                <div class="dv-node">
+                  <span class="node-num">01</span>
+                  <span class="node-title">CST / Log</span>
+                </div>
+                <div class="node-wire"></div>
+                <div class="dv-node active">
+                  <span class="node-num">02</span>
+                  <span class="node-title">Primaries</span>
+                </div>
+                <div class="node-wire"></div>
+                <div class="dv-node">
+                  <span class="node-num">03</span>
+                  <span class="node-title">Film LUT</span>
+                </div>
+              </div>
+              <div class="dv-scopes">
+                <div class="scope-bars">
+                  <span class="sb r"></span>
+                  <span class="sb g"></span>
+                  <span class="sb b"></span>
+                </div>
+                <div class="sound-wave-mock">
+                  <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <h3>Color &amp; Sound Design</h3>
+          <p>DaVinci Resolve film grading, custom sound effects, EQ leveling &amp; audio mixing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOICEUP MEDIA AGENCY & FOUNDER SECTION -->
+  <section id="agency" class="section agency-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow green">◆ Agency &amp; Leadership</span>
+        <h2 class="section-title">Founder &amp; Creative Lead at<br /><span class="italic">VoiceUp Media</span></h2>
+        <p class="section-desc">A modern digital marketing &amp; media production agency helping brands and creators
+          achieve explosive growth.</p>
+      </div>
+
+      <div class="agency-block reveal">
+        <div class="agency-info">
+          <div class="agency-header">
+            <div class="agency-badge-icon">
+              <img src="voiceup-logo.png" alt="VoiceUp Media Logo" class="agency-logo-img" loading="lazy"
+                decoding="async" width="54" height="54" />
+            </div>
+            <div>
+              <div class="agency-tag-pill">Digital Marketing Agency</div>
+              <h3>VoiceUp Media</h3>
+              <p>Founded &amp; Directed by Me</p>
+            </div>
+          </div>
+
+          <p class="agency-desc">
+            At <strong>VoiceUp Media</strong>, we combine data-driven digital marketing with high-retention cinematic
+            video production. From scaling e-commerce brands with high-ROI ad creatives to driving millions of organic
+            views for top influencers, we turn attention into revenue.
+          </p>
+
+          <div class="agency-services-mini">
+            <div class="asm-item"><span class="asm-dot"></span> <span>Performance Ads &amp; Paid Media</span></div>
+            <div class="asm-item"><span class="asm-dot"></span> <span>Viral Short-Form Reels &amp; TikToks</span></div>
+            <div class="asm-item"><span class="asm-dot"></span> <span>Script-to-Screen Production</span></div>
+            <div class="asm-item"><span class="asm-dot"></span> <span>Hook &amp; Retention Engineering</span></div>
+          </div>
+
+          <div class="stat-row">
+            <div class="stat-cell">
+              <strong>50<span>+</span></strong>
+              <small>Active Clients</small>
+            </div>
+            <div class="stat-cell">
+              <strong>2.5M<span>+</span></strong>
+              <small>Total Organic Views</small>
+            </div>
+            <div class="stat-cell">
+              <strong>98<span>%</span></strong>
+              <small>Retention Rate</small>
+            </div>
+          </div>
+
+          <a href="#contact" class="btn-primary">
+            <span>Scale With VoiceUp</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17L17 7M17 7H8M17 7V16" />
+            </svg>
+          </a>
+        </div>
+
+        <!-- Right Column: Featured Agency Projects Showcase (Swipeable) -->
+        <div class="agency-showcase-wrap">
+          <div class="agency-showcase-head">
+            <h4>Agency Top Performs</h4>
+            <div class="works-slider-nav">
+              <button class="w-nav-btn" onclick="scrollAgency(-1)" aria-label="Previous Project">‹</button>
+              <button class="w-nav-btn" onclick="scrollAgency(1)" aria-label="Next Project">›</button>
+            </div>
+          </div>
+
+          <div class="reels-showcase" id="agencyShowcase">
+            <div class="reel-frame video-card-interactive">
+              <div class="reel-mockup r1">
+                <video class="portfolio-video" src="videos/reel1.mp4#t=0.001" playsinline preload="metadata" loop
+                  muted></video>
+                <div class="reel-badge">Viral Reel</div>
+                <button class="reel-play-icon video-toggle-btn" aria-label="Play video">▶</button>
+                <div class="reel-label">
+                  <span>Creator Growth Reel</span>
+                  <small>Viral Retention Cut</small>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="reel-frame">
+              <div class="reel-mockup r3">
+                <div class="reel-badge">Podcasts</div>
+                <div class="reel-play-icon">▶</div>
+                <div class="reel-label">
+                  <span>Podcast Repurposing Cut</span>
+                  <small>850k+ Views · 15k Subs</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="reel-frame">
+              <div class="reel-mockup r4">
+                <div class="reel-badge">Lead Gen</div>
+                <div class="reel-play-icon">▶</div>
+                <div class="reel-label">
+                  <span>High-Converting VSL</span>
+                  <small>B2B Client Scaling Campaign</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="reel-frame">
+              <div class="reel-mockup r5">
+                <div class="reel-badge">Commercial</div>
+                <div class="reel-play-icon">▶</div>
+                <div class="reel-label">
+                  <span>Brand Launch Film</span>
+                  <small>Cinema-Grade Product Teaser</small>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <h3>Motion Graphics</h3>
-        <p>Animated logos, 3D title sequences, sleek explainers, speed ramping &amp; dynamic kinetic typography.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS SECTION -->
+  <section class="section stats-section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">◆ Proven Track Record</span>
+        <h2 class="section-title">Results that<br /><span class="italic">speak for themselves</span></h2>
       </div>
 
-      <!-- 3. DAVINCI RESOLVE COLOR & SOUND DESIGN -->
-      <div class="service-card reveal">
-        <div class="service-mockup dv-mockup">
-          <div class="app-ui-header">
-            <div class="ui-dots"><span></span><span></span><span></span></div>
-            <div class="ui-tab"><span class="app-badge dv">Dv</span> DaVinci Color &amp; Fairlight</div>
-            <div class="ui-timecode dv-tc">ACEScc · 12-Bit Log</div>
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <div class="stat-num-wrap">
+            <span class="counter-num" data-target="100">0</span>
+            <span class="counter-plus plus-sign">+</span>
           </div>
-          <div class="dv-body">
-            <div class="dv-nodes">
-              <div class="dv-node">
-                <span class="node-num">01</span>
-                <span class="node-title">CST / Log</span>
-              </div>
-              <div class="node-wire"></div>
-              <div class="dv-node active">
-                <span class="node-num">02</span>
-                <span class="node-title">Primaries</span>
-              </div>
-              <div class="node-wire"></div>
-              <div class="dv-node">
-                <span class="node-num">03</span>
-                <span class="node-title">Film LUT</span>
-              </div>
+          <h4>Projects Delivered</h4>
+          <p>Across YouTube, commercials, weddings &amp; music videos.</p>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-num-wrap">
+            <span class="counter-num" data-target="99">0</span>
+            <span class="counter-plus percent-sign">%</span>
+          </div>
+          <h4>Client Satisfaction</h4>
+          <p>Consistent 5-star feedback &amp; repeat contracts.</p>
+        </div>
+
+        <div class="stat-card reveal">
+          <div class="stat-num-wrap">
+            <span class="counter-num" data-target="2">0</span>
+            <span class="counter-plus plus-sign">+</span>
+          </div>
+          <h4>Years Experience</h4>
+          <p>Mastery in modern post-production pipelines.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS / SOFTWARE STACK -->
+  <section id="skills" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">◆ Tools &amp; Stack</span>
+        <h2 class="section-title">Software stack<br /><span class="italic">&amp; expertise</span></h2>
+        <p class="section-desc">Industry-standard tools I use every day to craft premium visual experiences.</p>
+      </div>
+
+      <div class="skills-wrap reveal">
+        <div class="skill-category">
+          <h3>Video &amp; Post-Production</h3>
+          <div class="skill-tools-grid">
+            <div class="s-tool-item">
+              <span class="s-tool-icon">
+                <svg width="36" height="36" viewBox="0 0 48 48">
+                  <rect width="48" height="48" rx="10" fill="#00005B" stroke="#9999FF" stroke-width="1.5" />
+                  <path
+                    d="M14 14h7c3.5 0 6 2 6 5.5s-2.5 5.5-6 5.5h-3v9h-4V14zm4 7.5h3c1.5 0 2.5-.8 2.5-2s-1-2-2.5-2h-3v4zM29 20h3.5v2.2h.2c.8-1.5 2.2-2.5 4-2.5.5 0 1 .1 1.3.2v3.8c-.6-.2-1.2-.3-1.8-.3-2.2 0-3.7 1.8-3.7 4.2V34H29V20z"
+                    fill="#9999FF" />
+                </svg>
+              </span>
+              <span class="s-tool-name">Adobe Premiere Pro</span>
             </div>
-            <div class="dv-scopes">
-              <div class="scope-bars">
-                <span class="sb r"></span>
-                <span class="sb g"></span>
-                <span class="sb b"></span>
-              </div>
-              <div class="sound-wave-mock">
-                <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
-              </div>
+
+            <div class="s-tool-item">
+              <span class="s-tool-icon">
+                <svg width="36" height="36" viewBox="0 0 48 48">
+                  <rect width="48" height="48" rx="10" fill="#14171E" stroke="rgba(255,255,255,0.15)"
+                    stroke-width="1" />
+                  <g transform="translate(4, 4) scale(1.66)">
+                    <path
+                      d="M12 4.4c-2 .1-3.2 1.7-3.2 3.3 0 1.4 1.6 3.5 2.9 4.5.1.1.2.1.3.2.1 0 .2 0 .3-.1.4-.2 1-.9 1.6-1.7a7.7 7.7 0 0 0 1-1.7c.4-.9.3-1.6.2-1.9a4 4 0 0 0-1-1.7 3.4 3.4 0 0 0-2.1-.9z"
+                      fill="#FF453A" />
+                    <path
+                      d="M16.2 12.3c-1.1.1-2.2.3-3.2.6-.2.1-.3.1-.4.2-.1 0-.1.1-.1.3 0 .4.3 1.3.6 2.3.4 1.1 1.1 2.3 1.8 2.7a3.2 3.2 0 0 0 2.5.3c.8-.2 1.6-.9 2-1.5 1-1.8.2-3.5-1.1-4.4-.5-.3-1.1-.5-1.9-.5h-.2z"
+                      fill="#0A84FF" />
+                    <path
+                      d="M7.8 12.3a6.2 6.2 0 0 0-.8 0c-.6.1-.9.3-1.3.5a3.2 3.2 0 0 0-1.4 2c-.1.6-.1 1.1.1 1.5.4 1.4 1.3 2.2 2.8 2.5.6 0 1.4-.1 2-.5 1.3-.8 2.1-3.2 2.4-4.7.1-.2 0-.4 0-.4 0-.1 0-.1-.2-.2-.4-.2-1.3-.4-2.4-.6a7.7 7.7 0 0 0-1.2-.1z"
+                      fill="#30D158" />
+                  </g>
+                </svg>
+              </span>
+              <span class="s-tool-name">DaVinci Resolve</span>
+            </div>
+
+            <div class="s-tool-item">
+              <span class="s-tool-icon">
+                <svg width="36" height="36" viewBox="0 0 48 48">
+                  <rect width="48" height="48" rx="10" fill="#00005B" stroke="#9999FF" stroke-width="1.5" />
+                  <path
+                    d="M19.2 34l-1.6-4.5h-6.2L9.8 34H6l7.5-20h3.8L24.8 34h-5.6zm-2.8-8.2l-1.9-5.6-1.9 5.6h3.8zM26.5 27.2c.2 4.2 3 5.4 6 5.4 2.2 0 4-.6 5.2-1.4v3.2c-1.5.8-3.6 1.2-6 1.2-5.8 0-9.2-3.8-9.2-9.6 0-5.6 3.5-9.6 8.8-9.6 5.4 0 8.2 3.8 8.2 8.8 0 .8-.1 1.5-.2 2H26.5zm8.8-2.8c0-2.4-1.2-4.5-4.2-4.5-2.8 0-4.2 2.1-4.5 4.5h8.7z"
+                    fill="#9999FF" />
+                </svg>
+              </span>
+              <span class="s-tool-name">Adobe After Effects</span>
+            </div>
+
+            <div class="s-tool-item">
+              <span class="s-tool-icon">
+                <svg width="36" height="36" viewBox="0 0 48 48">
+                  <rect width="48" height="48" rx="10" fill="#000000" stroke="rgba(255,255,255,0.18)"
+                    stroke-width="1" />
+                  <g transform="translate(10, 10) scale(1.16)">
+                    <path
+                      d="M24.189 6.442V2.671l-4.535 2.383V4.91c.002-1.505-1.078-2.411-2.638-2.411H2.64C.993 2.5 0 3.407 0 4.91V8.72L6.354 12 0 15.316v3.8C0 20.595 1 21.5 2.64 21.5h14.373c1.56 0 2.639-.907 2.639-2.382v-.197l4.536 2.409v-3.828L13.64 12 24.19 6.443zM9.982 13.873l7.797 4.083H2.157l7.825-4.083zm7.741-7.828l-7.742 4.057-7.825-4.057h15.567z"
+                      fill="#FFFFFF" />
+                  </g>
+                </svg>
+              </span>
+              <span class="s-tool-name">CapCut Pro</span>
             </div>
           </div>
         </div>
-        <h3>Color &amp; Sound Design</h3>
-        <p>DaVinci Resolve film grading, custom sound effects, EQ leveling &amp; audio mixing.</p>
+
+        <div class="skill-category">
+          <h3>Graphic &amp; Brand Design</h3>
+          <div class="skill-tools-grid">
+            <div class="s-tool-item">
+              <span class="s-tool-icon">
+                <svg width="36" height="36" viewBox="0 0 48 48">
+                  <rect width="48" height="48" rx="10" fill="#001E36" stroke="#31A8FF" stroke-width="1.5" />
+                  <path
+                    d="M13 14h7.5c4 0 6.5 2.2 6.5 6s-2.5 6-6.5 6h-3.5v8H13V14zm4 8h3.2c1.8 0 2.8-1 2.8-2.2s-1-2.2-2.8-2.2H17V22zM28.5 28.5c1.2.8 2.8 1.4 4.5 1.4 2 0 3-.8 3-1.8 0-1.2-1.2-1.7-3.4-2.4-3.2-1-4.8-2.4-4.8-4.8 0-3 2.5-5.1 6.2-5.1 1.8 0 3.2.4 4.2 1l-1 3c-.8-.5-2-1-3.4-1-1.6 0-2.4.7-2.4 1.5 0 1.1 1.1 1.6 3.2 2.3 3.4 1.1 5 2.5 5 5 0 3.2-2.5 5.3-6.6 5.3-2 0-3.8-.5-5-1.2l1-3.3z"
+                    fill="#31A8FF" />
+                </svg>
+              </span>
+              <span class="s-tool-name">Adobe Photoshop</span>
+            </div>
+
+            <div class="s-tool-item">
+              <span class="s-tool-icon">
+                <svg width="36" height="36" viewBox="0 0 48 48">
+                  <rect width="48" height="48" rx="10" fill="#330000" stroke="#FF9A00" stroke-width="1.5" />
+                  <path
+                    d="M19.5 34l-1.8-5h-6.8l-1.8 5H5l8-20h4.2l8 20h-5.7zm-3-8.8l-2.2-6.5-2.2 6.5h4.4zM27 15.5c0-1.2 1-2 2.2-2s2.2.8 2.2 2-1 2-2.2 2-2.2-.8-2.2-2zM27 20h4.5v14H27V20z"
+                    fill="#FF9A00" />
+                </svg>
+              </span>
+              <span class="s-tool-name">Adobe Illustrator</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<!-- VOICEUP MEDIA AGENCY & FOUNDER SECTION -->
-<section id="agency" class="section agency-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow green">◆ Agency &amp; Leadership</span>
-      <h2 class="section-title">Founder &amp; Creative Lead at<br/><span class="italic">VoiceUp Media</span></h2>
-      <p class="section-desc">A modern digital marketing &amp; media production agency helping brands and creators achieve explosive growth.</p>
+  <!-- ABOUT CREATOR -->
+  <section id="about" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">◆ Behind The Scenes</span>
+        <h2 class="section-title">The creator<br /><span class="italic">behind the craft</span></h2>
+      </div>
+
+      <div class="about-card reveal">
+        <div class="about-left">
+          <div class="creator-avatar-wrap">
+            <div class="creator-avatar">
+              <img src="photo.jpg.png" alt="Vedant Beladiya - Video Editor" class="creator-avatar-img" loading="lazy"
+                decoding="async" width="260" height="300" />
+            </div>
+          </div>
+          <div class="creator-title">
+            <h3>Professional Video Editor</h3>
+            <p>Motion Designer · Colorist</p>
+          </div>
+          <div class="creator-social-pills">
+            <a href="#contact" class="mini-link">✨ Available for Hire</a>
+            <a href="https://www.instagram.com/vedant.editx.09/" target="_blank" rel="noopener noreferrer"
+              class="mini-link">📸 Instagram</a>
+          </div>
+        </div>
+
+        <div class="about-right">
+          <p class="about-lead">
+            I believe every frame has a heartbeat. My mission is to translate your vision into unforgettable cinematic
+            experiences that mesmerize your audience.
+          </p>
+          <p class="about-text-body">
+            Whether it’s tightening a 30-second high-energy Instagram reel or pacing a full-length 4K documentary, I
+            obsess over the microscopic details: rhythm, soundscapes, color temperature, and emotion.
+          </p>
+          <div class="about-features">
+            <div class="af-item">
+              <span class="af-icon">⚡</span>
+              <div><strong>Lightning Fast Turnaround</strong><small>24-48 hr delivery for reels</small></div>
+            </div>
+            <div class="af-item">
+              <span class="af-icon">🎨</span>
+              <div><strong>Cinema-Grade Color Grading</strong><small>Accurate skin tones &amp; film looks</small></div>
+            </div>
+            <div class="af-item">
+              <span class="af-icon">🎧</span>
+              <div><strong>Immersive Sound Design</strong><small>SFX, foley, EQ &amp; beat sync</small></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </section>
 
-    <div class="agency-block reveal">
-      <div class="agency-info">
-        <div class="agency-header">
-          <div class="agency-badge-icon">
-            <img src="voiceup-logo.png" alt="VoiceUp Media Logo" class="agency-logo-img" loading="lazy" decoding="async" width="54" height="54"/>
+  <!-- FAQ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">◆ FAQ</span>
+        <h2 class="section-title">Your questions<br /><span class="italic">answered</span></h2>
+      </div>
+
+      <div class="faq-list reveal">
+        <details class="faq-item" open>
+          <summary>What type of videos do you edit?</summary>
+          <div class="faq-body">
+            <p>All kinds — YouTube long-form, Instagram reels &amp; TikToks, cinematic movie edits, teasers, brand
+              promos, product videos, wedding films, and music videos. Video editing is my primary craft.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>How do we start a project?</summary>
+          <div class="faq-body">
+            <p>Fill out the contact form below or reach out via WhatsApp. I'll respond within 24 hours to review your
+              footage and outline timeline &amp; pricing.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>What are your turnaround times?</summary>
+          <div class="faq-body">
+            <p>Reels/Shorts: 1–2 days · Full YouTube/Commercial videos: 3–7 days · 3D renders: 3–5 days. Rush delivery
+              is also available upon request.</p>
+          </div>
+        </details>
+        <details class="faq-item">
+          <summary>Do you work with international clients?</summary>
+          <div class="faq-body">
+            <p>Yes! I work remotely with creators and brands worldwide via Google Drive, Dropbox, WhatsApp, and Zoom.
+              Multiple payment methods accepted.</p>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">◆ Let's Connect</span>
+        <h2 class="section-title">Have a project<br /><span class="italic">in mind?</span></h2>
+        <p class="section-desc">Fill in your project details below to chat with me directly on WhatsApp.</p>
+      </div>
+
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <a href="https://wa.me/919409904904" target="_blank" rel="noopener noreferrer" class="c-tile wa-tile"
+            id="directWaLink">
+            <span class="c-icon-badge c-icon-wa">
+              <svg width="34" height="34" viewBox="0 0 48 48" fill="none">
+                <circle cx="24" cy="24" r="24" fill="#25D366" />
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                  d="M24 10C16.268 10 10 16.268 10 24c0 2.68.755 5.185 2.067 7.317L10.5 37.5l6.37-1.53A13.916 13.916 0 0024 38c7.732 0 14-6.268 14-14s-6.268-14-14-14zm7.07 19.348c-.297.836-1.728 1.597-2.414 1.7-.618.093-1.4.13-2.254-.142-.519-.166-1.186-.386-2.04-.754-3.591-1.551-5.932-5.166-6.11-5.405-.18-.239-1.46-1.942-1.46-3.704 0-1.762.925-2.628 1.253-2.986.328-.358.714-.448.953-.448.24 0 .478.002.686.012.22.01.514-.083.804.615.298.716 1.014 2.477 1.103 2.656.09.18.149.388.03.627-.12.24-.18.388-.358.597-.18.209-.379.467-.542.627-.18.18-.368.373-.158.732.21.36 1.25 2.062 2.707 3.359 1.874 1.668 3.454 2.183 3.944 2.422.49.239.774.199 1.063-.129.288-.328 1.233-1.434 1.562-1.927.328-.493.657-.41.985-.29.328.12 2.088.985 2.446 1.164.358.18.597.269.686.418.09.15.09.866-.207 1.702z"
+                  fill="#FFF" />
+              </svg>
+            </span>
+            <div><strong>WhatsApp</strong><small>Instant Chat &amp; Voice</small></div>
+            <span class="c-arrow">↗</span>
+          </a>
+          <a href="mailto:vedbeladiya22@gmail.com" class="c-tile mail-tile">
+            <span class="c-icon-badge c-icon-mail">
+              <svg width="34" height="34" viewBox="0 0 48 48">
+                <path fill="#4285F4" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c2.2,0,4-1.8,4-4V16.2z" />
+                <path fill="#34A853" d="M3,16.2l5,2.75l5,4.75L13,40H6c-2.2,0-4-1.8-4-4V16.2z" />
+                <path fill="#EA4335" d="M35,23.7L24,31.5L13,23.7V40h22V23.7z" />
+                <path fill="#FBBC05" d="M24,28.5l11-7.8l5-2.75L24,8L4,17.95l5,2.75L24,28.5z" />
+                <path fill="#C5221F"
+                  d="M40,17.95l-5,5.75L24,31.5l-11-7.8l-5-5.75L3,16.2c-0.6-0.3-1-0.9-1-1.6c0-1.2,1.2-2.1,2.4-1.5L24,22.5l19.6-9.4c1.2-0.6,2.4,0.3,2.4,1.5c0,0.7-0.4,1.3-1,1.6L40,17.95z" />
+              </svg>
+            </span>
+            <div><strong>Email Me</strong><small>vedbeladiya22@gmail.com</small></div>
+            <span class="c-arrow">↗</span>
+          </a>
+          <a href="https://www.instagram.com/vedant.editx.09/" target="_blank" rel="noopener noreferrer"
+            class="c-tile insta-tile">
+            <span class="c-icon-badge c-icon-insta">
+              <svg width="34" height="34" viewBox="0 0 48 48">
+                <defs>
+                  <radialGradient id="igOfficialGrad" cx="30%" cy="107%" r="150%">
+                    <stop offset="0%" stop-color="#fdf497" />
+                    <stop offset="5%" stop-color="#fdf497" />
+                    <stop offset="45%" stop-color="#fd5949" />
+                    <stop offset="60%" stop-color="#d6249f" />
+                    <stop offset="90%" stop-color="#285AEB" />
+                  </radialGradient>
+                </defs>
+                <rect width="48" height="48" rx="12" fill="url(#igOfficialGrad)" />
+                <circle cx="24" cy="24" r="7.5" fill="none" stroke="#fff" stroke-width="3" />
+                <circle cx="34.5" cy="13.5" r="2.2" fill="#fff" />
+                <rect x="7" y="7" width="34" height="34" rx="9" fill="none" stroke="#fff" stroke-width="3" />
+              </svg>
+            </span>
+            <div><strong>Instagram</strong><small>@vedant.editx.09</small></div>
+            <span class="c-arrow">↗</span>
+          </a>
+          <a href="tel:+919409904904" class="c-tile call-tile">
+            <span class="c-icon-badge c-icon-call">
+              <svg width="34" height="34" viewBox="0 0 48 48">
+                <defs>
+                  <linearGradient id="phoneOfficialGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#00ff88" />
+                    <stop offset="100%" stop-color="#00d2ff" />
+                  </linearGradient>
+                </defs>
+                <rect width="48" height="48" rx="12" fill="url(#phoneOfficialGrad)" />
+                <path
+                  d="M33.5 28.5c-1.2-.4-2.6-.7-3.8-.2-1.2.5-2 1.5-3 2.3-2.3-1.2-4.2-3.1-5.4-5.4.8-.9 1.8-1.8 2.3-3 .5-1.2.2-2.6-.2-3.8-.5-1.4-1-2.8-1.7-4.1-.7-1.2-2-1.9-3.3-1.8-1.4.1-2.7.9-3.3 2.1-1.5 2.9-1.2 6.4.5 9.3 2.2 4 5.6 7.4 9.6 9.6 2.9 1.7 6.4 2 9.3.5 1.2-.6 2-1.9 2.1-3.3.1-1.4-.6-2.7-1.8-3.3-1.3-.7-2.7-1.3-4.1-1.7z"
+                  fill="#031521" />
+              </svg>
+            </span>
+            <div><strong>Call Me Directly</strong><small>+91 94099 04904</small></div>
+            <span class="c-arrow">↗</span>
+          </a>
+        </div>
+
+        <form id="contactForm" class="contact-form reveal">
+          <div class="form-glow"></div>
+          <h3>Let's Connect</h3>
+          <p class="form-intro">Fill your details to start a direct WhatsApp chat</p>
+
+          <div class="form-row">
+            <label>
+              <input type="text" name="name" required placeholder="" />
+              <span>Full Name*</span>
+            </label>
+            <label>
+              <input type="email" name="email" required placeholder="" />
+              <span>Email Address*</span>
+            </label>
+          </div>
+          <label>
+            <input type="tel" name="phone" placeholder="" />
+            <span>Phone / WhatsApp (Optional)</span>
+          </label>
+          <label>
+            <select name="project" required>
+              <option value="">— Select Project Type* —</option>
+              <option>Video Editing (YouTube / Commercial)</option>
+              <option>Instagram Reels / TikTok Pack</option>
+              <option>Motion Graphics &amp; Titles</option>
+              <option>Color &amp; Sound Design</option>
+              <option>3D Animation &amp; Renders</option>
+              <option>Other Collaboration</option>
+            </select>
+          </label>
+          <label>
+            <textarea name="message" rows="3" required placeholder=""></textarea>
+            <span>Tell me about your project &amp; vision*</span>
+          </label>
+
+          <button type="submit" class="btn-primary full">
+            <span>Hire Me on WhatsApp</span>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M7 17L17 7M17 7H8M17 7V16" />
+            </svg>
+          </button>
+          <p class="form-note">⚡ Direct communication on WhatsApp · Instant response.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <a href="#home" class="logo big">
+            <span class="logo-icon">◆</span>
+            <span class="logo-text">Vedant Beladiya<em>.Editor</em></span>
+          </a>
+          <p>Video Editor · Motion · Design · 3D<br />Crafting visuals that make an impact worldwide.</p>
+          <a href="#contact" class="btn-primary">
+            <span>Start a Project</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M7 17L17 7M17 7H8M17 7V16" />
+            </svg>
+          </a>
+        </div>
+
+        <div class="footer-cols">
+          <div>
+            <h4>Menu</h4>
+            <a href="#color-grade">Colour Grade</a>
+            <a href="#services">Services</a>
+            <a href="#agency">VoiceUp Media</a>
+            <a href="#skills">Skills</a>
+            <a href="javascript:void(0)" onclick="document.getElementById('adminToggleBtn').click()"
+              style="color:var(--accent-green); font-weight:600;">⚡ Manage Videos</a>
           </div>
           <div>
-            <div class="agency-tag-pill">Digital Marketing Agency</div>
-            <h3>VoiceUp Media</h3>
-            <p>Founded &amp; Directed by Me</p>
+            <h4>Social</h4>
+            <a href="https://wa.me/919409904904" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href="https://www.instagram.com/vedant.editx.09/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
           </div>
-        </div>
-
-        <p class="agency-desc">
-          At <strong>VoiceUp Media</strong>, we combine data-driven digital marketing with high-retention cinematic video production. From scaling e-commerce brands with high-ROI ad creatives to driving millions of organic views for top influencers, we turn attention into revenue.
-        </p>
-
-        <div class="agency-services-mini">
-          <div class="asm-item"><span class="asm-dot"></span> <span>Performance Ads &amp; Paid Media</span></div>
-          <div class="asm-item"><span class="asm-dot"></span> <span>Viral Short-Form Reels &amp; TikToks</span></div>
-          <div class="asm-item"><span class="asm-dot"></span> <span>Script-to-Screen Production</span></div>
-          <div class="asm-item"><span class="asm-dot"></span> <span>Hook &amp; Retention Engineering</span></div>
-        </div>
-
-        <div class="stat-row">
-          <div class="stat-cell">
-            <strong>50<span>+</span></strong>
-            <small>Active Clients</small>
-          </div>
-          <div class="stat-cell">
-            <strong>2.5M<span>+</span></strong>
-            <small>Total Organic Views</small>
-          </div>
-          <div class="stat-cell">
-            <strong>98<span>%</span></strong>
-            <small>Retention Rate</small>
-          </div>
-        </div>
-
-        <a href="#contact" class="btn-primary">
-          <span>Scale With VoiceUp</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
-        </a>
-      </div>
-
-      <!-- Right Column: Featured Agency Projects Showcase (Swipeable) -->
-      <div class="agency-showcase-wrap">
-        <div class="agency-showcase-head">
-          <h4>Agency Top Performs</h4>
-          <div class="works-slider-nav">
-            <button class="w-nav-btn" onclick="scrollAgency(-1)" aria-label="Previous Project">‹</button>
-            <button class="w-nav-btn" onclick="scrollAgency(1)" aria-label="Next Project">›</button>
-          </div>
-        </div>
-
-        <div class="reels-showcase" id="agencyShowcase">
-          <div class="reel-frame video-card-interactive">
-            <div class="reel-mockup r1">
-              <video class="portfolio-video" src="videos/reel1.mp4#t=0.001" playsinline preload="metadata" loop muted></video>
-              <div class="reel-badge">Viral Reel</div>
-              <button class="reel-play-icon video-toggle-btn" aria-label="Play video">▶</button>
-              <div class="reel-label">
-                <span>Creator Growth Reel</span>
-                <small>Viral Retention Cut</small>
-              </div>
-            </div>
-          </div>
-
-
-          <div class="reel-frame">
-            <div class="reel-mockup r3">
-              <div class="reel-badge">Podcasts</div>
-              <div class="reel-play-icon">▶</div>
-              <div class="reel-label">
-                <span>Podcast Repurposing Cut</span>
-                <small>850k+ Views · 15k Subs</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="reel-frame">
-            <div class="reel-mockup r4">
-              <div class="reel-badge">Lead Gen</div>
-              <div class="reel-play-icon">▶</div>
-              <div class="reel-label">
-                <span>High-Converting VSL</span>
-                <small>B2B Client Scaling Campaign</small>
-              </div>
-            </div>
-          </div>
-
-          <div class="reel-frame">
-            <div class="reel-mockup r5">
-              <div class="reel-badge">Commercial</div>
-              <div class="reel-play-icon">▶</div>
-              <div class="reel-label">
-                <span>Brand Launch Film</span>
-                <small>Cinema-Grade Product Teaser</small>
-              </div>
-            </div>
+          <div>
+            <h4>Contact</h4>
+            <a href="#contact">Contact Form</a>
+            <a href="mailto:vedbeladiya22@gmail.com">Email Direct</a>
           </div>
         </div>
       </div>
+
+      <div class="footer-big">VEDANT BELADIYA<em>.EDITOR</em></div>
     </div>
+  </footer>
+
+  <!-- ================= VIDEO MANAGER & ADMIN MODALS ================= -->
+
+  <!-- Floating Admin Trigger Button -->
+  <div class="admin-floating-trigger" id="adminTrigger" title="Manage Website Videos">
+    <button class="admin-float-btn" id="adminToggleBtn" aria-label="Open Video Manager">
+      <span class="admin-btn-icon">⚡</span>
+      <span class="admin-btn-label">Manage Videos</span>
+    </button>
   </div>
-</section>
 
-<!-- STATS SECTION -->
-<section class="section stats-section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">◆ Proven Track Record</span>
-      <h2 class="section-title">Results that<br/><span class="italic">speak for themselves</span></h2>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat-card reveal">
-        <div class="stat-num-wrap">
-          <span class="counter-num" data-target="100">0</span>
-          <span class="counter-plus plus-sign">+</span>
-        </div>
-        <h4>Projects Delivered</h4>
-        <p>Across YouTube, commercials, weddings &amp; music videos.</p>
+  <!-- Admin Active Top Bar -->
+  <div class="admin-top-bar" id="adminTopBar" style="display: none;">
+    <div class="admin-bar-inner">
+      <div class="admin-bar-status">
+        <span class="pulse-dot green"></span>
+        <span><strong>Admin Edit Mode Active</strong> — You can now delete or add videos directly</span>
       </div>
-
-      <div class="stat-card reveal">
-        <div class="stat-num-wrap">
-          <span class="counter-num" data-target="99">0</span>
-          <span class="counter-plus percent-sign">%</span>
-        </div>
-        <h4>Client Satisfaction</h4>
-        <p>Consistent 5-star feedback &amp; repeat contracts.</p>
-      </div>
-
-      <div class="stat-card reveal">
-        <div class="stat-num-wrap">
-          <span class="counter-num" data-target="2">0</span>
-          <span class="counter-plus plus-sign">+</span>
-        </div>
-        <h4>Years Experience</h4>
-        <p>Mastery in modern post-production pipelines.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS / SOFTWARE STACK -->
-<section id="skills" class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">◆ Tools &amp; Stack</span>
-      <h2 class="section-title">Software stack<br/><span class="italic">&amp; expertise</span></h2>
-      <p class="section-desc">Industry-standard tools I use every day to craft premium visual experiences.</p>
-    </div>
-
-    <div class="skills-wrap reveal">
-      <div class="skill-category">
-        <h3>Video &amp; Post-Production</h3>
-        <div class="skill-tools-grid">
-          <div class="s-tool-item">
-            <span class="s-tool-icon">
-              <svg width="36" height="36" viewBox="0 0 48 48">
-                <rect width="48" height="48" rx="10" fill="#00005B" stroke="#9999FF" stroke-width="1.5"/>
-                <path d="M14 14h7c3.5 0 6 2 6 5.5s-2.5 5.5-6 5.5h-3v9h-4V14zm4 7.5h3c1.5 0 2.5-.8 2.5-2s-1-2-2.5-2h-3v4zM29 20h3.5v2.2h.2c.8-1.5 2.2-2.5 4-2.5.5 0 1 .1 1.3.2v3.8c-.6-.2-1.2-.3-1.8-.3-2.2 0-3.7 1.8-3.7 4.2V34H29V20z" fill="#9999FF"/>
-              </svg>
-            </span>
-            <span class="s-tool-name">Adobe Premiere Pro</span>
-          </div>
-
-          <div class="s-tool-item">
-            <span class="s-tool-icon">
-              <svg width="36" height="36" viewBox="0 0 48 48">
-                <rect width="48" height="48" rx="10" fill="#14171E" stroke="rgba(255,255,255,0.15)" stroke-width="1"/>
-                <g transform="translate(4, 4) scale(1.66)">
-                  <path d="M12 4.4c-2 .1-3.2 1.7-3.2 3.3 0 1.4 1.6 3.5 2.9 4.5.1.1.2.1.3.2.1 0 .2 0 .3-.1.4-.2 1-.9 1.6-1.7a7.7 7.7 0 0 0 1-1.7c.4-.9.3-1.6.2-1.9a4 4 0 0 0-1-1.7 3.4 3.4 0 0 0-2.1-.9z" fill="#FF453A"/>
-                  <path d="M16.2 12.3c-1.1.1-2.2.3-3.2.6-.2.1-.3.1-.4.2-.1 0-.1.1-.1.3 0 .4.3 1.3.6 2.3.4 1.1 1.1 2.3 1.8 2.7a3.2 3.2 0 0 0 2.5.3c.8-.2 1.6-.9 2-1.5 1-1.8.2-3.5-1.1-4.4-.5-.3-1.1-.5-1.9-.5h-.2z" fill="#0A84FF"/>
-                  <path d="M7.8 12.3a6.2 6.2 0 0 0-.8 0c-.6.1-.9.3-1.3.5a3.2 3.2 0 0 0-1.4 2c-.1.6-.1 1.1.1 1.5.4 1.4 1.3 2.2 2.8 2.5.6 0 1.4-.1 2-.5 1.3-.8 2.1-3.2 2.4-4.7.1-.2 0-.4 0-.4 0-.1 0-.1-.2-.2-.4-.2-1.3-.4-2.4-.6a7.7 7.7 0 0 0-1.2-.1z" fill="#30D158"/>
-                </g>
-              </svg>
-            </span>
-            <span class="s-tool-name">DaVinci Resolve</span>
-          </div>
-
-          <div class="s-tool-item">
-            <span class="s-tool-icon">
-              <svg width="36" height="36" viewBox="0 0 48 48">
-                <rect width="48" height="48" rx="10" fill="#00005B" stroke="#9999FF" stroke-width="1.5"/>
-                <path d="M19.2 34l-1.6-4.5h-6.2L9.8 34H6l7.5-20h3.8L24.8 34h-5.6zm-2.8-8.2l-1.9-5.6-1.9 5.6h3.8zM26.5 27.2c.2 4.2 3 5.4 6 5.4 2.2 0 4-.6 5.2-1.4v3.2c-1.5.8-3.6 1.2-6 1.2-5.8 0-9.2-3.8-9.2-9.6 0-5.6 3.5-9.6 8.8-9.6 5.4 0 8.2 3.8 8.2 8.8 0 .8-.1 1.5-.2 2H26.5zm8.8-2.8c0-2.4-1.2-4.5-4.2-4.5-2.8 0-4.2 2.1-4.5 4.5h8.7z" fill="#9999FF"/>
-              </svg>
-            </span>
-            <span class="s-tool-name">Adobe After Effects</span>
-          </div>
-
-          <div class="s-tool-item">
-            <span class="s-tool-icon">
-              <svg width="36" height="36" viewBox="0 0 48 48">
-                <rect width="48" height="48" rx="10" fill="#000000" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
-                <g transform="translate(10, 10) scale(1.16)">
-                  <path d="M24.189 6.442V2.671l-4.535 2.383V4.91c.002-1.505-1.078-2.411-2.638-2.411H2.64C.993 2.5 0 3.407 0 4.91V8.72L6.354 12 0 15.316v3.8C0 20.595 1 21.5 2.64 21.5h14.373c1.56 0 2.639-.907 2.639-2.382v-.197l4.536 2.409v-3.828L13.64 12 24.19 6.443zM9.982 13.873l7.797 4.083H2.157l7.825-4.083zm7.741-7.828l-7.742 4.057-7.825-4.057h15.567z" fill="#FFFFFF"/>
-                </g>
-              </svg>
-            </span>
-            <span class="s-tool-name">CapCut Pro</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="skill-category">
-        <h3>Graphic &amp; Brand Design</h3>
-        <div class="skill-tools-grid">
-          <div class="s-tool-item">
-            <span class="s-tool-icon">
-              <svg width="36" height="36" viewBox="0 0 48 48">
-                <rect width="48" height="48" rx="10" fill="#001E36" stroke="#31A8FF" stroke-width="1.5"/>
-                <path d="M13 14h7.5c4 0 6.5 2.2 6.5 6s-2.5 6-6.5 6h-3.5v8H13V14zm4 8h3.2c1.8 0 2.8-1 2.8-2.2s-1-2.2-2.8-2.2H17V22zM28.5 28.5c1.2.8 2.8 1.4 4.5 1.4 2 0 3-.8 3-1.8 0-1.2-1.2-1.7-3.4-2.4-3.2-1-4.8-2.4-4.8-4.8 0-3 2.5-5.1 6.2-5.1 1.8 0 3.2.4 4.2 1l-1 3c-.8-.5-2-1-3.4-1-1.6 0-2.4.7-2.4 1.5 0 1.1 1.1 1.6 3.2 2.3 3.4 1.1 5 2.5 5 5 0 3.2-2.5 5.3-6.6 5.3-2 0-3.8-.5-5-1.2l1-3.3z" fill="#31A8FF"/>
-              </svg>
-            </span>
-            <span class="s-tool-name">Adobe Photoshop</span>
-          </div>
-
-          <div class="s-tool-item">
-            <span class="s-tool-icon">
-              <svg width="36" height="36" viewBox="0 0 48 48">
-                <rect width="48" height="48" rx="10" fill="#330000" stroke="#FF9A00" stroke-width="1.5"/>
-                <path d="M19.5 34l-1.8-5h-6.8l-1.8 5H5l8-20h4.2l8 20h-5.7zm-3-8.8l-2.2-6.5-2.2 6.5h4.4zM27 15.5c0-1.2 1-2 2.2-2s2.2.8 2.2 2-1 2-2.2 2-2.2-.8-2.2-2zM27 20h4.5v14H27V20z" fill="#FF9A00"/>
-              </svg>
-            </span>
-            <span class="s-tool-name">Adobe Illustrator</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT CREATOR -->
-<section id="about" class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">◆ Behind The Scenes</span>
-      <h2 class="section-title">The creator<br/><span class="italic">behind the craft</span></h2>
-    </div>
-
-    <div class="about-card reveal">
-      <div class="about-left">
-        <div class="creator-avatar-wrap">
-          <div class="creator-avatar">
-            <img src="photo.jpg.png" alt="Vedant Beladiya - Video Editor" class="creator-avatar-img" loading="lazy" decoding="async" width="260" height="300"/>
-          </div>
-        </div>
-        <div class="creator-title">
-          <h3>Professional Video Editor</h3>
-          <p>Motion Designer · Colorist</p>
-        </div>
-        <div class="creator-social-pills">
-          <a href="#contact" class="mini-link">✨ Available for Hire</a>
-          <a href="https://www.instagram.com/vedant.editx.09/" target="_blank" rel="noopener noreferrer" class="mini-link">📸 Instagram</a>
-        </div>
-      </div>
-
-      <div class="about-right">
-        <p class="about-lead">
-          I believe every frame has a heartbeat. My mission is to translate your vision into unforgettable cinematic experiences that mesmerize your audience.
-        </p>
-        <p class="about-text-body">
-          Whether it’s tightening a 30-second high-energy Instagram reel or pacing a full-length 4K documentary, I obsess over the microscopic details: rhythm, soundscapes, color temperature, and emotion.
-        </p>
-        <div class="about-features">
-          <div class="af-item">
-            <span class="af-icon">⚡</span>
-            <div><strong>Lightning Fast Turnaround</strong><small>24-48 hr delivery for reels</small></div>
-          </div>
-          <div class="af-item">
-            <span class="af-icon">🎨</span>
-            <div><strong>Cinema-Grade Color Grading</strong><small>Accurate skin tones &amp; film looks</small></div>
-          </div>
-          <div class="af-item">
-            <span class="af-icon">🎧</span>
-            <div><strong>Immersive Sound Design</strong><small>SFX, foley, EQ &amp; beat sync</small></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FAQ -->
-<section class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">◆ FAQ</span>
-      <h2 class="section-title">Your questions<br/><span class="italic">answered</span></h2>
-    </div>
-
-    <div class="faq-list reveal">
-      <details class="faq-item" open>
-        <summary>What type of videos do you edit?</summary>
-        <div class="faq-body"><p>All kinds — YouTube long-form, Instagram reels &amp; TikToks, cinematic movie edits, teasers, brand promos, product videos, wedding films, and music videos. Video editing is my primary craft.</p></div>
-      </details>
-      <details class="faq-item">
-        <summary>How do we start a project?</summary>
-        <div class="faq-body"><p>Fill out the contact form below or reach out via WhatsApp. I'll respond within 24 hours to review your footage and outline timeline &amp; pricing.</p></div>
-      </details>
-      <details class="faq-item">
-        <summary>What are your turnaround times?</summary>
-        <div class="faq-body"><p>Reels/Shorts: 1–2 days · Full YouTube/Commercial videos: 3–7 days · 3D renders: 3–5 days. Rush delivery is also available upon request.</p></div>
-      </details>
-      <details class="faq-item">
-        <summary>Do you work with international clients?</summary>
-        <div class="faq-body"><p>Yes! I work remotely with creators and brands worldwide via Google Drive, Dropbox, WhatsApp, and Zoom. Multiple payment methods accepted.</p></div>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <span class="eyebrow">◆ Let's Connect</span>
-      <h2 class="section-title">Have a project<br/><span class="italic">in mind?</span></h2>
-      <p class="section-desc">Fill in your project details below to chat with me directly on WhatsApp.</p>
-    </div>
-
-    <div class="contact-grid">
-      <div class="contact-info reveal">
-        <a href="https://wa.me/919409904904" target="_blank" rel="noopener noreferrer" class="c-tile wa-tile" id="directWaLink">
-          <span class="c-icon-badge c-icon-wa">
-            <svg width="34" height="34" viewBox="0 0 48 48" fill="none">
-              <circle cx="24" cy="24" r="24" fill="#25D366"/>
-              <path fill-rule="evenodd" clip-rule="evenodd" d="M24 10C16.268 10 10 16.268 10 24c0 2.68.755 5.185 2.067 7.317L10.5 37.5l6.37-1.53A13.916 13.916 0 0024 38c7.732 0 14-6.268 14-14s-6.268-14-14-14zm7.07 19.348c-.297.836-1.728 1.597-2.414 1.7-.618.093-1.4.13-2.254-.142-.519-.166-1.186-.386-2.04-.754-3.591-1.551-5.932-5.166-6.11-5.405-.18-.239-1.46-1.942-1.46-3.704 0-1.762.925-2.628 1.253-2.986.328-.358.714-.448.953-.448.24 0 .478.002.686.012.22.01.514-.083.804.615.298.716 1.014 2.477 1.103 2.656.09.18.149.388.03.627-.12.24-.18.388-.358.597-.18.209-.379.467-.542.627-.18.18-.368.373-.158.732.21.36 1.25 2.062 2.707 3.359 1.874 1.668 3.454 2.183 3.944 2.422.49.239.774.199 1.063-.129.288-.328 1.233-1.434 1.562-1.927.328-.493.657-.41.985-.29.328.12 2.088.985 2.446 1.164.358.18.597.269.686.418.09.15.09.866-.207 1.702z" fill="#FFF"/>
-            </svg>
-          </span>
-          <div><strong>WhatsApp</strong><small>Instant Chat &amp; Voice</small></div>
-          <span class="c-arrow">↗</span>
-        </a>
-        <a href="mailto:vedbeladiya22@gmail.com" class="c-tile mail-tile">
-          <span class="c-icon-badge c-icon-mail">
-            <svg width="34" height="34" viewBox="0 0 48 48">
-              <path fill="#4285F4" d="M45,16.2l-5,2.75l-5,4.75L35,40h7c2.2,0,4-1.8,4-4V16.2z"/>
-              <path fill="#34A853" d="M3,16.2l5,2.75l5,4.75L13,40H6c-2.2,0-4-1.8-4-4V16.2z"/>
-              <path fill="#EA4335" d="M35,23.7L24,31.5L13,23.7V40h22V23.7z"/>
-              <path fill="#FBBC05" d="M24,28.5l11-7.8l5-2.75L24,8L4,17.95l5,2.75L24,28.5z"/>
-              <path fill="#C5221F" d="M40,17.95l-5,5.75L24,31.5l-11-7.8l-5-5.75L3,16.2c-0.6-0.3-1-0.9-1-1.6c0-1.2,1.2-2.1,2.4-1.5L24,22.5l19.6-9.4c1.2-0.6,2.4,0.3,2.4,1.5c0,0.7-0.4,1.3-1,1.6L40,17.95z"/>
-            </svg>
-          </span>
-          <div><strong>Email Me</strong><small>vedbeladiya22@gmail.com</small></div>
-          <span class="c-arrow">↗</span>
-        </a>
-        <a href="https://www.instagram.com/vedant.editx.09/" target="_blank" rel="noopener noreferrer" class="c-tile insta-tile">
-          <span class="c-icon-badge c-icon-insta">
-            <svg width="34" height="34" viewBox="0 0 48 48">
-              <defs>
-                <radialGradient id="igOfficialGrad" cx="30%" cy="107%" r="150%">
-                  <stop offset="0%" stop-color="#fdf497"/>
-                  <stop offset="5%" stop-color="#fdf497"/>
-                  <stop offset="45%" stop-color="#fd5949"/>
-                  <stop offset="60%" stop-color="#d6249f"/>
-                  <stop offset="90%" stop-color="#285AEB"/>
-                </radialGradient>
-              </defs>
-              <rect width="48" height="48" rx="12" fill="url(#igOfficialGrad)"/>
-              <circle cx="24" cy="24" r="7.5" fill="none" stroke="#fff" stroke-width="3"/>
-              <circle cx="34.5" cy="13.5" r="2.2" fill="#fff"/>
-              <rect x="7" y="7" width="34" height="34" rx="9" fill="none" stroke="#fff" stroke-width="3"/>
-            </svg>
-          </span>
-          <div><strong>Instagram</strong><small>@vedant.editx.09</small></div>
-          <span class="c-arrow">↗</span>
-        </a>
-        <a href="tel:+919409904904" class="c-tile call-tile">
-          <span class="c-icon-badge c-icon-call">
-            <svg width="34" height="34" viewBox="0 0 48 48">
-              <defs>
-                <linearGradient id="phoneOfficialGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#00ff88"/>
-                  <stop offset="100%" stop-color="#00d2ff"/>
-                </linearGradient>
-              </defs>
-              <rect width="48" height="48" rx="12" fill="url(#phoneOfficialGrad)"/>
-              <path d="M33.5 28.5c-1.2-.4-2.6-.7-3.8-.2-1.2.5-2 1.5-3 2.3-2.3-1.2-4.2-3.1-5.4-5.4.8-.9 1.8-1.8 2.3-3 .5-1.2.2-2.6-.2-3.8-.5-1.4-1-2.8-1.7-4.1-.7-1.2-2-1.9-3.3-1.8-1.4.1-2.7.9-3.3 2.1-1.5 2.9-1.2 6.4.5 9.3 2.2 4 5.6 7.4 9.6 9.6 2.9 1.7 6.4 2 9.3.5 1.2-.6 2-1.9 2.1-3.3.1-1.4-.6-2.7-1.8-3.3-1.3-.7-2.7-1.3-4.1-1.7z" fill="#031521"/>
-            </svg>
-          </span>
-          <div><strong>Call Me Directly</strong><small>+91 94099 04904</small></div>
-          <span class="c-arrow">↗</span>
-        </a>
-      </div>
-
-      <form id="contactForm" class="contact-form reveal">
-        <div class="form-glow"></div>
-        <h3>Let's Connect</h3>
-        <p class="form-intro">Fill your details to start a direct WhatsApp chat</p>
-
-        <div class="form-row">
-          <label>
-            <input type="text" name="name" required placeholder=""/>
-            <span>Full Name*</span>
-          </label>
-          <label>
-            <input type="email" name="email" required placeholder=""/>
-            <span>Email Address*</span>
-          </label>
-        </div>
-        <label>
-          <input type="tel" name="phone" placeholder=""/>
-          <span>Phone / WhatsApp (Optional)</span>
-        </label>
-        <label>
-          <select name="project" required>
-            <option value="">— Select Project Type* —</option>
-            <option>Video Editing (YouTube / Commercial)</option>
-            <option>Instagram Reels / TikTok Pack</option>
-            <option>Motion Graphics &amp; Titles</option>
-            <option>Color &amp; Sound Design</option>
-            <option>3D Animation &amp; Renders</option>
-            <option>Other Collaboration</option>
-          </select>
-        </label>
-        <label>
-          <textarea name="message" rows="3" required placeholder=""></textarea>
-          <span>Tell me about your project &amp; vision*</span>
-        </label>
-
-        <button type="submit" class="btn-primary full">
-          <span>Hire Me on WhatsApp</span>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
+      <div class="admin-bar-actions">
+        <button class="btn-admin-action" id="barUploadBtn">
+          <span>＋ Upload Video</span>
         </button>
-        <p class="form-note">⚡ Direct communication on WhatsApp · Instant response.</p>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-top">
-      <div class="footer-brand">
-        <a href="#home" class="logo big">
-          <span class="logo-icon">◆</span>
-          <span class="logo-text">Vedant Beladiya<em>.Editor</em></span>
-        </a>
-        <p>Video Editor · Motion · Design · 3D<br/>Crafting visuals that make an impact worldwide.</p>
-        <a href="#contact" class="btn-primary">
-          <span>Start a Project</span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H8M17 7V16"/></svg>
-        </a>
-      </div>
-
-      <div class="footer-cols">
-        <div>
-          <h4>Menu</h4>
-          <a href="#color-grade">Colour Grade</a>
-          <a href="#services">Services</a>
-          <a href="#agency">VoiceUp Media</a>
-          <a href="#skills">Skills</a>
-          <a href="javascript:void(0)" onclick="document.getElementById('adminToggleBtn').click()" style="color:var(--accent-green); font-weight:600;">⚡ Manage Videos</a>
-        </div>
-        <div>
-          <h4>Social</h4>
-          <a href="https://wa.me/919409904904" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-          <a href="https://www.instagram.com/vedant.editx.09/" target="_blank" rel="noopener noreferrer">Instagram</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-        </div>
-        <div>
-          <h4>Contact</h4>
-          <a href="#contact">Contact Form</a>
-          <a href="mailto:vedbeladiya22@gmail.com">Email Direct</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-big">VEDANT BELADIYA<em>.EDITOR</em></div>
-  </div>
-</footer>
-
-<!-- ================= VIDEO MANAGER & ADMIN MODALS ================= -->
-
-<!-- Floating Admin Trigger Button -->
-<div class="admin-floating-trigger" id="adminTrigger" title="Manage Website Videos">
-  <button class="admin-float-btn" id="adminToggleBtn" aria-label="Open Video Manager">
-    <span class="admin-btn-icon">⚡</span>
-    <span class="admin-btn-label">Manage Videos</span>
-  </button>
-</div>
-
-<!-- Admin Active Top Bar -->
-<div class="admin-top-bar" id="adminTopBar" style="display: none;">
-  <div class="admin-bar-inner">
-    <div class="admin-bar-status">
-      <span class="pulse-dot green"></span>
-      <span><strong>Admin Edit Mode Active</strong> — You can now delete or add videos directly</span>
-    </div>
-    <div class="admin-bar-actions">
-      <button class="btn-admin-action" id="barUploadBtn">
-        <span>＋ Upload Video</span>
-      </button>
-      <button class="btn-admin-action secondary" id="barSyncBtn">
-        <span>📋 Sync to Live</span>
-      </button>
-      <button class="btn-admin-action secondary" id="barSettingsBtn">
-        <span>⚙️ Cloud Settings</span>
-      </button>
-      <button class="btn-admin-action danger" id="barExitBtn">
-        <span>🔒 Exit Mode</span>
-      </button>
-    </div>
-  </div>
-</div>
-
-<!-- 1. Admin PIN Modal -->
-<div class="modal-backdrop" id="adminPinModal" style="display: none;">
-  <div class="modal-card">
-    <div class="modal-head">
-      <div class="modal-title-wrap">
-        <span class="modal-icon">🔐</span>
-        <div>
-          <h3>Owner Video Manager</h3>
-          <p>Enter your secret password to add, edit or delete videos</p>
-        </div>
-      </div>
-      <button class="modal-close-btn" data-close="adminPinModal">✕</button>
-    </div>
-    <div class="modal-body">
-      <form id="adminPinForm">
-        <label class="modal-label">
-          <span>Enter Admin Password</span>
-          <input type="password" id="adminPinInput" maxlength="60" placeholder="••••••••" required autofocus autocomplete="current-password" />
-        </label>
-        <div class="modal-actions">
-          <button type="button" class="btn-modal secondary" data-close="adminPinModal">Cancel</button>
-          <button type="submit" class="btn-modal primary">Unlock Admin Mode</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- 2. Video Upload & Add Modal -->
-<div class="modal-backdrop" id="videoUploadModal" style="display: none;">
-  <div class="modal-card modal-card-lg">
-    <div class="modal-head">
-      <div class="modal-title-wrap">
-        <span class="modal-icon">🎬</span>
-        <div>
-          <h3 id="uploadModalTitle">Upload New Video Reel</h3>
-          <p>Add video directly to your website portfolio</p>
-        </div>
-      </div>
-      <button class="modal-close-btn" data-close="videoUploadModal">✕</button>
-    </div>
-
-    <div class="modal-body">
-      <!-- Upload Method Tabs -->
-      <div class="upload-tabs">
-        <button type="button" class="upload-tab active" data-tab="tab-gdrive">🔺 Google Drive (Recommended)</button>
-        <button type="button" class="upload-tab" data-tab="tab-file">📁 Upload from Phone / PC</button>
-        <button type="button" class="upload-tab" data-tab="tab-url">🔗 Paste Video URL</button>
-      </div>
-
-      <form id="videoUploadForm">
-        <input type="hidden" id="editVideoId" value="" />
-
-        <!-- Target Section Selection -->
-        <label class="modal-label">
-          <span>Select Portfolio Section*</span>
-          <select id="videoTargetSection" required>
-            <option value="colorTrack">01 · Colour Grading</option>
-            <option value="aiTrack">02 · AI Reels &amp; Viral Short-Form</option>
-            <option value="motionTrack">03 · Motion Graphics</option>
-            <option value="speedTrack">04 · Speed Ramps &amp; Beat Sync</option>
-            <option value="agencyShowcase">05 · VoiceUp Media Agency Showcase</option>
-          </select>
-        </label>
-
-        <!-- Tab 0: Google Drive Share Link (Recommended for Phone & PC) -->
-        <div class="tab-pane active" id="tab-gdrive">
-          <div class="gdrive-guide-card">
-            <div class="gdrive-guide-head">
-              <span class="gdrive-icon">🔺</span>
-              <div>
-                <h4>How to get video link from Google Drive:</h4>
-                <p>Upload video to Google Drive from your phone &amp; copy share link:</p>
-              </div>
-            </div>
-            <ol class="gdrive-steps">
-              <li>Open Google Drive app on your phone &amp; tap <strong>3 dots (⋯)</strong> on your video.</li>
-              <li>Tap <strong>Manage access / Share</strong> &rarr; change to <strong>"Anyone with the link"</strong>.</li>
-              <li>Tap <strong>Copy link</strong> and paste it in the box below!</li>
-            </ol>
-          </div>
-
-          <label class="modal-label">
-            <span>Paste Google Drive Video Link*</span>
-            <input type="url" id="gdriveUrlInput" placeholder="https://drive.google.com/file/d/.../view?usp=sharing" />
-          </label>
-
-          <!-- GDrive Preview Card -->
-          <div class="file-preview-card" id="gdrivePreviewCard" style="display: none;">
-            <div class="preview-video-wrap gdrive-preview-wrap">
-              <img id="gdriveThumbImg" src="" alt="GDrive Video Thumbnail" />
-              <span class="gdrive-play-badge">▶</span>
-            </div>
-            <div class="preview-info">
-              <span class="preview-filename">Google Drive Video Connected</span>
-              <span class="preview-filesize" id="gdriveStatusText">Ready to display on website</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab 1: File Dropzone / Mobile File Upload -->
-        <div class="tab-pane" id="tab-file" style="display: none;">
-          <div class="file-dropzone" id="fileDropzone">
-            <input type="file" id="videoFileInput" accept="video/mp4,video/quicktime,video/webm,video/*" />
-            <div class="dropzone-content">
-              <span class="drop-icon">📹</span>
-              <h4>Tap here to choose video from Phone Gallery or PC</h4>
-              <p>Supports MP4, MOV, WebM (Recommended: under 100MB)</p>
-              <span class="btn-browse">Browse Gallery / Files</span>
-            </div>
-          </div>
-
-          <!-- Video File Selected Preview -->
-          <div class="file-preview-card" id="filePreviewCard" style="display: none;">
-            <div class="preview-video-wrap">
-              <video id="filePreviewVideo" playsinline controls muted></video>
-            </div>
-            <div class="preview-info">
-              <span class="preview-filename" id="previewFilename">video.mp4</span>
-              <span class="preview-filesize" id="previewFilesize">0 MB</span>
-              <button type="button" class="btn-remove-file" id="btnRemoveFile">Change Video</button>
-            </div>
-          </div>
-
-          <!-- Upload Progress Indicator -->
-          <div class="upload-progress-wrap" id="uploadProgressWrap" style="display: none;">
-            <div class="upload-progress-info">
-              <span id="uploadStatusText">Uploading to Cloud CDN...</span>
-              <span id="uploadPercent">0%</span>
-            </div>
-            <div class="upload-progress-bar">
-              <div class="upload-progress-fill" id="uploadProgressFill" style="width: 0%;"></div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Tab 2: Direct Video URL -->
-        <div class="tab-pane" id="tab-url" style="display: none;">
-          <label class="modal-label">
-            <span>Direct Video URL (MP4 / Cloud CDN)*</span>
-            <input type="url" id="videoUrlInput" placeholder="https://res.cloudinary.com/.../video.mp4" />
-          </label>
-        </div>
-
-        <!-- Metadata Fields -->
-        <div class="modal-form-grid">
-          <label class="modal-label">
-            <span>Badge / Category Label</span>
-            <input type="text" id="videoBadgeInput" placeholder="e.g. Viral Reel, 4K Color, 3D Title" />
-          </label>
-
-          <label class="modal-label">
-            <span>Reel Title / Client Name</span>
-            <input type="text" id="videoTitleInput" placeholder="e.g. Creator Growth Reel" />
-          </label>
-        </div>
-
-        <label class="modal-label">
-          <span>Short Subtitle / Description</span>
-          <input type="text" id="videoSubtitleInput" placeholder="e.g. 1M+ Views Viral Cut · DaVinci Resolve" />
-        </label>
-
-        <div class="modal-actions">
-          <button type="button" class="btn-modal secondary" data-close="videoUploadModal">Cancel</button>
-          <button type="submit" class="btn-modal primary" id="btnSubmitVideo">
-            <span>Save &amp; Add to Website</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- 3. Cloud Storage Settings Modal -->
-<div class="modal-backdrop" id="cloudSettingsModal" style="display: none;">
-  <div class="modal-card">
-    <div class="modal-head">
-      <div class="modal-title-wrap">
-        <span class="modal-icon">⚙️</span>
-        <div>
-          <h3>Cloud Storage &amp; Admin Settings</h3>
-          <p>Connect your Cloudinary for 100% free cloud video hosting</p>
-        </div>
-      </div>
-      <button class="modal-close-btn" data-close="cloudSettingsModal">✕</button>
-    </div>
-    <div class="modal-body">
-      <form id="cloudSettingsForm">
-        <div class="settings-guide">
-          <h4>🚀 How Cloud Upload Works:</h4>
-          <p>Videos uploaded from your phone are stored on Cloudinary CDN for instant global playback for all visitors.</p>
-        </div>
-
-        <label class="modal-label">
-          <span>Cloudinary Cloud Name</span>
-          <input type="text" id="cloudNameInput" placeholder="xypda8sw" />
-        </label>
-
-        <label class="modal-label">
-          <span>Cloudinary Upload Preset (Unsigned)</span>
-          <input type="text" id="uploadPresetInput" placeholder="website_videos" />
-        </label>
-
-        <div class="cloud-test-row">
-          <button type="button" class="btn-modal secondary" id="btnTestCloudConnection" style="width:100%; margin-bottom: 0.8rem; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
-            <span>🧪 Test Cloudinary Connection</span>
-          </button>
-          <div id="cloudTestResult" style="display:none; font-size:0.8rem; padding:0.75rem 1rem; border-radius:8px; margin-bottom:1rem; line-height:1.45;"></div>
-        </div>
-
-        <label class="modal-label">
-          <span>Change Admin Password (Optional)</span>
-          <input type="password" id="changePinInput" placeholder="Letters, numbers & symbols (e.g. Vedant@2026#Edit)" maxlength="60" autocomplete="new-password" />
-        </label>
-
-        <div class="settings-reset-zone">
-          <span>Reset Portfolio Videos to Default</span>
-          <button type="button" class="btn-modal danger-outline" id="btnResetVideos">Reset to Default</button>
-        </div>
-
-        <div class="modal-actions">
-          <button type="button" class="btn-modal secondary" data-close="cloudSettingsModal">Close</button>
-          <button type="submit" class="btn-modal primary">Save Settings</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</div>
-
-<!-- 4. Sync to Live Modal -->
-<div class="modal-backdrop" id="syncModal" style="display: none;">
-  <div class="modal-card">
-    <div class="modal-head">
-      <div class="modal-title-wrap">
-        <span class="modal-icon">📋</span>
-        <div>
-          <h3>Sync Videos to All Visitors</h3>
-          <p>Make your phone uploaded videos visible across all devices</p>
-        </div>
-      </div>
-      <button class="modal-close-btn" data-close="syncModal">✕</button>
-    </div>
-    <div class="modal-body">
-      <p style="font-size:0.85rem; color:var(--text-light); line-height:1.5; margin-bottom:1rem;">
-        તમે ફોનમાંથી અપલોડ કરેલા વિડિયોઝનો ડેટા નીચે આપ્યો છે. આને કોપી કરીને અહીં ચેટમાં મોકલી આપો જેથી હું તેને લાઈવ વેબસાઇટમાં કાયમ માટે બધા માટે સેવ કરી દઉં!
-      </p>
-
-      <textarea id="syncJsonOutput" rows="6" readonly style="width:100%; font-family:monospace; font-size:0.75rem; background:#070b14; color:#00ff88; padding:0.8rem; border-radius:8px; border:1px solid rgba(0,255,136,0.3); margin-bottom:1rem; box-sizing:border-box;"></textarea>
-
-      <div class="modal-actions">
-        <button type="button" class="btn-modal secondary" data-close="syncModal">Close</button>
-        <button type="button" class="btn-modal primary" id="btnCopySyncJson">
-          <span>📋 Copy to Clipboard</span>
+        <button class="btn-admin-action secondary" id="barSyncBtn">
+          <span>📋 Sync to Live</span>
+        </button>
+        <button class="btn-admin-action secondary" id="barSettingsBtn">
+          <span>⚙️ Cloud Settings</span>
+        </button>
+        <button class="btn-admin-action danger" id="barExitBtn">
+          <span>🔒 Exit Mode</span>
         </button>
       </div>
     </div>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <!-- 1. Admin PIN Modal -->
+  <div class="modal-backdrop" id="adminPinModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🔐</span>
+          <div>
+            <h3>Owner Video Manager</h3>
+            <p>Enter your secret password to add, edit or delete videos</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close="adminPinModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="adminPinForm">
+          <label class="modal-label">
+            <span>Enter Admin Password</span>
+            <input type="password" id="adminPinInput" maxlength="60" placeholder="••••••••" required autofocus
+              autocomplete="current-password" />
+          </label>
+          <div class="modal-actions">
+            <button type="button" class="btn-modal secondary" data-close="adminPinModal">Cancel</button>
+            <button type="submit" class="btn-modal primary">Unlock Admin Mode</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. Video Upload & Add Modal -->
+  <div class="modal-backdrop" id="videoUploadModal" style="display: none;">
+    <div class="modal-card modal-card-lg">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">🎬</span>
+          <div>
+            <h3 id="uploadModalTitle">Upload New Video Reel</h3>
+            <p>Add video directly to your website portfolio</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close="videoUploadModal">✕</button>
+      </div>
+
+      <div class="modal-body">
+        <!-- Upload Method Tabs -->
+        <div class="upload-tabs">
+          <button type="button" class="upload-tab active" data-tab="tab-gdrive">🔺 Google Drive (Recommended)</button>
+          <button type="button" class="upload-tab" data-tab="tab-file">📁 Upload from Phone / PC</button>
+          <button type="button" class="upload-tab" data-tab="tab-url">🔗 Paste Video URL</button>
+        </div>
+
+        <form id="videoUploadForm">
+          <input type="hidden" id="editVideoId" value="" />
+
+          <!-- Target Section Selection -->
+          <label class="modal-label">
+            <span>Select Portfolio Section*</span>
+            <select id="videoTargetSection" required>
+              <option value="colorTrack">01 · Colour Grading</option>
+              <option value="aiTrack">02 · AI Reels &amp; Viral Short-Form</option>
+              <option value="motionTrack">03 · Motion Graphics</option>
+              <option value="speedTrack">04 · Speed Ramps &amp; Beat Sync</option>
+              <option value="agencyShowcase">05 · VoiceUp Media Agency Showcase</option>
+            </select>
+          </label>
+
+          <!-- Tab 0: Google Drive Share Link (Recommended for Phone & PC) -->
+          <div class="tab-pane active" id="tab-gdrive">
+            <div class="gdrive-guide-card">
+              <div class="gdrive-guide-head">
+                <span class="gdrive-icon">🔺</span>
+                <div>
+                  <h4>How to get video link from Google Drive:</h4>
+                  <p>Upload video to Google Drive from your phone &amp; copy share link:</p>
+                </div>
+              </div>
+              <ol class="gdrive-steps">
+                <li>Open Google Drive app on your phone &amp; tap <strong>3 dots (⋯)</strong> on your video.</li>
+                <li>Tap <strong>Manage access / Share</strong> &rarr; change to <strong>"Anyone with the link"</strong>.
+                </li>
+                <li>Tap <strong>Copy link</strong> and paste it in the box below!</li>
+              </ol>
+            </div>
+
+            <label class="modal-label">
+              <span>Paste Google Drive Video Link*</span>
+              <input type="url" id="gdriveUrlInput"
+                placeholder="https://drive.google.com/file/d/.../view?usp=sharing" />
+            </label>
+
+            <!-- GDrive Preview Card -->
+            <div class="file-preview-card" id="gdrivePreviewCard" style="display: none;">
+              <div class="preview-video-wrap gdrive-preview-wrap">
+                <img id="gdriveThumbImg" src="" alt="GDrive Video Thumbnail" />
+                <span class="gdrive-play-badge">▶</span>
+              </div>
+              <div class="preview-info">
+                <span class="preview-filename">Google Drive Video Connected</span>
+                <span class="preview-filesize" id="gdriveStatusText">Ready to display on website</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 1: File Dropzone / Mobile File Upload -->
+          <div class="tab-pane" id="tab-file" style="display: none;">
+            <div class="file-dropzone" id="fileDropzone">
+              <input type="file" id="videoFileInput" accept="video/mp4,video/quicktime,video/webm,video/*" />
+              <div class="dropzone-content">
+                <span class="drop-icon">📹</span>
+                <h4>Tap here to choose video from Phone Gallery or PC</h4>
+                <p>Supports MP4, MOV, WebM (Recommended: under 100MB)</p>
+                <span class="btn-browse">Browse Gallery / Files</span>
+              </div>
+            </div>
+
+            <!-- Video File Selected Preview -->
+            <div class="file-preview-card" id="filePreviewCard" style="display: none;">
+              <div class="preview-video-wrap">
+                <video id="filePreviewVideo" playsinline controls muted></video>
+              </div>
+              <div class="preview-info">
+                <span class="preview-filename" id="previewFilename">video.mp4</span>
+                <span class="preview-filesize" id="previewFilesize">0 MB</span>
+                <button type="button" class="btn-remove-file" id="btnRemoveFile">Change Video</button>
+              </div>
+            </div>
+
+            <!-- Upload Progress Indicator -->
+            <div class="upload-progress-wrap" id="uploadProgressWrap" style="display: none;">
+              <div class="upload-progress-info">
+                <span id="uploadStatusText">Uploading to Cloud CDN...</span>
+                <span id="uploadPercent">0%</span>
+              </div>
+              <div class="upload-progress-bar">
+                <div class="upload-progress-fill" id="uploadProgressFill" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Direct Video URL -->
+          <div class="tab-pane" id="tab-url" style="display: none;">
+            <label class="modal-label">
+              <span>Direct Video URL (MP4 / Cloud CDN)*</span>
+              <input type="url" id="videoUrlInput" placeholder="https://res.cloudinary.com/.../video.mp4" />
+            </label>
+          </div>
+
+          <!-- Metadata Fields -->
+          <div class="modal-form-grid">
+            <label class="modal-label">
+              <span>Badge / Category Label</span>
+              <input type="text" id="videoBadgeInput" placeholder="e.g. Viral Reel, 4K Color, 3D Title" />
+            </label>
+
+            <label class="modal-label">
+              <span>Reel Title / Client Name</span>
+              <input type="text" id="videoTitleInput" placeholder="e.g. Creator Growth Reel" />
+            </label>
+          </div>
+
+          <label class="modal-label">
+            <span>Short Subtitle / Description</span>
+            <input type="text" id="videoSubtitleInput" placeholder="e.g. 1M+ Views Viral Cut · DaVinci Resolve" />
+          </label>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-modal secondary" data-close="videoUploadModal">Cancel</button>
+            <button type="submit" class="btn-modal primary" id="btnSubmitVideo">
+              <span>Save &amp; Add to Website</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Cloud Storage Settings Modal -->
+  <div class="modal-backdrop" id="cloudSettingsModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">⚙️</span>
+          <div>
+            <h3>Cloud Storage &amp; Admin Settings</h3>
+            <p>Connect your Cloudinary for 100% free cloud video hosting</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close="cloudSettingsModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="cloudSettingsForm">
+          <div class="settings-guide">
+            <h4>🚀 How Cloud Upload Works:</h4>
+            <p>Videos uploaded from your phone are stored on Cloudinary CDN for instant global playback for all
+              visitors.</p>
+          </div>
+
+          <label class="modal-label">
+            <span>Cloudinary Cloud Name</span>
+            <input type="text" id="cloudNameInput" placeholder="xypda8sw" />
+          </label>
+
+          <label class="modal-label">
+            <span>Cloudinary Upload Preset (Unsigned)</span>
+            <input type="text" id="uploadPresetInput" placeholder="website_videos" />
+          </label>
+
+          <div class="cloud-test-row">
+            <button type="button" class="btn-modal secondary" id="btnTestCloudConnection"
+              style="width:100%; margin-bottom: 0.8rem; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+              <span>🧪 Test Cloudinary Connection</span>
+            </button>
+            <div id="cloudTestResult"
+              style="display:none; font-size:0.8rem; padding:0.75rem 1rem; border-radius:8px; margin-bottom:1rem; line-height:1.45;">
+            </div>
+          </div>
+
+          <label class="modal-label">
+            <span>Change Admin Password (Optional)</span>
+            <input type="password" id="changePinInput" placeholder="Letters, numbers & symbols (e.g. Vedant@2026#Edit)"
+              maxlength="60" autocomplete="new-password" />
+          </label>
+
+          <div class="settings-reset-zone">
+            <span>Reset Portfolio Videos to Default</span>
+            <button type="button" class="btn-modal danger-outline" id="btnResetVideos">Reset to Default</button>
+          </div>
+
+          <div class="modal-actions">
+            <button type="button" class="btn-modal secondary" data-close="cloudSettingsModal">Close</button>
+            <button type="submit" class="btn-modal primary">Save Settings</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Sync to Live Modal -->
+  <div class="modal-backdrop" id="syncModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-head">
+        <div class="modal-title-wrap">
+          <span class="modal-icon">📋</span>
+          <div>
+            <h3>Sync Videos to All Visitors</h3>
+            <p>Make your phone uploaded videos visible across all devices</p>
+          </div>
+        </div>
+        <button class="modal-close-btn" data-close="syncModal">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.85rem; color:var(--text-light); line-height:1.5; margin-bottom:1rem;">
+          તમે ફોનમાંથી અપલોડ કરેલા વિડિયોઝનો ડેટા નીચે આપ્યો છે. આને કોપી કરીને અહીં ચેટમાં મોકલી આપો જેથી હું તેને લાઈવ
+          વેબસાઇટમાં કાયમ માટે બધા માટે સેવ કરી દઉં!
+        </p>
+
+        <textarea id="syncJsonOutput" rows="6" readonly
+          style="width:100%; font-family:monospace; font-size:0.75rem; background:#070b14; color:#00ff88; padding:0.8rem; border-radius:8px; border:1px solid rgba(0,255,136,0.3); margin-bottom:1rem; box-sizing:border-box;"></textarea>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-modal secondary" data-close="syncModal">Close</button>
+          <button type="button" class="btn-modal primary" id="btnCopySyncJson">
+            <span>📋 Copy to Clipboard</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
+
 </html>
