@@ -260,17 +260,27 @@ document.addEventListener('DOMContentLoaded', function() {
   // No default placeholder videos — only YOUR uploaded reels will show
   var DEFAULT_VIDEOS = [];
 
+  // Default Settings with your Cloudinary Cloud & Preset pre-configured
+  var DEFAULT_SETTINGS = {
+    pin: '1234',
+    cloudName: 'xypda8sw',
+    uploadPreset: 'website_videos'
+  };
+
   // Load Settings
   function getSettings() {
     try {
       var saved = localStorage.getItem(STORAGE_SETTINGS_KEY);
-      if (saved) return JSON.parse(saved);
+      if (saved) {
+        var parsed = JSON.parse(saved);
+        return {
+          pin: parsed.pin || DEFAULT_SETTINGS.pin,
+          cloudName: parsed.cloudName || DEFAULT_SETTINGS.cloudName,
+          uploadPreset: parsed.uploadPreset || DEFAULT_SETTINGS.uploadPreset
+        };
+      }
     } catch(e) {}
-    return {
-      pin: '1234',
-      cloudName: '',
-      uploadPreset: ''
-    };
+    return Object.assign({}, DEFAULT_SETTINGS);
   }
 
   function saveSettings(settings) {
