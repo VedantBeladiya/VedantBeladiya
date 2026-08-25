@@ -466,15 +466,175 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
 
+  // =====================================================
+  // CUSTOM VIDEO CONTROLS — AUTO-HIDE + TIMELINE + FULLSCREEN
+  // Applies globally to ALL video cards (work + reel)
+  // =====================================================
+
+  // Single shared fullscreen modal (created once)
+  var vcFsModal = null;
+  var vcFsVideo = null;
+  var vcFsScrubber = null;
+  var vcFsPlayBtn = null;
+  var vcFsTimeEl = null;
+  var vcFsControls = null;
+  var vcFsTop = null;
+  var vcFsHideTimer = null;
+  var vcFsOriginalCard = null;
+
+  function createFsModal() {
+    if (vcFsModal) return;
+    vcFsModal = document.createElement('div');
+    vcFsModal.className = 'vc-fullscreen-modal';
+    vcFsModal.setAttribute('role', 'dialog');
+    vcFsModal.setAttribute('aria-modal', 'true');
+    vcFsModal.innerHTML =
+      '<video class="vc-fs-video" playsinline></video>' +
+      '<div class="vc-fs-top">' +
+        '<button class="vc-fs-close" aria-label="Exit fullscreen">✕</button>' +
+      '</div>' +
+      '<div class="vc-fs-controls">' +
+        '<input type="range" class="vc-fs-scrubber" min="0" max="100" step="0.1" value="0" aria-label="Seek">' +
+        '<div class="vc-fs-btn-row">' +
+          '<button class="vc-fs-btn vc-fs-seek-back" aria-label="Rewind 10s">⏪</button>' +
+          '<button class="vc-fs-btn vc-fs-play" aria-label="Play/Pause">▶</button>' +
+          '<button class="vc-fs-btn vc-fs-seek-fwd" aria-label="Forward 10s">⏩</button>' +
+          '<span class="vc-fs-time">0:00 / 0:00</span>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(vcFsModal);
+
+    vcFsVideo = vcFsModal.querySelector('.vc-fs-video');
+    vcFsScrubber = vcFsModal.querySelector('.vc-fs-scrubber');
+    vcFsPlayBtn = vcFsModal.querySelector('.vc-fs-play');
+    vcFsTimeEl = vcFsModal.querySelector('.vc-fs-time');
+    vcFsControls = vcFsModal.querySelector('.vc-fs-controls');
+    vcFsTop = vcFsModal.querySelector('.vc-fs-top');
+
+    // Close fullscreen
+    var fsClose = vcFsModal.querySelector('.vc-fs-close');
+    function closeFsModal() {
+      if (vcFsVideo) { vcFsVideo.pause(); vcFsVideo.src = ''; }
+      vcFsModal.classList.remove('open');
+      document.body.style.overflow = '';
+      // Resume original card in paused state
+      if (vcFsOriginalCard) {
+        var origCard = vcFsOriginalCard;
+        var origVid = origCard.querySelector('video');
+        if (origVid) { origVid.pause(); origVid.currentTime = 0.001; }
+        origCard.classList.remove('is-playing');
+        var origBtn = origCard.querySelector('.vc-btn-play');
+        if (origBtn) origBtn.textContent = '▶';
+        vcFsOriginalCard = null;
+      }
+      clearTimeout(vcFsHideTimer);
+    }
+    fsClose.addEventListener('click', closeFsModal);
+    vcFsModal.addEventListener('click', function(e) {
+      if (e.target === vcFsModal) closeFsModal();
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape' && vcFsModal.classList.contains('open')) closeFsModal();
+    });
+
+    // Play/Pause
+    vcFsPlayBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (vcFsVideo.paused) { vcFsVideo.play(); vcFsPlayBtn.textContent = '⏸'; }
+      else { vcFsVideo.pause(); vcFsPlayBtn.textContent = '▶'; }
+    });
+
+    // Seek buttons
+    vcFsModal.querySelector('.vc-fs-seek-back').addEventListener('click', function(e) {
+      e.stopPropagation();
+      vcFsVideo.currentTime = Math.max(0, vcFsVideo.currentTime - 10);
+      showFsControls();
+    });
+    vcFsModal.querySelector('.vc-fs-seek-fwd').addEventListener('click', function(e) {
+      e.stopPropagation();
+      vcFsVideo.currentTime = Math.min(vcFsVideo.duration || 0, vcFsVideo.currentTime + 10);
+      showFsControls();
+    });
+
+    // Scrubber
+    vcFsScrubber.addEventListener('input', function() {
+      if (vcFsVideo.duration) vcFsVideo.currentTime = (vcFsScrubber.value / 100) * vcFsVideo.duration;
+    });
+
+    // Time sync
+    vcFsVideo.addEventListener('timeupdate', function() {
+      if (vcFsVideo.duration) {
+        var pct = (vcFsVideo.currentTime / vcFsVideo.duration) * 100;
+        vcFsScrubber.value = pct;
+        vcFsScrubber.style.setProperty('--prog', pct.toFixed(2) + '%');
+        vcFsTimeEl.textContent = fmtTime(vcFsVideo.currentTime) + ' / ' + fmtTime(vcFsVideo.duration);
+      }
+    });
+
+    vcFsVideo.addEventListener('play', function() { vcFsPlayBtn.textContent = '⏸'; });
+    vcFsVideo.addEventListener('pause', function() { vcFsPlayBtn.textContent = '▶'; });
+    vcFsVideo.addEventListener('ended', function() { vcFsPlayBtn.textContent = '▶'; });
+
+    // Auto-hide controls in fullscreen
+    function showFsControls() {
+      vcFsControls.classList.remove('vc-hidden');
+      vcFsTop.style.opacity = '1';
+      clearTimeout(vcFsHideTimer);
+      vcFsHideTimer = setTimeout(function() {
+        if (!vcFsVideo.paused) {
+          vcFsControls.classList.add('vc-hidden');
+          vcFsTop.style.opacity = '0';
+        }
+      }, 3000);
+    }
+
+    vcFsModal.addEventListener('touchstart', showFsControls, { passive: true });
+    vcFsModal.addEventListener('mousemove', showFsControls);
+    vcFsModal.addEventListener('click', function() { showFsControls(); });
+  }
+
+  function openFsModal(card, video) {
+    createFsModal();
+    vcFsOriginalCard = card;
+    vcFsVideo.src = video.src || video.currentSrc;
+    vcFsVideo.currentTime = video.currentTime > 0.01 ? video.currentTime : 0;
+    vcFsVideo.muted = false;
+    vcFsModal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    vcFsVideo.play().catch(function() { vcFsVideo.muted = true; vcFsVideo.play(); });
+    vcFsControls.classList.remove('vc-hidden');
+    if (vcFsTop) vcFsTop.style.opacity = '1';
+    clearTimeout(vcFsHideTimer);
+    vcFsHideTimer = setTimeout(function() {
+      if (!vcFsVideo.paused) {
+        vcFsControls.classList.add('vc-hidden');
+        if (vcFsTop) vcFsTop.style.opacity = '0';
+      }
+    }, 3000);
+  }
+
+  // Format seconds -> M:SS
+  function fmtTime(s) {
+    if (!s || isNaN(s)) return '0:00';
+    var m = Math.floor(s / 60);
+    var sec = Math.floor(s % 60);
+    return m + ':' + (sec < 10 ? '0' : '') + sec;
+  }
+
   // Video Players Interaction Handler
   function initInteractiveVideoPlayers() {
     var allVideoCards = document.querySelectorAll('.video-card-interactive');
-    
+
     allVideoCards.forEach(function(card) {
       var video = card.querySelector('video');
-      var playBtn = card.querySelector('.video-toggle-btn');
+      var origPlayBtn = card.querySelector('.video-toggle-btn'); // original center button (hidden on play)
       if (!video) return;
 
+      // Skip if already initialized
+      if (card.dataset.vcInit === '1') return;
+      card.dataset.vcInit = '1';
+
+      // Preload frame
       if (video.readyState >= 1) {
         if (video.currentTime === 0) video.currentTime = 0.001;
       } else {
@@ -483,64 +643,242 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { once: true });
       }
 
-      card.addEventListener('mouseenter', function() {
-        if (video.paused && !card.classList.contains('is-playing')) {
-          video.muted = true;
-          var playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.catch(function() {});
-          }
-        }
-      });
+      // ---- Inject custom overlay ----
+      var overlay = document.createElement('div');
+      overlay.className = 'vc-overlay';
+      overlay.innerHTML =
+        '<div class="vc-tap-zone"></div>' +
+        '<div class="vc-center-icon" aria-hidden="true">▶</div>' +
+        '<div class="vc-controls">' +
+          '<div class="vc-timeline-row">' +
+            '<span class="vc-time vc-cur">0:00</span>' +
+            '<input type="range" class="vc-scrubber" min="0" max="100" step="0.1" value="0" aria-label="Seek">' +
+            '<span class="vc-time vc-dur">0:00</span>' +
+          '</div>' +
+          '<div class="vc-btn-row">' +
+            '<button class="vc-btn vc-btn-play" aria-label="Play/Pause">▶</button>' +
+            '<button class="vc-btn vc-btn-back" aria-label="Rewind 10s" title="−10s">⏪</button>' +
+            '<button class="vc-btn vc-btn-fwd" aria-label="Forward 10s" title="+10s">⏩</button>' +
+            '<button class="vc-btn vc-btn-fs" aria-label="Fullscreen">⛶</button>' +
+          '</div>' +
+        '</div>';
 
+      // Append to the thumb/mockup container
+      var thumb = card.querySelector('.work-thumb') || card.querySelector('.reel-mockup');
+      if (thumb) {
+        thumb.appendChild(overlay);
+      } else {
+        card.appendChild(overlay);
+      }
+
+      var tapZone = overlay.querySelector('.vc-tap-zone');
+      var centerIcon = overlay.querySelector('.vc-center-icon');
+      var vcControls = overlay.querySelector('.vc-controls');
+      var scrubber = overlay.querySelector('.vc-scrubber');
+      var curTimeEl = overlay.querySelector('.vc-cur');
+      var durTimeEl = overlay.querySelector('.vc-dur');
+      var vcPlayBtn = overlay.querySelector('.vc-btn-play');
+      var vcBackBtn = overlay.querySelector('.vc-btn-back');
+      var vcFwdBtn = overlay.querySelector('.vc-btn-fwd');
+      var vcFsBtn = overlay.querySelector('.vc-btn-fs');
+
+      var hideTimer = null;
+      var centerIconTimer = null;
+
+      // ---- Auto-hide controls ----
+      function showControls() {
+        overlay.classList.add('vc-visible');
+        clearTimeout(hideTimer);
+        if (!video.paused) {
+          hideTimer = setTimeout(function() {
+            overlay.classList.remove('vc-visible');
+          }, 2500);
+        }
+      }
+
+      function hideControls() {
+        clearTimeout(hideTimer);
+        overlay.classList.remove('vc-visible');
+      }
+
+      // Show on touch/hover
+      overlay.addEventListener('touchstart', function(e) {
+        showControls();
+      }, { passive: true });
+      card.addEventListener('mouseenter', function() {
+        if (!card.classList.contains('is-playing')) {
+          // Muted hover preview
+          video.muted = true;
+          video.play().catch(function() {});
+        }
+        showControls();
+      });
       card.addEventListener('mouseleave', function() {
         if (!card.classList.contains('is-playing')) {
           video.pause();
           video.currentTime = 0.001;
+          hideControls();
+          vcPlayBtn.textContent = '▶';
+          if (origPlayBtn) origPlayBtn.innerHTML = '▶';
+        } else {
+          hideControls();
+        }
+      });
+      overlay.addEventListener('mousemove', function() { showControls(); });
+
+      // ---- Flash center icon briefly ----
+      function flashCenterIcon(icon) {
+        clearTimeout(centerIconTimer);
+        centerIcon.textContent = icon;
+        centerIcon.classList.remove('hide');
+        centerIcon.classList.add('show');
+        centerIconTimer = setTimeout(function() {
+          centerIcon.classList.remove('show');
+          centerIcon.classList.add('hide');
+        }, 700);
+      }
+
+      // ---- Play / Pause ----
+      function pauseAllOthers() {
+        document.querySelectorAll('.video-card-interactive').forEach(function(otherCard) {
+          if (otherCard === card) return;
+          var otherVid = otherCard.querySelector('video');
+          if (otherVid && !otherVid.paused) {
+            otherVid.pause();
+            otherCard.classList.remove('is-playing');
+            var ob = otherCard.querySelector('.vc-btn-play');
+            if (ob) ob.textContent = '▶';
+            var op = otherCard.querySelector('.video-toggle-btn');
+            if (op) op.innerHTML = '▶';
+            var oo = otherCard.querySelector('.vc-overlay');
+            if (oo) oo.classList.remove('vc-visible');
+          }
+        });
+      }
+
+      function doPlay() {
+        pauseAllOthers();
+        video.muted = false;
+        return video.play().then(function() {
+          card.classList.add('is-playing');
+          vcPlayBtn.textContent = '⏸';
+          if (origPlayBtn) origPlayBtn.innerHTML = '⏸';
+          showControls();
+        }).catch(function() {
+          video.muted = true;
+          video.play();
+          card.classList.add('is-playing');
+          vcPlayBtn.textContent = '⏸';
+          if (origPlayBtn) origPlayBtn.innerHTML = '⏸';
+          showControls();
+        });
+      }
+
+      function doPause() {
+        video.pause();
+        card.classList.remove('is-playing');
+        vcPlayBtn.textContent = '▶';
+        if (origPlayBtn) origPlayBtn.innerHTML = '▶';
+        showControls();
+      }
+
+      function togglePlay(e) {
+        if (e) { e.stopPropagation(); e.preventDefault(); }
+        if (video.paused) {
+          doPlay().then(function() { flashCenterIcon('⏸'); });
+        } else {
+          doPause();
+          flashCenterIcon('▶');
+        }
+      }
+
+      // Tap zone = play/pause
+      tapZone.addEventListener('click', togglePlay);
+      tapZone.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        togglePlay(e);
+      });
+
+      // Original play button
+      if (origPlayBtn) {
+        origPlayBtn.onclick = function(e) {
+          e.stopPropagation();
+          togglePlay(e);
+        };
+      }
+
+      // vc play button
+      vcPlayBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        togglePlay(e);
+      });
+
+      // ---- Seek Buttons ----
+      vcBackBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        video.currentTime = Math.max(0, video.currentTime - 10);
+        flashCenterIcon('⏪');
+        showControls();
+      });
+      vcFwdBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        video.currentTime = Math.min(video.duration || 0, video.currentTime + 10);
+        flashCenterIcon('⏩');
+        showControls();
+      });
+
+      // ---- Scrubber ----
+      scrubber.addEventListener('input', function(e) {
+        e.stopPropagation();
+        if (video.duration) {
+          video.currentTime = (scrubber.value / 100) * video.duration;
+        }
+        showControls();
+      });
+      scrubber.addEventListener('click', function(e) { e.stopPropagation(); });
+      scrubber.addEventListener('touchstart', function(e) { e.stopPropagation(); showControls(); }, { passive: true });
+
+      // ---- Time update ----
+      video.addEventListener('timeupdate', function() {
+        if (video.duration) {
+          var pct = (video.currentTime / video.duration) * 100;
+          scrubber.value = pct;
+          scrubber.style.setProperty('--prog', pct.toFixed(2) + '%');
+          curTimeEl.textContent = fmtTime(video.currentTime);
+          durTimeEl.textContent = fmtTime(video.duration);
         }
       });
 
-      function togglePlay(e) {
-        if (e) {
-          e.stopPropagation();
-          e.preventDefault();
-        }
+      video.addEventListener('loadedmetadata', function() {
+        durTimeEl.textContent = fmtTime(video.duration);
+      });
 
-        if (card.classList.contains('is-playing')) {
-          video.pause();
-          card.classList.remove('is-playing');
-          if (playBtn) playBtn.innerHTML = '▶';
-          video.currentTime = 0.001;
-        } else {
-          allVideoCards.forEach(function(otherCard) {
-            var otherVid = otherCard.querySelector('video');
-            var otherBtn = otherCard.querySelector('.video-toggle-btn');
-            if (otherVid && otherCard !== card) {
-              otherVid.pause();
-              otherCard.classList.remove('is-playing');
-              if (otherBtn) otherBtn.innerHTML = '▶';
-            }
-          });
+      video.addEventListener('ended', function() {
+        card.classList.remove('is-playing');
+        vcPlayBtn.textContent = '▶';
+        if (origPlayBtn) origPlayBtn.innerHTML = '▶';
+        video.currentTime = 0.001;
+        showControls();
+      });
 
-          video.muted = false;
-          var playPromise = video.play();
-          if (playPromise !== undefined) {
-            playPromise.then(function() {
-              card.classList.add('is-playing');
-              if (playBtn) playBtn.innerHTML = '❚❚';
-            }).catch(function() {
-              video.muted = true;
-              video.play();
-              card.classList.add('is-playing');
-              if (playBtn) playBtn.innerHTML = '❚❚';
-            });
-          }
-        }
-      }
-
-      if (playBtn) {
-        playBtn.onclick = togglePlay;
-      }
+      // ---- Fullscreen button ----
+      vcFsBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        // Pause in-card, open fullscreen modal
+        video.pause();
+        card.classList.remove('is-playing');
+        vcPlayBtn.textContent = '▶';
+        if (origPlayBtn) origPlayBtn.innerHTML = '▶';
+        openFsModal(card, video);
+      });
+      vcFsBtn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        video.pause();
+        card.classList.remove('is-playing');
+        vcPlayBtn.textContent = '▶';
+        openFsModal(card, video);
+      });
     });
   }
 
