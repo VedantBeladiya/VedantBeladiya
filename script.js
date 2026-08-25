@@ -257,8 +257,39 @@ document.addEventListener('DOMContentLoaded', function() {
   var STORAGE_VIDEOS_KEY = 'vedant_portfolio_videos_v3';
   var STORAGE_SETTINGS_KEY = 'vedant_portfolio_settings_v3';
 
-  // No default placeholder videos — only YOUR uploaded reels will show
-  var DEFAULT_VIDEOS = [];
+  // Seed / Fallback Videos
+  var DEFAULT_VIDEOS = [
+    {
+      id: "vid_1787653848011",
+      section: "aiTrack",
+      title: "BM Studio",
+      badge: "Bargad Song Edit",
+      subtitle: "",
+      videoUrl: "https://res.cloudinary.com/xypda8sw/video/upload/q_auto,vc_auto,w_720/v1787653846/pdfsfqewjd3sl9zdvr9j.mp4",
+      thumbClass: "v1"
+    },
+    {
+      id: "vid_1787653671082",
+      section: "colorTrack",
+      title: "Vedant Beladiya",
+      badge: "Log to Colour Grad",
+      subtitle: "",
+      videoUrl: "https://res.cloudinary.com/xypda8sw/video/upload/q_auto,vc_auto,w_720/v1787653669/vkpw2ztgzrw2m5lp5aon.mp4",
+      thumbClass: "v1"
+    },
+    {
+      id: "vid_1787645827738",
+      section: "colorTrack",
+      title: "Vedant Beladiya",
+      badge: "Log to Colour Grad",
+      subtitle: "Graded In Premier Pro",
+      videoUrl: "https://res.cloudinary.com/xypda8sw/video/upload/q_auto,vc_auto,w_720/v1787645826/xthkjuswpslg5zkptoa6.mp4",
+      thumbClass: "v1"
+    }
+  ];
+
+  // In-memory videos store initialized with cache / seed
+  var inMemoryVideos = null;
 
   // Default Settings with your Cloudinary Cloud & Secret Password pre-configured
   var DEFAULT_SETTINGS = {
@@ -289,16 +320,30 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch(e) {}
   }
 
-  // Load Videos
+  // Load Videos from memory or local cache
   function getVideos() {
+    if (inMemoryVideos && Array.isArray(inMemoryVideos) && inMemoryVideos.length > 0) {
+      return inMemoryVideos;
+    }
     try {
       var saved = localStorage.getItem(STORAGE_VIDEOS_KEY);
       if (saved) {
         var parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          inMemoryVideos = parsed;
+          return inMemoryVideos;
+        }
       }
     } catch(e) {}
-    return DEFAULT_VIDEOS.slice();
+    inMemoryVideos = DEFAULT_VIDEOS.slice();
+    return inMemoryVideos;
+  }
+
+  function setVideosCache(videos) {
+    inMemoryVideos = Array.isArray(videos) ? videos : [];
+    try {
+      localStorage.setItem(STORAGE_VIDEOS_KEY, JSON.stringify(inMemoryVideos));
+    } catch(e) {}
   }
 
   // Stream Optimizer for Cloudinary & Direct MP4s
@@ -314,66 +359,123 @@ document.addEventListener('DOMContentLoaded', function() {
     return url;
   }
 
-  // Realtime Cloud Database Endpoint for instant global sync across all devices
-  var REALTIME_CLOUD_DB = 'https://api.restful-api.dev/objects/ff8081819ff5b11001a037fbb94a199b';
-  var GITHUB_API_REPO = 'VedantBeladiya/VedantBeladiya';
-  var _0xgh = atob('Z2hwX3JSNmpEWkdoTVB6N0xKS2drc2VDajlvZldwMVpiTzMzWmZJMQ==');
+  // --- Persistent Backend API Client ---
+  var API_ENDPOINT = '/api/videos';
 
-  // Automatic Realtime Cloud Sync
-  function syncToRealtimeCloud(videos) {
+  async function fetchVideosFromBackend() {
     try {
-      fetch(REALTIME_CLOUD_DB, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: 'vedant_portfolio_videos',
-          data: { videos: videos }
-        })
-      })
-      .then(function(res) { return res.json(); })
-      .then(function() {
-        console.log('✅ Realtime cloud sync successful! Videos are live for all devices.');
-      })
-      .catch(function(err) {
-        console.warn('Realtime cloud sync notice:', err);
+      var res = await fetch(API_ENDPOINT + '?t=' + Date.now(), {
+        headers: { 'Cache-Control': 'no-cache' }
       });
-    } catch(e) {}
-
-    // Also sync to GitHub as persistent backup
-    if (_0xgh) {
-      try {
-        var contentBase64 = btoa(unescape(encodeURIComponent(JSON.stringify(videos, null, 2))));
-        fetch('https://api.github.com/repos/' + GITHUB_API_REPO + '/contents/videos.json?ref=main', {
-          headers: { 'Authorization': 'token ' + _0xgh }
-        })
-        .then(function(r) { return r.json(); })
-        .then(function(data) {
-          var sha = data && data.sha ? data.sha : null;
-          var payload = {
-            message: 'Auto-sync portfolio videos from phone',
-            content: contentBase64
-          };
-          if (sha) payload.sha = sha;
-          return fetch('https://api.github.com/repos/' + GITHUB_API_REPO + '/contents/videos.json', {
-            method: 'PUT',
-            headers: {
-              'Authorization': 'token ' + _0xgh,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-          });
-        }).catch(function() {});
-      } catch(e) {}
+      if (res.ok) {
+        var data = await res.json();
+        if (data && data.success && Array.isArray(data.videos) && data.videos.length > 0) {
+          setVideosCache(data.videos);
+          renderAllTracks();
+          return data.videos;
+        }
+      }
+    } catch (err) {
+      console.warn('API fetch notice, using fallback cache:', err);
     }
+
+    // Static fallback to videos.json
+    try {
+      var staticRes = await fetch('videos.json?t=' + Date.now());
+      if (staticRes.ok) {
+        var staticData = await staticRes.json();
+        if (Array.isArray(staticData) && staticData.length > 0) {
+          setVideosCache(staticData);
+          renderAllTracks();
+          return staticData;
+        }
+      }
+    } catch (e) {}
+
+    renderAllTracks();
+    return getVideos();
   }
 
-  function saveVideos(videos, skipSync) {
+  async function saveVideoToBackend(videoObj) {
     try {
-      localStorage.setItem(STORAGE_VIDEOS_KEY, JSON.stringify(videos));
-    } catch(e) {}
-    if (!skipSync) {
-      syncToRealtimeCloud(videos);
+      var res = await fetch(API_ENDPOINT, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ video: videoObj })
+      });
+      if (res.ok) {
+        var data = await res.json();
+        if (data && Array.isArray(data.videos)) {
+          setVideosCache(data.videos);
+          renderAllTracks();
+          return true;
+        }
+      }
+    } catch (err) {
+      console.error('Backend save error:', err);
     }
+
+    // Fallback: update local cache
+    var list = getVideos().slice();
+    var idx = list.findIndex(function(v) { return v.id === videoObj.id; });
+    if (idx >= 0) list[idx] = videoObj;
+    else list.unshift(videoObj);
+    setVideosCache(list);
+    renderAllTracks();
+    return false;
+  }
+
+  async function updateVideoInBackend(videoObj) {
+    try {
+      var res = await fetch(API_ENDPOINT, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ video: videoObj })
+      });
+      if (res.ok) {
+        var data = await res.json();
+        if (data && Array.isArray(data.videos)) {
+          setVideosCache(data.videos);
+          renderAllTracks();
+          return true;
+        }
+      }
+    } catch (err) {
+      console.error('Backend update error:', err);
+    }
+
+    // Fallback
+    var list = getVideos().slice();
+    var idx = list.findIndex(function(v) { return v.id === videoObj.id; });
+    if (idx >= 0) list[idx] = Object.assign({}, list[idx], videoObj);
+    else list.unshift(videoObj);
+    setVideosCache(list);
+    renderAllTracks();
+    return false;
+  }
+
+  async function deleteVideoFromBackend(id) {
+    try {
+      var res = await fetch(API_ENDPOINT + '?id=' + encodeURIComponent(id), {
+        method: 'DELETE'
+      });
+      if (res.ok) {
+        var data = await res.json();
+        if (data && Array.isArray(data.videos)) {
+          setVideosCache(data.videos);
+          renderAllTracks();
+          return true;
+        }
+      }
+    } catch (err) {
+      console.error('Backend delete error:', err);
+    }
+
+    // Fallback
+    var updated = getVideos().filter(function(v) { return v.id !== id; });
+    setVideosCache(updated);
+    renderAllTracks();
+    return false;
   }
 
   var isAdminActive = false;
@@ -1153,10 +1255,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // Reset to Default
   var btnResetVideos = document.getElementById('btnResetVideos');
   if (btnResetVideos) {
-    btnResetVideos.addEventListener('click', function() {
+    btnResetVideos.addEventListener('click', async function() {
       if (confirm('⚠️ Are you sure you want to reset all portfolio videos back to initial defaults?')) {
-        saveVideos(DEFAULT_VIDEOS.slice());
+        setVideosCache(DEFAULT_VIDEOS.slice());
         renderAllTracks();
+        try {
+          await fetch('/api/videos', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ reset: true, videos: DEFAULT_VIDEOS.slice() })
+          });
+        } catch(e) {}
         closeModal('cloudSettingsModal');
         alert('✨ Portfolio videos reset to default.');
       }
@@ -1283,13 +1392,10 @@ document.addEventListener('DOMContentLoaded', function() {
     openModal('videoUploadModal');
   };
 
-  window.deleteVideoItem = function(id, e) {
+  window.deleteVideoItem = async function(id, e) {
     if (e) e.stopPropagation();
     if (confirm('🗑️ Are you sure you want to delete this video from your website?')) {
-      var videos = getVideos();
-      var updated = videos.filter(function(v) { return v.id !== id; });
-      saveVideos(updated);
-      renderAllTracks();
+      await deleteVideoFromBackend(id);
     }
   };
 
@@ -1569,21 +1675,19 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  function finalizeSaveVideo(videoObj) {
+  async function finalizeSaveVideo(videoObj) {
     if (videoObj.videoUrl) {
       videoObj.videoUrl = optimizeVideoUrl(videoObj.videoUrl);
     }
-    var videos = getVideos();
-    var existingIndex = videos.findIndex(function(v) { return v.id === videoObj.id; });
+    var isEdit = Boolean(document.getElementById('editVideoId').value);
 
-    if (existingIndex >= 0) {
-      videos[existingIndex] = Object.assign({}, videos[existingIndex], videoObj);
+    // Save to persistent backend
+    if (isEdit) {
+      await updateVideoInBackend(videoObj);
     } else {
-      videos.unshift(videoObj);
+      await saveVideoToBackend(videoObj);
     }
 
-    saveVideos(videos);
-    renderAllTracks();
     closeModal('videoUploadModal');
     resetFilePreview();
   }
@@ -1591,35 +1695,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // Initial render from local cache
   renderAllTracks();
 
-  // Fetch live videos from Realtime Cloud Database for all visitors worldwide
-  fetch(REALTIME_CLOUD_DB)
-    .then(function(res) { return res.json(); })
-    .then(function(payload) {
-      if (payload && payload.data && Array.isArray(payload.data.videos)) {
-        var liveVideos = payload.data.videos;
-        // Merge with local storage videos so no freshly uploaded item is lost
-        var localVideos = getVideos();
-        var merged = liveVideos.slice();
-        localVideos.forEach(function(lv) {
-          if (!merged.some(function(mv) { return mv.id === lv.id; })) {
-            merged.push(lv);
-          }
-        });
-        saveVideos(merged, true); // true = skip redundant re-sync
-        renderAllTracks();
-      }
-    })
-    .catch(function() {
-      // Backup fetch from videos.json
-      fetch('videos.json?t=' + Date.now())
-        .then(function(r) { return r.json(); })
-        .then(function(backupVideos) {
-          if (Array.isArray(backupVideos) && backupVideos.length > 0) {
-            saveVideos(backupVideos, true);
-            renderAllTracks();
-          }
-        }).catch(function() {});
-    });
+  // Fetch live videos from persistent backend API for all visitors worldwide
+  fetchVideosFromBackend();
 
-  console.log('%c🎬 Video Editor Portfolio Ready | Realtime Cloud Sync Active', 'color: #00ff88; font-weight: bold;');
+  console.log('%c🎬 Video Editor Portfolio Ready | Persistent Cloud Backend Active', 'color: #00ff88; font-weight: bold;');
 });
