@@ -590,6 +590,35 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // Sync to Live Modal Actions
+  var barSyncBtn = document.getElementById('barSyncBtn');
+  var syncJsonOutput = document.getElementById('syncJsonOutput');
+  var btnCopySyncJson = document.getElementById('btnCopySyncJson');
+
+  if (barSyncBtn) {
+    barSyncBtn.addEventListener('click', function() {
+      var videos = getVideos();
+      if (syncJsonOutput) {
+        syncJsonOutput.value = JSON.stringify(videos, null, 2);
+      }
+      openModal('syncModal');
+    });
+  }
+
+  if (btnCopySyncJson) {
+    btnCopySyncJson.addEventListener('click', function() {
+      if (syncJsonOutput) {
+        syncJsonOutput.select();
+        navigator.clipboard.writeText(syncJsonOutput.value).then(function() {
+          alert('📋 Copied! હવે આને ચેટમાં પેસ્ટ કરી દો જેથી હું તેને લાઈવ વેબસાઇટમાં કાયમ માટે સેવ કરી દઉં.');
+        }).catch(function() {
+          document.execCommand('copy');
+          alert('📋 Copied!');
+        });
+      }
+    });
+  }
+
   if (barExitBtn) {
     barExitBtn.addEventListener('click', function() {
       setAdminMode(false);
@@ -1118,6 +1147,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Initial render on page load
   renderAllTracks();
+
+  // Fetch live videos from videos.json for all visitors
+  fetch('videos.json')
+    .then(function(res) { return res.json(); })
+    .then(function(liveVideos) {
+      if (Array.isArray(liveVideos) && liveVideos.length > 0) {
+        var current = getVideos();
+        // If current is empty or live has more items, merge and render
+        if (current.length === 0) {
+          saveVideos(liveVideos);
+          renderAllTracks();
+        }
+      }
+    }).catch(function() {});
 
   console.log('%c🎬 Video Editor Portfolio Ready | Video Management Enabled', 'color: #00ff88; font-weight: bold;');
 });

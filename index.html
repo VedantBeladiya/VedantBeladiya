@@ -1111,6 +1111,9 @@
       <button class="btn-admin-action" id="barUploadBtn">
         <span>＋ Upload Video</span>
       </button>
+      <button class="btn-admin-action secondary" id="barSyncBtn">
+        <span>📋 Sync to Live</span>
+      </button>
       <button class="btn-admin-action secondary" id="barSettingsBtn">
         <span>⚙️ Cloud Settings</span>
       </button>
@@ -1346,6 +1349,36 @@
           <button type="submit" class="btn-modal primary">Save Settings</button>
         </div>
       </form>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Sync to Live Modal -->
+<div class="modal-backdrop" id="syncModal" style="display: none;">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title-wrap">
+        <span class="modal-icon">📋</span>
+        <div>
+          <h3>Sync Videos to All Visitors</h3>
+          <p>Make your phone uploaded videos visible across all devices</p>
+        </div>
+      </div>
+      <button class="modal-close-btn" data-close="syncModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:0.85rem; color:var(--text-light); line-height:1.5; margin-bottom:1rem;">
+        તમે ફોનમાંથી અપલોડ કરેલા વિડિયોઝનો ડેટા નીચે આપ્યો છે. આને કોપી કરીને અહીં ચેટમાં મોકલી આપો જેથી હું તેને લાઈવ વેબસાઇટમાં કાયમ માટે બધા માટે સેવ કરી દઉં!
+      </p>
+
+      <textarea id="syncJsonOutput" rows="6" readonly style="width:100%; font-family:monospace; font-size:0.75rem; background:#070b14; color:#00ff88; padding:0.8rem; border-radius:8px; border:1px solid rgba(0,255,136,0.3); margin-bottom:1rem; box-sizing:border-box;"></textarea>
+
+      <div class="modal-actions">
+        <button type="button" class="btn-modal secondary" data-close="syncModal">Close</button>
+        <button type="button" class="btn-modal primary" id="btnCopySyncJson">
+          <span>📋 Copy to Clipboard</span>
+        </button>
+      </div>
     </div>
   </div>
 </div>
