@@ -1440,9 +1440,9 @@ a, button, input, select, textarea {
   z-index: 3;
 }
 
-/* Hide original center play button once custom controls are injected */
-.video-card-interactive[data-vc-init="1"] .work-play-btn,
-.video-card-interactive[data-vc-init="1"] .reel-play-icon {
+/* Hide original center play button ONLY when video is actively playing */
+.video-card-interactive.is-playing .work-play-btn,
+.video-card-interactive.is-playing .reel-play-icon {
   display: none !important;
 }
 
@@ -1467,7 +1467,7 @@ a, button, input, select, textarea {
   transition: opacity 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
   cursor: pointer;
   opacity: 1;
-  z-index: 10;
+  z-index: 25;
   position: relative;
 }
 
@@ -1479,13 +1479,7 @@ a, button, input, select, textarea {
   box-shadow: 0 0 28px var(--primary-blue-glow);
 }
 
-/* When playing: HIDE the central play button */
-.video-card-interactive.is-playing .work-play-btn,
-.video-card-interactive.is-playing .reel-play-icon {
-  opacity: 0;
-  transform: scale(0.6);
-  pointer-events: none;
-}
+/* When playing: HIDE the central play button (already handled by display:none above) */
 
 .video-card-interactive.is-playing .work-thumb::after,
 .video-card-interactive.is-playing .reel-mockup::after {
