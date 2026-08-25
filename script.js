@@ -345,6 +345,17 @@ document.addEventListener('DOMContentLoaded', function() {
     return url;
   }
 
+  // Generate a transformed first-frame image for older Cloudinary videos.
+  function getFallbackThumbnail(videoUrl) {
+    if (!videoUrl || typeof videoUrl !== 'string' || videoUrl.startsWith('gdrive:')) return '';
+    if (videoUrl.includes('res.cloudinary.com') && videoUrl.includes('/video/upload/')) {
+      var cleanUrl = videoUrl.split('#')[0].split('?')[0];
+      cleanUrl = cleanUrl.replace('/video/upload/', '/video/upload/so_0,q_auto:good,f_jpg,w_720/');
+      return cleanUrl.replace(/\.[^/.]+$/, '.jpg');
+    }
+    return '';
+  }
+
   // --- Persistent Backend API Client ---
   var API_ENDPOINT = '/api/videos';
 
@@ -459,6 +470,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
   var isAdminActive = false;
   var currentSelectedFile = null;
+  var selectedThumbnailUrl = '';
+  var thumbnailUploadBusy = false;
 
   // Render all video tracks
   function renderAllTracks() {
@@ -498,13 +511,16 @@ document.addEventListener('DOMContentLoaded', function() {
           if (!hasVideo) return '';
           if (isGDrive) {
             return '<div class="gdrive-card-wrap">' +
-              '<img class="gdrive-thumb portfolio-video" src="https://drive.google.com/thumbnail?id=' + gdriveId + '&sz=w480-h270" alt="Video thumbnail" />' +
+              '<img class="gdrive-thumb portfolio-video" loading="lazy" decoding="async" src="' + (item.thumbnailUrl || ('https://drive.google.com/thumbnail?id=' + gdriveId + '&sz=w480-h270')) + '" alt="Video thumbnail" />' +
               '<button class="gdrive-overlay-btn" onclick="window.openGDrivePlayer(\'' + gdriveId + '\', event)" aria-label="Play Google Drive video">▶</button>' +
               '<span class="gdrive-badge">🔺 GDrive</span>' +
             '</div>';
           }
           var streamUrl = optimizeVideoUrl(item.videoUrl);
-          return '<video class="portfolio-video" src="' + streamUrl + '#t=0.001" playsinline webkit-playsinline preload="metadata" loop muted></video>';
+          var posterUrl = item.thumbnailUrl || getFallbackThumbnail(item.videoUrl);
+          return '<video class="portfolio-video" src="' + streamUrl + '"' +
+            (posterUrl ? ' poster="' + posterUrl + '"' : '') +
+            ' playsinline webkit-playsinline preload="' + (posterUrl ? 'none' : 'metadata') + '" loop muted></video>';
         }
 
         if (isAgency) {
@@ -1298,6 +1314,42 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // --- Upload Video Flow & Global Window Methods ---
+  function setThumbnailPreview(url) {
+    selectedThumbnailUrl = url || '';
+    var wrap = document.getElementById('thumbPreviewWrap');
+    var img = document.getElementById('thumbPreviewImg');
+    if (img) img.src = selectedThumbnailUrl;
+    if (wrap) wrap.style.display = selectedThumbnailUrl ? 'block' : 'none';
+  }
+
+  function setThumbnailVideoSource(url) {
+    var video = document.getElementById('thumbScrubVideo');
+    var wrap = document.getElementById('thumbScrubWrap');
+    var hint = document.getElementById('thumbNoVideoHint');
+    if (!video) return;
+    video.pause();
+    video.removeAttribute('src');
+    if (url && !url.startsWith('gdrive:')) {
+      video.crossOrigin = 'anonymous';
+      video.src = url;
+      video.load();
+      if (wrap) wrap.style.display = 'block';
+      if (hint) hint.style.display = 'none';
+    } else {
+      if (wrap) wrap.style.display = 'none';
+      if (hint) hint.style.display = 'block';
+    }
+  }
+
+  function resetThumbnailState(existingUrl) {
+    selectedThumbnailUrl = existingUrl || '';
+    thumbnailUploadBusy = false;
+    var input = document.getElementById('thumbImageInput');
+    if (input) input.value = '';
+    setThumbnailPreview(selectedThumbnailUrl);
+    window.switchThumbPanel('video');
+  }
+
   window.openUploadForSection = function(sectionId) {
     var editIdInput = document.getElementById('editVideoId');
     var sectionSelect = document.getElementById('videoTargetSection');
@@ -1323,6 +1375,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (gdrivePreviewCard) gdrivePreviewCard.style.display = 'none';
 
     resetFilePreview();
+    resetThumbnailState('');
+    setThumbnailVideoSource('');
     switchUploadTab('tab-gdrive');
     openModal('videoUploadModal');
   };
@@ -1368,6 +1422,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     resetFilePreview();
+    resetThumbnailState(item.thumbnailUrl || '');
+    setThumbnailVideoSource(item.videoUrl || '');
     openModal('videoUploadModal');
   };
 
@@ -1471,6 +1527,7 @@ document.addEventListener('DOMContentLoaded', function() {
       filePreviewVideo.src = fileUrl;
       filePreviewVideo.load();
     }
+    setThumbnailVideoSource(fileUrl);
 
     if (fileDropzone) fileDropzone.style.display = 'none';
     if (filePreviewCard) filePreviewCard.style.display = 'flex';
@@ -1519,6 +1576,150 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  // --- Thumbnail picker, frame capture, and Cloudinary image upload ---
+  window.switchThumbPanel = function(panel) {
+    var isVideo = panel === 'video';
+    var videoPanel = document.getElementById('thumbPanelVideo');
+    var customPanel = document.getElementById('thumbPanelCustom');
+    var videoBtn = document.getElementById('thumbBtnFromVideo');
+    var customBtn = document.getElementById('thumbBtnCustom');
+    if (videoPanel) videoPanel.style.display = isVideo ? 'block' : 'none';
+    if (customPanel) customPanel.style.display = isVideo ? 'none' : 'block';
+    if (videoBtn) videoBtn.classList.toggle('active', isVideo);
+    if (customBtn) customBtn.classList.toggle('active', !isVideo);
+  };
+
+  function showThumbnailProgress(show, percent, message) {
+    var wrap = document.getElementById('thumbUploadProgress');
+    var fill = document.getElementById('thumbUploadFill');
+    var pct = document.getElementById('thumbUploadPercent');
+    var text = document.getElementById('thumbUploadStatusText');
+    if (wrap) wrap.style.display = show ? 'block' : 'none';
+    if (fill) fill.style.width = (percent || 0) + '%';
+    if (pct) pct.textContent = (percent || 0) + '%';
+    if (text && message) text.textContent = message;
+  }
+
+  function uploadThumbnailToCloudinary(blob, filename) {
+    var settings = getSettings();
+    if (!settings.cloudName || !settings.uploadPreset) {
+      return Promise.reject(new Error('Cloudinary Cloud Name and unsigned upload preset are required in Settings.'));
+    }
+    thumbnailUploadBusy = true;
+    showThumbnailProgress(true, 0, 'Uploading thumbnail...');
+    return new Promise(function(resolve, reject) {
+      var form = new FormData();
+      form.append('file', blob, filename || 'thumbnail.webp');
+      form.append('upload_preset', settings.uploadPreset);
+      form.append('folder', 'portfolio_thumbnails');
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://api.cloudinary.com/v1_1/' + encodeURIComponent(settings.cloudName) + '/image/upload', true);
+      xhr.upload.onprogress = function(evt) {
+        if (evt.lengthComputable) showThumbnailProgress(true, Math.round(evt.loaded / evt.total * 100), 'Uploading thumbnail...');
+      };
+      xhr.onload = function() {
+        thumbnailUploadBusy = false;
+        showThumbnailProgress(false, 100);
+        if (xhr.status >= 200 && xhr.status < 300) {
+          try {
+            var data = JSON.parse(xhr.responseText);
+            if (!data.secure_url) throw new Error('Cloudinary did not return an image URL.');
+            resolve(data.secure_url);
+          } catch (err) { reject(err); }
+        } else {
+          var detail = '';
+          try { detail = JSON.parse(xhr.responseText).error.message; } catch (_) {}
+          reject(new Error(detail || ('Cloudinary upload failed (' + xhr.status + ').')));
+        }
+      };
+      xhr.onerror = function() {
+        thumbnailUploadBusy = false;
+        showThumbnailProgress(false, 0);
+        reject(new Error('Network error while uploading the thumbnail.'));
+      };
+      xhr.send(form);
+    });
+  }
+
+  var thumbVideo = document.getElementById('thumbScrubVideo');
+  var thumbRange = document.getElementById('thumbScrubRange');
+  var thumbTime = document.getElementById('thumbScrubTime');
+  if (thumbVideo && thumbRange) {
+    function syncThumbTime() {
+      if (!isFinite(thumbVideo.duration)) return;
+      var pct = thumbVideo.duration ? (thumbVideo.currentTime / thumbVideo.duration) * 100 : 0;
+      thumbRange.value = pct;
+      if (thumbTime) thumbTime.textContent = fmtTime(thumbVideo.currentTime) + ' / ' + fmtTime(thumbVideo.duration);
+    }
+    thumbVideo.addEventListener('loadedmetadata', syncThumbTime);
+    thumbVideo.addEventListener('timeupdate', syncThumbTime);
+    thumbRange.addEventListener('input', function() {
+      if (isFinite(thumbVideo.duration)) thumbVideo.currentTime = (Number(thumbRange.value) / 100) * thumbVideo.duration;
+    });
+  }
+
+  var captureBtn = document.getElementById('btnCaptureFrame');
+  if (captureBtn) captureBtn.addEventListener('click', function() {
+    if (!thumbVideo || !thumbVideo.videoWidth || !thumbVideo.videoHeight) {
+      alert('Could not capture this frame. Wait for the video to load, pause on a frame, and try again.');
+      return;
+    }
+    captureBtn.disabled = true;
+    try {
+      var canvas = document.createElement('canvas');
+      var maxWidth = 1920;
+      var scale = Math.min(1, maxWidth / thumbVideo.videoWidth);
+      canvas.width = Math.round(thumbVideo.videoWidth * scale);
+      canvas.height = Math.round(thumbVideo.videoHeight * scale);
+      canvas.getContext('2d').drawImage(thumbVideo, 0, 0, canvas.width, canvas.height);
+      canvas.toBlob(async function(blob) {
+        if (!blob) {
+          captureBtn.disabled = false;
+          alert('Frame capture failed. The video host may block browser frame access; try a custom thumbnail instead.');
+          return;
+        }
+        try {
+          var url = await uploadThumbnailToCloudinary(blob, 'video-frame-' + Date.now() + '.jpg');
+          setThumbnailPreview(url);
+        } catch (err) {
+          alert('Thumbnail upload failed: ' + err.message + '\n\nPlease retry. Your saved video has not been changed.');
+        } finally { captureBtn.disabled = false; }
+      }, 'image/jpeg', 0.92);
+    } catch (err) {
+      captureBtn.disabled = false;
+      alert('Frame capture failed: ' + err.message + '\n\nTry a custom thumbnail if this video host blocks frame capture.');
+    }
+  });
+
+  var thumbImageInput = document.getElementById('thumbImageInput');
+  if (thumbImageInput) thumbImageInput.addEventListener('change', async function(e) {
+    var file = e.target.files && e.target.files[0];
+    if (!file) return;
+    var validTypes = ['image/jpeg', 'image/png', 'image/webp'];
+    if (validTypes.indexOf(file.type) === -1) {
+      thumbImageInput.value = '';
+      alert('Invalid thumbnail. Please choose a JPG, JPEG, PNG, or WebP image.');
+      return;
+    }
+    try {
+      var url = await uploadThumbnailToCloudinary(file, file.name);
+      setThumbnailPreview(url);
+    } catch (err) {
+      alert('Thumbnail upload failed: ' + err.message + '\n\nPlease retry. Your saved video has not been changed.');
+    }
+  });
+
+  var clearThumbBtn = document.getElementById('btnClearThumb');
+  if (clearThumbBtn) clearThumbBtn.addEventListener('click', function() {
+    setThumbnailPreview('');
+    if (thumbImageInput) thumbImageInput.value = '';
+  });
+
+  var directVideoInput = document.getElementById('videoUrlInput');
+  if (directVideoInput) directVideoInput.addEventListener('change', function() {
+    setThumbnailVideoSource(directVideoInput.value.trim());
+  });
+
   // --- Video Upload Submission (GDrive / Cloudinary / Direct URL) ---
   var videoUploadForm = document.getElementById('videoUploadForm');
   if (videoUploadForm) {
@@ -1531,6 +1732,11 @@ document.addEventListener('DOMContentLoaded', function() {
       var subtitle = (document.getElementById('videoSubtitleInput').value || '').trim();
       var directUrl = (document.getElementById('videoUrlInput').value || '').trim();
       var gdriveRaw = (document.getElementById('gdriveUrlInput').value || '').trim();
+
+      if (thumbnailUploadBusy) {
+        alert('Please wait for the thumbnail upload to finish before saving.');
+        return;
+      }
 
       var submitBtn = document.getElementById('btnSubmitVideo');
       var progressWrap = document.getElementById('uploadProgressWrap');
@@ -1657,6 +1863,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if (videoObj.videoUrl) {
       videoObj.videoUrl = optimizeVideoUrl(videoObj.videoUrl);
     }
+    // Only a Cloudinary URL (or an empty string) reaches Redis; never blobs/base64.
+    videoObj.thumbnailUrl = selectedThumbnailUrl || '';
     var isEdit = Boolean(document.getElementById('editVideoId').value);
 
     // Save to persistent backend — only close modal if backend confirms the write
@@ -1670,6 +1878,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (success) {
       closeModal('videoUploadModal');
       resetFilePreview();
+      resetThumbnailState('');
     }
     // If failed, modal stays open so user can retry
   }

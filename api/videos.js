@@ -33,6 +33,17 @@ const INITIAL_SEED_VIDEOS = [
 
 const KV_KEY = "portfolio_videos";
 
+function isValidThumbnailUrl(value) {
+  if (value === undefined || value === null || value === "") return true;
+  if (typeof value !== "string") return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === "https:" && url.hostname === "res.cloudinary.com";
+  } catch (_) {
+    return false;
+  }
+}
+
 // Get Upstash Redis / Vercel KV credentials from process.env
 function getKvConfig() {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
@@ -163,6 +174,9 @@ module.exports = async function handler(req, res) {
       if (!videoData || !videoData.videoUrl) {
         return res.status(400).json({ success: false, error: "Missing required field: videoUrl" });
       }
+      if (!isValidThumbnailUrl(videoData.thumbnailUrl)) {
+        return res.status(400).json({ success: false, error: "thumbnailUrl must be an HTTPS Cloudinary image URL" });
+      }
 
       const newVideo = {
         id: videoData.id || `vid_${Date.now()}`,
@@ -171,6 +185,7 @@ module.exports = async function handler(req, res) {
         badge: videoData.badge || "Reel",
         subtitle: videoData.subtitle || "",
         videoUrl: videoData.videoUrl,
+        thumbnailUrl: typeof videoData.thumbnailUrl === "string" ? videoData.thumbnailUrl : "",
         thumbClass: videoData.thumbClass || "v1"
       };
 
@@ -191,6 +206,9 @@ module.exports = async function handler(req, res) {
       const videoData = body && body.video ? body.video : body;
       if (!videoData || !videoData.id) {
         return res.status(400).json({ success: false, error: "Missing required field: id" });
+      }
+      if (!isValidThumbnailUrl(videoData.thumbnailUrl)) {
+        return res.status(400).json({ success: false, error: "thumbnailUrl must be an HTTPS Cloudinary image URL" });
       }
 
       const currentVideos = await getVideosFromDb();

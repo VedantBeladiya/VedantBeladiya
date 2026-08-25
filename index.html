@@ -1505,6 +1505,79 @@
             <input type="text" id="videoSubtitleInput" placeholder="e.g. 1M+ Views Viral Cut · DaVinci Resolve" />
           </label>
 
+          <!-- ═══════════════════════════════════════════════════════ -->
+          <!-- THUMBNAIL SECTION                                       -->
+          <!-- ═══════════════════════════════════════════════════════ -->
+          <div class="thumb-section">
+            <div class="thumb-section-label">
+              <span class="thumb-section-icon">🖼️</span>
+              <span>Thumbnail <span class="thumb-optional">(Optional)</span></span>
+            </div>
+
+            <!-- Toggle buttons -->
+            <div class="thumb-toggle-row">
+              <button type="button" class="thumb-toggle-btn active" id="thumbBtnFromVideo" onclick="window.switchThumbPanel('video')">
+                🎞️ Choose From Video
+              </button>
+              <button type="button" class="thumb-toggle-btn" id="thumbBtnCustom" onclick="window.switchThumbPanel('custom')">
+                📁 Upload Custom Image
+              </button>
+            </div>
+
+            <!-- Panel A: Frame picker from video -->
+            <div class="thumb-panel" id="thumbPanelVideo">
+              <p class="thumb-hint">Scrub the video to any frame, then click <strong>Use Current Frame</strong>.</p>
+              <div class="thumb-scrub-wrap" id="thumbScrubWrap" style="display:none;">
+                <video id="thumbScrubVideo" playsinline muted controls preload="metadata" class="thumb-scrub-video"></video>
+                <div class="thumb-scrub-controls">
+                  <input type="range" id="thumbScrubRange" class="thumb-scrub-range" min="0" max="100" step="0.01" value="0" aria-label="Scrub video" />
+                  <div class="thumb-scrub-footer">
+                    <span id="thumbScrubTime" class="thumb-scrub-time">0:00 / 0:00</span>
+                    <button type="button" class="btn-capture-frame" id="btnCaptureFrame">
+                      📸 Use Current Frame
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <p class="thumb-hint thumb-no-video-hint" id="thumbNoVideoHint">
+                ⬆️ Select or paste a video first to enable frame picking.
+              </p>
+            </div>
+
+            <!-- Panel B: Custom image upload -->
+            <div class="thumb-panel" id="thumbPanelCustom" style="display:none;">
+              <div class="thumb-img-dropzone" id="thumbImgDropzone">
+                <input type="file" id="thumbImageInput" accept="image/jpeg,image/jpg,image/png,image/webp" />
+                <div class="thumb-dz-content">
+                  <span class="thumb-dz-icon">🖼️</span>
+                  <span class="thumb-dz-label">Tap to choose thumbnail image</span>
+                  <small>JPG, PNG, or WebP</small>
+                </div>
+              </div>
+            </div>
+
+            <!-- Shared thumbnail preview -->
+            <div class="thumb-preview-wrap" id="thumbPreviewWrap" style="display:none;">
+              <div class="thumb-preview-label">
+                <span>✅ Thumbnail Selected</span>
+                <button type="button" class="thumb-clear-btn" id="btnClearThumb">✕ Clear</button>
+              </div>
+              <img id="thumbPreviewImg" src="" alt="Thumbnail preview" class="thumb-preview-img" />
+            </div>
+
+            <!-- Thumbnail upload progress -->
+            <div class="thumb-upload-progress" id="thumbUploadProgress" style="display:none;">
+              <div class="upload-progress-info">
+                <span id="thumbUploadStatusText">Uploading thumbnail...</span>
+                <span id="thumbUploadPercent">0%</span>
+              </div>
+              <div class="upload-progress-bar">
+                <div class="upload-progress-fill" id="thumbUploadFill" style="width:0%;"></div>
+              </div>
+            </div>
+          </div>
+          <!-- END THUMBNAIL SECTION -->
+
           <div class="modal-actions">
             <button type="button" class="btn-modal secondary" data-close="videoUploadModal">Cancel</button>
             <button type="submit" class="btn-modal primary" id="btnSubmitVideo">
@@ -1515,6 +1588,7 @@
       </div>
     </div>
   </div>
+
 
   <!-- 3. Cloud Storage Settings Modal -->
   <div class="modal-backdrop" id="cloudSettingsModal" style="display: none;">
