@@ -288,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   ];
 
-  // In-memory videos store initialized with cache / seed
+  // In-memory videos store initialized to null until fetched from backend API
   var inMemoryVideos = null;
 
   // Default Settings with your Cloudinary Cloud & Secret Password pre-configured
@@ -320,30 +320,16 @@ document.addEventListener('DOMContentLoaded', function() {
     } catch(e) {}
   }
 
-  // Load Videos from memory or local cache
+  // Load Videos from active in-memory state (source of truth from API)
   function getVideos() {
-    if (inMemoryVideos && Array.isArray(inMemoryVideos) && inMemoryVideos.length > 0) {
+    if (inMemoryVideos !== null && Array.isArray(inMemoryVideos)) {
       return inMemoryVideos;
     }
-    try {
-      var saved = localStorage.getItem(STORAGE_VIDEOS_KEY);
-      if (saved) {
-        var parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) {
-          inMemoryVideos = parsed;
-          return inMemoryVideos;
-        }
-      }
-    } catch(e) {}
-    inMemoryVideos = DEFAULT_VIDEOS.slice();
-    return inMemoryVideos;
+    return [];
   }
 
   function setVideosCache(videos) {
     inMemoryVideos = Array.isArray(videos) ? videos : [];
-    try {
-      localStorage.setItem(STORAGE_VIDEOS_KEY, JSON.stringify(inMemoryVideos));
-    } catch(e) {}
   }
 
   // Stream Optimizer for Cloudinary & Direct MP4s
@@ -367,33 +353,26 @@ document.addEventListener('DOMContentLoaded', function() {
       var res = await fetch(API_ENDPOINT + '?t=' + Date.now(), {
         headers: { 'Cache-Control': 'no-cache' }
       });
-      if (res.ok) {
-        var data = await res.json();
-        if (data && data.success && Array.isArray(data.videos) && data.videos.length > 0) {
-          setVideosCache(data.videos);
-          renderAllTracks();
-          return data.videos;
-        }
+      var data = null;
+      try { data = await res.json(); } catch(e) {}
+
+      if (res.ok && data && data.success && Array.isArray(data.videos)) {
+        setVideosCache(data.videos);
+        renderAllTracks();
+        return data.videos;
+      } else {
+        var errorMsg = data && data.error ? data.error : ('HTTP ' + res.status + ': ' + res.statusText);
+        console.error('❌ Failed to fetch portfolio videos from backend database:', errorMsg);
+        setVideosCache([]);
+        renderAllTracks();
+        return [];
       }
     } catch (err) {
-      console.warn('API fetch notice, using fallback cache:', err);
+      console.error('❌ Network error connecting to /api/videos:', err.message);
+      setVideosCache([]);
+      renderAllTracks();
+      return [];
     }
-
-    // Static fallback to videos.json
-    try {
-      var staticRes = await fetch('videos.json?t=' + Date.now());
-      if (staticRes.ok) {
-        var staticData = await staticRes.json();
-        if (Array.isArray(staticData) && staticData.length > 0) {
-          setVideosCache(staticData);
-          renderAllTracks();
-          return staticData;
-        }
-      }
-    } catch (e) {}
-
-    renderAllTracks();
-    return getVideos();
   }
 
   async function saveVideoToBackend(videoObj) {
@@ -403,26 +382,25 @@ document.addEventListener('DOMContentLoaded', function() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ video: videoObj })
       });
-      if (res.ok) {
-        var data = await res.json();
-        if (data && Array.isArray(data.videos)) {
-          setVideosCache(data.videos);
-          renderAllTracks();
-          return true;
-        }
+      var data = null;
+      try { data = await res.json(); } catch(e) {}
+
+      if (res.ok && data && data.success && Array.isArray(data.videos)) {
+        setVideosCache(data.videos);
+        renderAllTracks();
+        alert('🎉 Video saved and published to database successfully!');
+        return true;
+      } else {
+        var errText = data && data.error ? data.error : ('Server error ' + res.status);
+        console.error('Database write failed:', errText);
+        alert('❌ Could not save video to database:\n\n' + errText);
+        return false;
       }
     } catch (err) {
-      console.error('Backend save error:', err);
+      console.error('Backend save network error:', err);
+      alert('❌ Network error: Could not reach backend database.\n\nPlease check your internet connection and try again.');
+      return false;
     }
-
-    // Fallback: update local cache
-    var list = getVideos().slice();
-    var idx = list.findIndex(function(v) { return v.id === videoObj.id; });
-    if (idx >= 0) list[idx] = videoObj;
-    else list.unshift(videoObj);
-    setVideosCache(list);
-    renderAllTracks();
-    return false;
   }
 
   async function updateVideoInBackend(videoObj) {
@@ -432,26 +410,25 @@ document.addEventListener('DOMContentLoaded', function() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ video: videoObj })
       });
-      if (res.ok) {
-        var data = await res.json();
-        if (data && Array.isArray(data.videos)) {
-          setVideosCache(data.videos);
-          renderAllTracks();
-          return true;
-        }
+      var data = null;
+      try { data = await res.json(); } catch(e) {}
+
+      if (res.ok && data && data.success && Array.isArray(data.videos)) {
+        setVideosCache(data.videos);
+        renderAllTracks();
+        alert('✅ Video updated in database successfully!');
+        return true;
+      } else {
+        var errText = data && data.error ? data.error : ('Server error ' + res.status);
+        console.error('Database update failed:', errText);
+        alert('❌ Could not update video in database:\n\n' + errText);
+        return false;
       }
     } catch (err) {
-      console.error('Backend update error:', err);
+      console.error('Backend update network error:', err);
+      alert('❌ Network error: Could not reach backend database.\n\nPlease try again.');
+      return false;
     }
-
-    // Fallback
-    var list = getVideos().slice();
-    var idx = list.findIndex(function(v) { return v.id === videoObj.id; });
-    if (idx >= 0) list[idx] = Object.assign({}, list[idx], videoObj);
-    else list.unshift(videoObj);
-    setVideosCache(list);
-    renderAllTracks();
-    return false;
   }
 
   async function deleteVideoFromBackend(id) {
@@ -459,23 +436,25 @@ document.addEventListener('DOMContentLoaded', function() {
       var res = await fetch(API_ENDPOINT + '?id=' + encodeURIComponent(id), {
         method: 'DELETE'
       });
-      if (res.ok) {
-        var data = await res.json();
-        if (data && Array.isArray(data.videos)) {
-          setVideosCache(data.videos);
-          renderAllTracks();
-          return true;
-        }
+      var data = null;
+      try { data = await res.json(); } catch(e) {}
+
+      if (res.ok && data && data.success && Array.isArray(data.videos)) {
+        setVideosCache(data.videos);
+        renderAllTracks();
+        alert('🗑️ Video successfully deleted from database.');
+        return true;
+      } else {
+        var errText = data && data.error ? data.error : ('Server error ' + res.status);
+        console.error('Database delete failed:', errText);
+        alert('❌ Could not delete video from database:\n\n' + errText);
+        return false;
       }
     } catch (err) {
-      console.error('Backend delete error:', err);
+      console.error('Backend delete network error:', err);
+      alert('❌ Network error: Could not reach backend database.\n\nPlease try again.');
+      return false;
     }
-
-    // Fallback
-    var updated = getVideos().filter(function(v) { return v.id !== id; });
-    setVideosCache(updated);
-    renderAllTracks();
-    return false;
   }
 
   var isAdminActive = false;
@@ -1642,6 +1621,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       xhr.onload = function() {
         if (submitBtn) submitBtn.disabled = false;
+        if (progressWrap) progressWrap.style.display = 'none';
         if (xhr.status >= 200 && xhr.status < 300) {
           try {
             var response = JSON.parse(xhr.responseText);
@@ -1655,13 +1635,11 @@ document.addEventListener('DOMContentLoaded', function() {
               videoUrl: secureUrl,
               thumbClass: 'v1'
             });
-            alert('🎉 Video uploaded and published successfully!');
           } catch(err) {
             alert('❌ Upload parse error: ' + err.message);
           }
         } else {
           alert('❌ Cloud upload failed (' + xhr.status + '). Please check Cloudinary credentials or preset name.');
-          if (progressWrap) progressWrap.style.display = 'none';
         }
       };
 
@@ -1681,21 +1659,23 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     var isEdit = Boolean(document.getElementById('editVideoId').value);
 
-    // Save to persistent backend
+    // Save to persistent backend — only close modal if backend confirms the write
+    var success;
     if (isEdit) {
-      await updateVideoInBackend(videoObj);
+      success = await updateVideoInBackend(videoObj);
     } else {
-      await saveVideoToBackend(videoObj);
+      success = await saveVideoToBackend(videoObj);
     }
 
-    closeModal('videoUploadModal');
-    resetFilePreview();
+    if (success) {
+      closeModal('videoUploadModal');
+      resetFilePreview();
+    }
+    // If failed, modal stays open so user can retry
   }
 
-  // Initial render from local cache
-  renderAllTracks();
-
   // Fetch live videos from persistent backend API for all visitors worldwide
+  // (renderAllTracks is called inside fetchVideosFromBackend after data arrives)
   fetchVideosFromBackend();
 
   console.log('%c🎬 Video Editor Portfolio Ready | Persistent Cloud Backend Active', 'color: #00ff88; font-weight: bold;');

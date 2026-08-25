@@ -1,8 +1,7 @@
-// Vercel Serverless Function — Unified Video Portfolio Backend API
+// Vercel Serverless Function — Single Source of Truth: Upstash Redis / Vercel KV
 // Route: /api/videos
-// Handles persistent CRUD for video portfolio metadata without client-side secrets.
 
-const SEED_VIDEOS = [
+const INITIAL_SEED_VIDEOS = [
   {
     id: "vid_1787653848011",
     section: "aiTrack",
@@ -32,158 +31,90 @@ const SEED_VIDEOS = [
   }
 ];
 
-const DEFAULT_CLOUD_DB = "https://api.restful-api.dev/objects/ff8081819ff5b11001a037fbb94a199b";
+const KV_KEY = "portfolio_videos";
 
-// --- Storage Adapters ---
-
-// 1. Upstash Redis / Vercel KV Adapter
-async function getFromKv() {
+// Get Upstash Redis / Vercel KV credentials from process.env
+function getKvConfig() {
   const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
   const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return null;
-
-  try {
-    const res = await fetch(`${url}/get/portfolio_videos`, {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (!data || !data.result) return null;
-    const parsed = typeof data.result === 'string' ? JSON.parse(data.result) : data.result;
-    return Array.isArray(parsed) ? parsed : null;
-  } catch (err) {
-    console.error("KV read error:", err);
+  if (!url || !token) {
     return null;
   }
+  return { url, token };
 }
 
-async function saveToKv(videos) {
-  const url = process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
-  if (!url || !token) return false;
-
-  try {
-    const res = await fetch(`${url}/set/portfolio_videos`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(JSON.stringify(videos))
-    });
-    return res.ok;
-  } catch (err) {
-    console.error("KV write error:", err);
-    return false;
+// Execute command on Upstash Redis REST API
+async function executeKvCommand(commandArray) {
+  const config = getKvConfig();
+  if (!config) {
+    throw new Error("DATABASE_NOT_CONFIGURED: Missing KV_REST_API_URL and KV_REST_API_TOKEN (or UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN) environment variables in Vercel.");
   }
+
+  const res = await fetch(config.url, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${config.token}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(commandArray)
+  });
+
+  if (!res.ok) {
+    throw new Error(`Database HTTP error ${res.status}: ${res.statusText}`);
+  }
+
+  const data = await res.json();
+  if (data.error) {
+    throw new Error(`Database error: ${data.error}`);
+  }
+
+  return data.result;
 }
 
-// 2. Cloud DB Adapter (Default & Environment Variable)
-async function getFromCloudDb() {
-  const endpoint = process.env.CLOUD_DB_URL || DEFAULT_CLOUD_DB;
-  try {
-    const res = await fetch(endpoint, {
-      headers: { "Content-Type": "application/json" }
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    if (data && data.data && Array.isArray(data.data.videos)) {
-      return data.data.videos;
+// Read videos from the primary database
+async function getVideosFromDb() {
+  const raw = await executeKvCommand(["GET", KV_KEY]);
+  
+  // If the key has never been initialized in the database (raw === null), perform one-time seed
+  if (raw === null || raw === undefined) {
+    await executeKvCommand(["SET", KV_KEY, JSON.stringify(INITIAL_SEED_VIDEOS)]);
+    return INITIAL_SEED_VIDEOS;
+  }
+
+  // Parse stored JSON
+  let parsed;
+  if (typeof raw === "string") {
+    try {
+      parsed = JSON.parse(raw);
+    } catch (e) {
+      throw new Error("Failed to parse database records: " + e.message);
     }
-    if (Array.isArray(data)) return data;
-    return null;
-  } catch (err) {
-    console.error("Cloud DB read error:", err);
-    return null;
-  }
-}
-
-async function saveToCloudDb(videos) {
-  const endpoint = process.env.CLOUD_DB_URL || DEFAULT_CLOUD_DB;
-  try {
-    const res = await fetch(endpoint, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name: "vedant_portfolio_videos",
-        data: { videos: videos }
-      })
-    });
-    return res.ok;
-  } catch (err) {
-    console.error("Cloud DB write error:", err);
-    return false;
-  }
-}
-
-// 3. Optional Server-Side GitHub Backup (Requires GITHUB_TOKEN in Vercel Env)
-async function syncToGitHub(videos) {
-  const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
-  const repo = process.env.GITHUB_REPO || "VedantBeladiya/VedantBeladiya";
-  if (!token) return;
-
-  try {
-    const getRes = await fetch(`https://api.github.com/repos/${repo}/contents/videos.json?ref=main`, {
-      headers: {
-        Authorization: `token ${token}`,
-        "User-Agent": "Vercel-Serverless-Function"
-      }
-    });
-    const getData = await getRes.json();
-    const sha = getData && getData.sha ? getData.sha : undefined;
-
-    const contentBase64 = Buffer.from(JSON.stringify(videos, null, 2)).toString("base64");
-    const payload = {
-      message: "Sync portfolio videos from admin portal",
-      content: contentBase64
-    };
-    if (sha) payload.sha = sha;
-
-    await fetch(`https://api.github.com/repos/${repo}/contents/videos.json`, {
-      method: "PUT",
-      headers: {
-        Authorization: `token ${token}`,
-        "Content-Type": "application/json",
-        "User-Agent": "Vercel-Serverless-Function"
-      },
-      body: JSON.stringify(payload)
-    });
-  } catch (err) {
-    console.warn("GitHub backup notice:", err.message);
-  }
-}
-
-// Unified Read
-async function loadVideos() {
-  // 1. Try Vercel KV / Upstash Redis
-  const kvVideos = await getFromKv();
-  if (kvVideos && kvVideos.length > 0) return kvVideos;
-
-  // 2. Try Cloud DB
-  const cloudVideos = await getFromCloudDb();
-  if (cloudVideos && cloudVideos.length > 0) {
-    // If KV is configured, backfill into KV
-    if (process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL) {
-      await saveToKv(cloudVideos);
-    }
-    return cloudVideos;
+  } else {
+    parsed = raw;
   }
 
-  // 3. Fallback to SEED_VIDEOS
-  return SEED_VIDEOS;
+  if (!Array.isArray(parsed)) {
+    throw new Error("Corrupted database format: expected Array but got " + typeof parsed);
+  }
+
+  // Empty array [] is completely valid!
+  return parsed;
 }
 
-// Unified Write
-async function persistVideos(videos) {
-  const results = await Promise.allSettled([
-    saveToKv(videos),
-    saveToCloudDb(videos),
-    syncToGitHub(videos)
-  ]);
-  return results.some(r => r.status === "fulfilled" && r.value !== false);
+// Save videos to primary database and verify write confirmation
+async function saveVideosToDb(videos) {
+  if (!Array.isArray(videos)) {
+    throw new Error("Invalid payload: videos must be an Array");
+  }
+
+  const result = await executeKvCommand(["SET", KV_KEY, JSON.stringify(videos)]);
+  if (result !== "OK") {
+    throw new Error(`Database write failed to confirm (received: ${JSON.stringify(result)})`);
+  }
+
+  return true;
 }
 
-// Serverless Handler
 module.exports = async function handler(req, res) {
   // CORS configuration
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -194,30 +125,38 @@ module.exports = async function handler(req, res) {
     return res.status(200).end();
   }
 
-  // Anti-caching headers for real-time consistency across all global users
+  // Strict anti-caching headers so Vercel CDN and browsers never cache dynamic portfolio state
   res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0, s-maxage=0");
   res.setHeader("Pragma", "no-cache");
   res.setHeader("Expires", "0");
 
+  const kvConfig = getKvConfig();
+  if (!kvConfig) {
+    return res.status(503).json({
+      success: false,
+      error: "DATABASE_NOT_CONFIGURED: Upstash / Vercel KV environment variables are not set. Please add KV_REST_API_URL and KV_REST_API_TOKEN (or UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN) to Vercel Project Settings -> Environment Variables."
+    });
+  }
+
   try {
-    // GET: Retrieve all portfolio videos
+    // GET: Retrieve all videos
     if (req.method === "GET") {
-      const videos = await loadVideos();
+      const videos = await getVideosFromDb();
       return res.status(200).json({ success: true, count: videos.length, videos });
     }
 
-    // Parse body if JSON string
+    // Parse request body
     let body = req.body;
     if (typeof body === "string") {
       try { body = JSON.parse(body); } catch (_) {}
     }
 
-    // POST: Add a new video or reset
+    // POST: Add new video (or reset/seed if explicitly requested)
     if (req.method === "POST") {
       if (body && (body.reset || (Array.isArray(body.videos) && !body.video))) {
-        const resetVideos = Array.isArray(body.videos) ? body.videos : SEED_VIDEOS;
-        await persistVideos(resetVideos);
-        return res.status(200).json({ success: true, message: "Videos updated/reset", videos: resetVideos });
+        const resetVideos = Array.isArray(body.videos) ? body.videos : INITIAL_SEED_VIDEOS;
+        await saveVideosToDb(resetVideos);
+        return res.status(200).json({ success: true, message: "Videos reset to default", count: resetVideos.length, videos: resetVideos });
       }
 
       const videoData = body && body.video ? body.video : body;
@@ -235,17 +174,16 @@ module.exports = async function handler(req, res) {
         thumbClass: videoData.thumbClass || "v1"
       };
 
-      const videos = await loadVideos();
-      // Insert at the beginning of the list
-      const existingIdx = videos.findIndex(v => v.id === newVideo.id);
+      const currentVideos = await getVideosFromDb();
+      const existingIdx = currentVideos.findIndex(v => v.id === newVideo.id);
       if (existingIdx >= 0) {
-        videos[existingIdx] = Object.assign({}, videos[existingIdx], newVideo);
+        currentVideos[existingIdx] = Object.assign({}, currentVideos[existingIdx], newVideo);
       } else {
-        videos.unshift(newVideo);
+        currentVideos.unshift(newVideo);
       }
 
-      await persistVideos(videos);
-      return res.status(201).json({ success: true, message: "Video added successfully", video: newVideo, videos });
+      await saveVideosToDb(currentVideos);
+      return res.status(201).json({ success: true, message: "Video added successfully", video: newVideo, count: currentVideos.length, videos: currentVideos });
     }
 
     // PUT: Update an existing video
@@ -255,17 +193,16 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ success: false, error: "Missing required field: id" });
       }
 
-      const videos = await loadVideos();
-      const existingIdx = videos.findIndex(v => v.id === videoData.id);
+      const currentVideos = await getVideosFromDb();
+      const existingIdx = currentVideos.findIndex(v => v.id === videoData.id);
       if (existingIdx === -1) {
-        // If not found, append
-        videos.unshift(videoData);
+        currentVideos.unshift(videoData);
       } else {
-        videos[existingIdx] = Object.assign({}, videos[existingIdx], videoData);
+        currentVideos[existingIdx] = Object.assign({}, currentVideos[existingIdx], videoData);
       }
 
-      await persistVideos(videos);
-      return res.status(200).json({ success: true, message: "Video updated successfully", video: videos[existingIdx >= 0 ? existingIdx : 0], videos });
+      await saveVideosToDb(currentVideos);
+      return res.status(200).json({ success: true, message: "Video updated successfully", video: videoData, count: currentVideos.length, videos: currentVideos });
     }
 
     // DELETE: Delete a video by ID
@@ -275,21 +212,24 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ success: false, error: "Missing required query parameter: id" });
       }
 
-      let videos = await loadVideos();
-      const initialCount = videos.length;
-      videos = videos.filter(v => v.id !== id);
+      const currentVideos = await getVideosFromDb();
+      const initialCount = currentVideos.length;
+      const filtered = currentVideos.filter(v => v.id !== id);
 
-      if (videos.length === initialCount) {
-        return res.status(404).json({ success: false, error: "Video not found", videos });
+      if (filtered.length === initialCount) {
+        return res.status(404).json({ success: false, error: `Video with ID "${id}" not found in database`, videos: currentVideos });
       }
 
-      await persistVideos(videos);
-      return res.status(200).json({ success: true, message: "Video deleted successfully", deletedId: id, videos });
+      await saveVideosToDb(filtered);
+      return res.status(200).json({ success: true, message: "Video deleted successfully", deletedId: id, count: filtered.length, videos: filtered });
     }
 
     return res.status(405).json({ success: false, error: `Method ${req.method} not allowed` });
   } catch (error) {
     console.error("API error:", error);
-    return res.status(500).json({ success: false, error: "Internal server error: " + error.message });
+    return res.status(500).json({
+      success: false,
+      error: "Database operation failed: " + error.message
+    });
   }
 };
