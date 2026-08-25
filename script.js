@@ -255,14 +255,14 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Storage keys — bumped to v3 to clear any old placeholder cards
   var STORAGE_VIDEOS_KEY = 'vedant_portfolio_videos_v3';
-  var STORAGE_SETTINGS_KEY = 'vedant_portfolio_settings_v2';
+  var STORAGE_SETTINGS_KEY = 'vedant_portfolio_settings_v3';
 
   // No default placeholder videos — only YOUR uploaded reels will show
   var DEFAULT_VIDEOS = [];
 
-  // Default Settings with your Cloudinary Cloud & Preset pre-configured
+  // Default Settings with your Cloudinary Cloud & Secret Password pre-configured
   var DEFAULT_SETTINGS = {
-    pin: '1234',
+    pin: 'Vedant@804480',
     cloudName: 'xypda8sw',
     uploadPreset: 'website_videos'
   };
@@ -539,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       var enteredPin = adminPinInput.value;
       var settings = getSettings();
-      var activePin = settings.pin || '1234';
+      var activePin = settings.pin || DEFAULT_SETTINGS.pin;
       
       if (enteredPin === activePin) {
         closeModal('adminPinModal');
@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', function() {
       var newPin = (document.getElementById('changePinInput').value || '').trim();
 
       var currentSettings = getSettings();
-      var finalPin = newPin.length > 0 ? newPin : (currentSettings.pin || '1234');
+      var finalPin = newPin.length > 0 ? newPin : (currentSettings.pin || DEFAULT_SETTINGS.pin);
 
       var settings = {
         cloudName: cloudName,
@@ -615,7 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
       };
       saveSettings(settings);
       closeModal('cloudSettingsModal');
-      alert('✅ Settings & PIN saved successfully!');
+      alert('✅ Settings & Password saved successfully!');
     });
   }
 
