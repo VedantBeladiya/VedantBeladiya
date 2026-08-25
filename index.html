@@ -90,6 +90,7 @@
       <li><a href="#speed-ramp" class="mobile-link"><span class="m-num">05</span> Speed Ramps</a></li>
       <li><a href="#agency" class="mobile-link"><span class="m-num">06</span> VoiceUp Media</a></li>
       <li><a href="#contact" class="mobile-link"><span class="m-num">07</span> Contact</a></li>
+      <li><a href="javascript:void(0)" class="mobile-link" onclick="document.getElementById('adminToggleBtn').click(); document.getElementById('mobileClose').click();" style="color:var(--accent-green);"><span class="m-num">⚡</span> Manage Videos</a></li>
     </ul>
 
     <div class="mobile-menu-footer">
@@ -1069,6 +1070,7 @@
           <a href="#services">Services</a>
           <a href="#agency">VoiceUp Media</a>
           <a href="#skills">Skills</a>
+          <a href="javascript:void(0)" onclick="document.getElementById('adminToggleBtn').click()" style="color:var(--accent-green); font-weight:600;">⚡ Manage Videos</a>
         </div>
         <div>
           <h4>Social</h4>
@@ -1085,9 +1087,268 @@
     </div>
 
     <div class="footer-big">VEDANT BELADIYA<em>.EDITOR</em></div>
-    <p class="copy">&copy; 2026 Vedant Beladiya. All rights reserved.</p>
   </div>
 </footer>
+
+<!-- ================= VIDEO MANAGER & ADMIN MODALS ================= -->
+
+<!-- Floating Admin Trigger Button -->
+<div class="admin-floating-trigger" id="adminTrigger" title="Manage Website Videos">
+  <button class="admin-float-btn" id="adminToggleBtn" aria-label="Open Video Manager">
+    <span class="admin-btn-icon">⚡</span>
+    <span class="admin-btn-label">Manage Videos</span>
+  </button>
+</div>
+
+<!-- Admin Active Top Bar -->
+<div class="admin-top-bar" id="adminTopBar" style="display: none;">
+  <div class="admin-bar-inner">
+    <div class="admin-bar-status">
+      <span class="pulse-dot green"></span>
+      <span><strong>Admin Edit Mode Active</strong> — You can now delete or add videos directly</span>
+    </div>
+    <div class="admin-bar-actions">
+      <button class="btn-admin-action" id="barUploadBtn">
+        <span>＋ Upload Video</span>
+      </button>
+      <button class="btn-admin-action secondary" id="barSettingsBtn">
+        <span>⚙️ Cloud Settings</span>
+      </button>
+      <button class="btn-admin-action danger" id="barExitBtn">
+        <span>🔒 Exit Mode</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 1. Admin PIN Modal -->
+<div class="modal-backdrop" id="adminPinModal" style="display: none;">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title-wrap">
+        <span class="modal-icon">🔐</span>
+        <div>
+          <h3>Owner Video Manager</h3>
+          <p>Enter your secret password to add, edit or delete videos</p>
+        </div>
+      </div>
+      <button class="modal-close-btn" data-close="adminPinModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="adminPinForm">
+        <label class="modal-label">
+          <span>Enter Admin Password</span>
+          <input type="password" id="adminPinInput" maxlength="60" placeholder="••••••••" required autofocus autocomplete="current-password" />
+        </label>
+        <div class="modal-actions">
+          <button type="button" class="btn-modal secondary" data-close="adminPinModal">Cancel</button>
+          <button type="submit" class="btn-modal primary">Unlock Admin Mode</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 2. Video Upload & Add Modal -->
+<div class="modal-backdrop" id="videoUploadModal" style="display: none;">
+  <div class="modal-card modal-card-lg">
+    <div class="modal-head">
+      <div class="modal-title-wrap">
+        <span class="modal-icon">🎬</span>
+        <div>
+          <h3 id="uploadModalTitle">Upload New Video Reel</h3>
+          <p>Add video directly to your website portfolio</p>
+        </div>
+      </div>
+      <button class="modal-close-btn" data-close="videoUploadModal">✕</button>
+    </div>
+
+    <div class="modal-body">
+      <!-- Upload Method Tabs -->
+      <div class="upload-tabs">
+        <button type="button" class="upload-tab active" data-tab="tab-gdrive">🔺 Google Drive (Recommended)</button>
+        <button type="button" class="upload-tab" data-tab="tab-file">📁 Upload from Phone / PC</button>
+        <button type="button" class="upload-tab" data-tab="tab-url">🔗 Paste Video URL</button>
+      </div>
+
+      <form id="videoUploadForm">
+        <input type="hidden" id="editVideoId" value="" />
+
+        <!-- Target Section Selection -->
+        <label class="modal-label">
+          <span>Select Portfolio Section*</span>
+          <select id="videoTargetSection" required>
+            <option value="colorTrack">01 · Colour Grading</option>
+            <option value="aiTrack">02 · AI Reels &amp; Viral Short-Form</option>
+            <option value="motionTrack">03 · Motion Graphics</option>
+            <option value="speedTrack">04 · Speed Ramps &amp; Beat Sync</option>
+            <option value="agencyShowcase">05 · VoiceUp Media Agency Showcase</option>
+          </select>
+        </label>
+
+        <!-- Tab 0: Google Drive Share Link (Recommended for Phone & PC) -->
+        <div class="tab-pane active" id="tab-gdrive">
+          <div class="gdrive-guide-card">
+            <div class="gdrive-guide-head">
+              <span class="gdrive-icon">🔺</span>
+              <div>
+                <h4>How to get video link from Google Drive:</h4>
+                <p>Upload video to Google Drive from your phone &amp; copy share link:</p>
+              </div>
+            </div>
+            <ol class="gdrive-steps">
+              <li>Open Google Drive app on your phone &amp; tap <strong>3 dots (⋯)</strong> on your video.</li>
+              <li>Tap <strong>Manage access / Share</strong> &rarr; change to <strong>"Anyone with the link"</strong>.</li>
+              <li>Tap <strong>Copy link</strong> and paste it in the box below!</li>
+            </ol>
+          </div>
+
+          <label class="modal-label">
+            <span>Paste Google Drive Video Link*</span>
+            <input type="url" id="gdriveUrlInput" placeholder="https://drive.google.com/file/d/.../view?usp=sharing" />
+          </label>
+
+          <!-- GDrive Preview Card -->
+          <div class="file-preview-card" id="gdrivePreviewCard" style="display: none;">
+            <div class="preview-video-wrap gdrive-preview-wrap">
+              <img id="gdriveThumbImg" src="" alt="GDrive Video Thumbnail" />
+              <span class="gdrive-play-badge">▶</span>
+            </div>
+            <div class="preview-info">
+              <span class="preview-filename">Google Drive Video Connected</span>
+              <span class="preview-filesize" id="gdriveStatusText">Ready to display on website</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 1: File Dropzone / Mobile File Upload -->
+        <div class="tab-pane" id="tab-file" style="display: none;">
+          <div class="file-dropzone" id="fileDropzone">
+            <input type="file" id="videoFileInput" accept="video/mp4,video/quicktime,video/webm,video/*" />
+            <div class="dropzone-content">
+              <span class="drop-icon">📹</span>
+              <h4>Tap here to choose video from Phone Gallery or PC</h4>
+              <p>Supports MP4, MOV, WebM (Recommended: under 100MB)</p>
+              <span class="btn-browse">Browse Gallery / Files</span>
+            </div>
+          </div>
+
+          <!-- Video File Selected Preview -->
+          <div class="file-preview-card" id="filePreviewCard" style="display: none;">
+            <div class="preview-video-wrap">
+              <video id="filePreviewVideo" playsinline controls muted></video>
+            </div>
+            <div class="preview-info">
+              <span class="preview-filename" id="previewFilename">video.mp4</span>
+              <span class="preview-filesize" id="previewFilesize">0 MB</span>
+              <button type="button" class="btn-remove-file" id="btnRemoveFile">Change Video</button>
+            </div>
+          </div>
+
+          <!-- Upload Progress Indicator -->
+          <div class="upload-progress-wrap" id="uploadProgressWrap" style="display: none;">
+            <div class="upload-progress-info">
+              <span id="uploadStatusText">Uploading to Cloud CDN...</span>
+              <span id="uploadPercent">0%</span>
+            </div>
+            <div class="upload-progress-bar">
+              <div class="upload-progress-fill" id="uploadProgressFill" style="width: 0%;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab 2: Direct Video URL -->
+        <div class="tab-pane" id="tab-url" style="display: none;">
+          <label class="modal-label">
+            <span>Direct Video URL (MP4 / Cloud CDN)*</span>
+            <input type="url" id="videoUrlInput" placeholder="https://res.cloudinary.com/.../video.mp4" />
+          </label>
+        </div>
+
+        <!-- Metadata Fields -->
+        <div class="modal-form-grid">
+          <label class="modal-label">
+            <span>Badge / Category Label</span>
+            <input type="text" id="videoBadgeInput" placeholder="e.g. Viral Reel, 4K Color, 3D Title" />
+          </label>
+
+          <label class="modal-label">
+            <span>Reel Title / Client Name</span>
+            <input type="text" id="videoTitleInput" placeholder="e.g. Creator Growth Reel" />
+          </label>
+        </div>
+
+        <label class="modal-label">
+          <span>Short Subtitle / Description</span>
+          <input type="text" id="videoSubtitleInput" placeholder="e.g. 1M+ Views Viral Cut · DaVinci Resolve" />
+        </label>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-modal secondary" data-close="videoUploadModal">Cancel</button>
+          <button type="submit" class="btn-modal primary" id="btnSubmitVideo">
+            <span>Save &amp; Add to Website</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- 3. Cloud Storage Settings Modal -->
+<div class="modal-backdrop" id="cloudSettingsModal" style="display: none;">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title-wrap">
+        <span class="modal-icon">⚙️</span>
+        <div>
+          <h3>Cloud Storage &amp; Admin Settings</h3>
+          <p>Connect your Cloudinary for 100% free cloud video hosting</p>
+        </div>
+      </div>
+      <button class="modal-close-btn" data-close="cloudSettingsModal">✕</button>
+    </div>
+    <div class="modal-body">
+      <form id="cloudSettingsForm">
+        <div class="settings-guide">
+          <h4>🚀 How Cloud Upload Works:</h4>
+          <p>Videos uploaded from your phone are stored on Cloudinary CDN for instant global playback for all visitors.</p>
+        </div>
+
+        <label class="modal-label">
+          <span>Cloudinary Cloud Name</span>
+          <input type="text" id="cloudNameInput" placeholder="e.g. your_cloud_name" />
+        </label>
+
+        <label class="modal-label">
+          <span>Cloudinary Upload Preset (Unsigned)</span>
+          <input type="text" id="uploadPresetInput" placeholder="e.g. website_videos" />
+        </label>
+
+        <div class="cloud-test-row">
+          <button type="button" class="btn-modal secondary" id="btnTestCloudConnection" style="width:100%; margin-bottom: 0.8rem; display:flex; align-items:center; justify-content:center; gap:0.5rem;">
+            <span>🧪 Test Cloudinary Connection</span>
+          </button>
+          <div id="cloudTestResult" style="display:none; font-size:0.8rem; padding:0.75rem 1rem; border-radius:8px; margin-bottom:1rem; line-height:1.45;"></div>
+        </div>
+
+        <label class="modal-label">
+          <span>Change Admin Password (Optional)</span>
+          <input type="password" id="changePinInput" placeholder="Letters, numbers & symbols (e.g. Vedant@2026#Edit)" maxlength="60" autocomplete="new-password" />
+        </label>
+
+        <div class="settings-reset-zone">
+          <span>Reset Portfolio Videos to Default</span>
+          <button type="button" class="btn-modal danger-outline" id="btnResetVideos">Reset to Default</button>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-modal secondary" data-close="cloudSettingsModal">Close</button>
+          <button type="submit" class="btn-modal primary">Save Settings</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 <script src="script.js"></script>
 </body>
