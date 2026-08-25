@@ -1525,6 +1525,33 @@ a, button, input, select, textarea {
   pointer-events: auto;
 }
 
+/* Buffering spinner */
+.vc-buffering {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top-color: var(--accent-green, #00ff88);
+  border-radius: 50%;
+  animation: vcBuffSpin 0.8s linear infinite;
+  z-index: 24;
+  pointer-events: none;
+  display: none;
+}
+
+.video-card-interactive.is-buffering .vc-buffering {
+  display: block;
+}
+
+@keyframes vcBuffSpin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
 /* Bottom controls bar */
 .vc-controls {
   position: relative;

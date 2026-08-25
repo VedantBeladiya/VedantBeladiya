@@ -295,10 +295,23 @@ document.addEventListener('DOMContentLoaded', function() {
       var saved = localStorage.getItem(STORAGE_VIDEOS_KEY);
       if (saved) {
         var parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
       }
     } catch(e) {}
-    return [];
+    return DEFAULT_VIDEOS.slice();
+  }
+
+  // Stream Optimizer for Cloudinary & Direct MP4s
+  function optimizeVideoUrl(url) {
+    if (!url || typeof url !== 'string') return url;
+    if (url.startsWith('gdrive:')) return url;
+    // Auto-apply Cloudinary bandwidth optimization (H.264 web streaming + auto compression + 720p scaling for instant butter-smooth mobile playback)
+    if (url.includes('res.cloudinary.com') && url.includes('/video/upload/')) {
+      if (!url.includes('/video/upload/q_') && !url.includes('/video/upload/w_') && !url.includes('/video/upload/f_')) {
+        return url.replace('/video/upload/', '/video/upload/q_auto,vc_auto,w_720/');
+      }
+    }
+    return url;
   }
 
   // Realtime Cloud Database Endpoint for instant global sync across all devices
@@ -409,7 +422,8 @@ document.addEventListener('DOMContentLoaded', function() {
               '<span class="gdrive-badge">🔺 GDrive</span>' +
             '</div>';
           }
-          return '<video class="portfolio-video" src="' + item.videoUrl + '#t=0.001" playsinline preload="metadata" loop muted></video>';
+          var streamUrl = optimizeVideoUrl(item.videoUrl);
+          return '<video class="portfolio-video" src="' + streamUrl + '#t=0.001" playsinline webkit-playsinline preload="metadata" loop muted></video>';
         }
 
         if (isAgency) {
@@ -596,12 +610,19 @@ document.addEventListener('DOMContentLoaded', function() {
   function openFsModal(card, video) {
     createFsModal();
     vcFsOriginalCard = card;
-    vcFsVideo.src = video.src || video.currentSrc;
+    var rawSrc = video.currentSrc || video.src;
+    vcFsVideo.src = rawSrc;
     vcFsVideo.currentTime = video.currentTime > 0.01 ? video.currentTime : 0;
     vcFsVideo.muted = false;
     vcFsModal.classList.add('open');
     document.body.style.overflow = 'hidden';
-    vcFsVideo.play().catch(function() { vcFsVideo.muted = true; vcFsVideo.play(); });
+    var p = vcFsVideo.play();
+    if (p !== undefined) {
+      p.catch(function() {
+        vcFsVideo.muted = true;
+        vcFsVideo.play().catch(function() {});
+      });
+    }
     vcFsControls.classList.remove('vc-hidden');
     if (vcFsTop) vcFsTop.style.opacity = '1';
     clearTimeout(vcFsHideTimer);
@@ -624,6 +645,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Video Players Interaction Handler
   function initInteractiveVideoPlayers() {
     var allVideoCards = document.querySelectorAll('.video-card-interactive');
+    var isDesktopPointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
     allVideoCards.forEach(function(card) {
       var video = card.querySelector('video');
@@ -634,6 +656,10 @@ document.addEventListener('DOMContentLoaded', function() {
       if (card.dataset.vcInit === '1') return;
       card.dataset.vcInit = '1';
 
+      video.playsInline = true;
+      video.setAttribute('playsinline', '');
+      video.setAttribute('webkit-playsinline', '');
+
       // Preload frame
       if (video.readyState >= 1) {
         if (video.currentTime === 0) video.currentTime = 0.001;
@@ -643,11 +669,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { once: true });
       }
 
+      // Buffering spinners
+      video.addEventListener('waiting', function() {
+        card.classList.add('is-buffering');
+      });
+      video.addEventListener('playing', function() {
+        card.classList.remove('is-buffering');
+      });
+      video.addEventListener('canplay', function() {
+        card.classList.remove('is-buffering');
+      });
+
       // ---- Inject custom overlay ----
       var overlay = document.createElement('div');
       overlay.className = 'vc-overlay';
       overlay.innerHTML =
         '<div class="vc-tap-zone"></div>' +
+        '<div class="vc-buffering" aria-hidden="true"></div>' +
         '<div class="vc-center-icon" aria-hidden="true">▶</div>' +
         '<div class="vc-controls">' +
           '<div class="vc-timeline-row">' +
@@ -702,28 +740,34 @@ document.addEventListener('DOMContentLoaded', function() {
       }
 
       // Show on touch/hover
-      overlay.addEventListener('touchstart', function(e) {
+      overlay.addEventListener('touchstart', function() {
         showControls();
       }, { passive: true });
-      card.addEventListener('mouseenter', function() {
-        if (!card.classList.contains('is-playing')) {
-          // Muted hover preview
-          video.muted = true;
-          video.play().catch(function() {});
-        }
-        showControls();
-      });
-      card.addEventListener('mouseleave', function() {
-        if (!card.classList.contains('is-playing')) {
+
+      // ONLY enable hover preview on desktop mouse (never touch devices)
+      if (isDesktopPointer) {
+        card.addEventListener('mouseenter', function() {
+          if (!card.classList.contains('is-playing') && video.paused) {
+            // Muted hover preview
+            video.muted = true;
+            video.play().catch(function() {});
+          }
+          showControls();
+        });
+
+        card.addEventListener('mouseleave', function() {
+          if (card.classList.contains('is-playing') || !video.paused) {
+            hideControls();
+            return;
+          }
           video.pause();
           video.currentTime = 0.001;
           hideControls();
           vcPlayBtn.textContent = '▶';
           if (origPlayBtn) origPlayBtn.innerHTML = '▶';
-        } else {
-          hideControls();
-        }
-      });
+        });
+      }
+
       overlay.addEventListener('mousemove', function() { showControls(); });
 
       // ---- Flash center icon briefly ----
@@ -758,20 +802,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
       function doPlay() {
         pauseAllOthers();
+        card.classList.add('is-playing');
+        vcPlayBtn.textContent = '⏸';
+        if (origPlayBtn) origPlayBtn.innerHTML = '⏸';
         video.muted = false;
-        return video.play().then(function() {
-          card.classList.add('is-playing');
-          vcPlayBtn.textContent = '⏸';
-          if (origPlayBtn) origPlayBtn.innerHTML = '⏸';
-          showControls();
-        }).catch(function() {
-          video.muted = true;
-          video.play();
-          card.classList.add('is-playing');
-          vcPlayBtn.textContent = '⏸';
-          if (origPlayBtn) origPlayBtn.innerHTML = '⏸';
-          showControls();
-        });
+        var p = video.play();
+        if (p !== undefined) {
+          p.then(function() {
+            showControls();
+          }).catch(function() {
+            video.muted = true;
+            video.play().then(function() {
+              showControls();
+            }).catch(function() {});
+          });
+        }
       }
 
       function doPause() {
@@ -785,7 +830,8 @@ document.addEventListener('DOMContentLoaded', function() {
       function togglePlay(e) {
         if (e) { e.stopPropagation(); e.preventDefault(); }
         if (video.paused) {
-          doPlay().then(function() { flashCenterIcon('⏸'); });
+          doPlay();
+          flashCenterIcon('⏸');
         } else {
           doPause();
           flashCenterIcon('▶');
@@ -1524,6 +1570,9 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   function finalizeSaveVideo(videoObj) {
+    if (videoObj.videoUrl) {
+      videoObj.videoUrl = optimizeVideoUrl(videoObj.videoUrl);
+    }
     var videos = getVideos();
     var existingIndex = videos.findIndex(function(v) { return v.id === videoObj.id; });
 
@@ -1548,7 +1597,15 @@ document.addEventListener('DOMContentLoaded', function() {
     .then(function(payload) {
       if (payload && payload.data && Array.isArray(payload.data.videos)) {
         var liveVideos = payload.data.videos;
-        saveVideos(liveVideos, true); // true = skip redundant re-sync
+        // Merge with local storage videos so no freshly uploaded item is lost
+        var localVideos = getVideos();
+        var merged = liveVideos.slice();
+        localVideos.forEach(function(lv) {
+          if (!merged.some(function(mv) { return mv.id === lv.id; })) {
+            merged.push(lv);
+          }
+        });
+        saveVideos(merged, true); // true = skip redundant re-sync
         renderAllTracks();
       }
     })
@@ -1557,7 +1614,7 @@ document.addEventListener('DOMContentLoaded', function() {
       fetch('videos.json?t=' + Date.now())
         .then(function(r) { return r.json(); })
         .then(function(backupVideos) {
-          if (Array.isArray(backupVideos)) {
+          if (Array.isArray(backupVideos) && backupVideos.length > 0) {
             saveVideos(backupVideos, true);
             renderAllTracks();
           }
